@@ -32,15 +32,44 @@
                         <div class="card-body">
                             <div id="bootstrap-data-table_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                                 <div class="row">
-                                    <div class="col-7 col-1">
-                                        div.input-
+                                    <div class="col-sm-12">
+                                        <div class="position-relative form-group">
+                                            <div class="input-group" style="padding: 0px 0rem; margin: 1.5rem 0px;">
+                                                <select name="select" id="select" class="form-control"
+                                                        style="margin-right: 10px;">
+                                                    <option value="0">--All Countres--</option>
+                                                    <option value="1">Cambodia</option>
+                                                </select> <select name="select" id="select" class="form-control"
+                                                                  style="margin-right: 10px;">
+                                                    <option value="">--All Cities--</option>
+                                                </select> <select name="select" id="select" class="form-control"
+                                                                  style="margin-right: 10px;">
+                                                    <option value="0">--All Projects--</option>
+                                                </select> <select name="select" id="select" class="form-control"
+                                                                  style="margin-right: 10px;">
+                                                    <option value="">--Sale And Rent--</option>
+                                                    <option value="Rent">Rent</option>
+                                                    <option value="Sale">Sale</option>
+                                                </select><input placeholder="--Min Price" name="title" type="text"
+                                                                class="form-control" value=""
+                                                                style="border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-right: none; text-align: center;">
+                                                <input placeholder="Max Price--" name="title" type="text"
+                                                       class="form-control" value=""
+                                                       style="border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; margin-right: 10px;"><select
+                                                        name="select" id="select" class="form-control"
+                                                        style="margin-right: 10px; text-align: center;">
+                                                    <option value="">--All Rooms--</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="else">Else</option>
+                                                </select></div>
+                                        </div>
                                     </div>
-                                    <div class="col-7 col-1"></div>
-                                    <div class="col-7 col-1"></div>
-                                    <div class="col-7 col-1"></div>
-                                    <div class="col-7 col-1"></div>
-                                    <div class="col-7 col-1"></div>
-                                    <div class="col-7 col-1"></div>
+
+                                   
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
