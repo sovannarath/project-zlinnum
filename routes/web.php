@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test', function () {
-    return view('welcome');
-});
+Route::get('/dashboard', function () {
+   return view('template.dashboard');
+})->name('dashboard');
+
+Route::get('/user', function () {
+    return view('template.all-user');
+})->name('all-user');
+
+Route::get('/add-project', function () {
+    return view('template.add-project');
+})->name('add-project');
+
+Route::get('/project-listing', function () {
+    return view('template.project-listing');
+})->name('show-project');
 
 
