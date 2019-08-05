@@ -34,16 +34,16 @@
                         <div class="card-body">
                             <div class="stat-widget-five">
                                 <div class="stat-icon dib flat-color-1">
-                                    <i class="fa fa-building-o"></i>
+                                    <i class="far fa-building"></i>
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">43</span></div>
+                                        <div class="stat-text"><span class="count">{{$totalproject}}</span></div>
                                         <div class="stat-heading">Total Project</div>
                                     </div>
                                 </div>
                                 <div class="stat-content custom">
-                                    <div class="stat-heading">Disabled: 38 | Enabled: 5</div>
+                                    <div class="stat-heading">Disabled: {{$projectDisable}} | Enabled: {{$projectEnable}}</div>
                                 </div>
                             </div>
                         </div>
@@ -55,16 +55,16 @@
                         <div class="card-body">
                             <div class="stat-widget-five">
                                 <div class="stat-icon dib flat-color-2">
-                                    <i class="pe-7s-cart"></i>
+                                    <i class="far fa-calendar-alt"></i>
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">3</span></div>
+                                        <div class="stat-text"><span class="count">{{$totalEvent}}</span></div>
                                         <div class="stat-heading">Total Event</div>
                                     </div>
                                 </div>
                                 <div class="stat-content custom">
-                                    <div class="stat-heading">Disabled: 0 | Enabled: 3</div>
+                                    <div class="stat-heading">Disabled: {{$eventDisble}} | Enabled: {{$eventEnable}}</div>
                                 </div>
                             </div>
                         </div>
@@ -80,12 +80,12 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">11</span></div>
+                                        <div class="stat-text"><span class="count">{{$total_user}}</span></div>
                                         <div class="stat-heading">Total User</div>
                                     </div>
                                 </div>
                                 <div class="stat-content custom">
-                                    <div class="stat-heading">Admin: 3 | Agent: 1 | User: 7</div>
+                                    <div class="stat-heading">Admin: {{$admin_count}} | Agent: {{$agent_count}} | User: {{$user_count}}</div>
                                 </div>
                             </div>
                         </div>
@@ -101,12 +101,12 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">15</span></div>
+                                        <div class="stat-text"><span class="count">{{$property_count}}</span></div>
                                         <div class="stat-heading">Propertys</div>
                                     </div>
                                 </div>
                                 <div class="stat-content custom">
-                                    <div class="stat-heading">Disabled: 9 | Enabled: 6</div>
+                                    <div class="stat-heading">Disabled: {{$propertyoff_count}} | Enabled: {{$propertyon_count}}</div>
                                 </div>
                             </div>
                         </div>
@@ -135,25 +135,25 @@
                                         <h4 class="por-title">
                                             Apartment
                                         </h4>
-                                        <div class="por-txt">1 (2%)</div>
+                                        <div class="por-txt">{{$apartment_count}} ({{$apartment_percent}}%)</div>
                                         <div class="progress mb-2" style="height: 5px;">
-                                            <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 2%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: {{$apartment_percent}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="progress-box progress-2">
                                         <h4 class="por-title">Condo</h4>
-                                        <div class="por-txt">8 (19%)</div>
+                                        <div class="por-txt">{{$condo_count}} ({{$condo_percent}}%)</div>
                                         <div class="progress mb-2" style="height: 5px;">
-                                            <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 19%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: {{$condo_percent}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="progress-box progress-2">
                                         <h4 class="por-title">
-                                            borey
+                                            Borey
                                         </h4>
-                                        <div class="por-txt">34 Users (79%)</div>
+                                        <div class="por-txt">{{$borey_count}} ({{$borey_percent}}%)</div>
                                         <div class="progress mb-2" style="height: 5px;">
-                                            <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 79%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: {{$borey_percent}}%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
 
@@ -193,6 +193,10 @@
         });
     </script>
     <script>
+        var apartment  = JSON.parse("{{json_encode($apartment_chart)}}");
+        var borey  = JSON.parse("{{json_encode($borey_chart)}}");
+        var condo  = JSON.parse("{{json_encode($condo_chart)}}");
+
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -205,13 +209,37 @@
                     label: 'Apartment',
                     backgroundColor: 'rgb(255, 99, 132,0.4)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45],
+
+                    data: apartment,
+
                     pointRadius: 0
 
 
-                }],
+                },
+                    {
+                        label: 'Condo',
+                        backgroundColor: 'rgb(255, 255, 102,0.4)',
+                        borderColor: 'rgb(230, 230, 0)',
+
+                        data: condo,
+
+                        pointRadius: 0
+
+
+                    },{
+                        label: 'Borey',
+                        backgroundColor: 'rgb(255, 153, 0,0.4)',
+                        borderColor: 'rgb(255, 153, 0)',
+
+                        data: borey,
+
+                        pointRadius: 0
+
+
+                    }],
 
             },
+
 
 
             // Configuration options go here

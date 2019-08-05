@@ -1,0 +1,84 @@
+
+------------- Start ---------------------
+Date: 19-07-31 08:13:47
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 08:13:51
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 08:19:07
+Error  Controller :HttpRequest.php
+Line: 18
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 10:53:23
+Error  Controller :HttpRequest.php
+Line: 178
+Message: can`t change profile image
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 10:57:12
+Error  Controller :HttpRequest.php
+Line: 178
+Message: Object of class stdClass could not be converted to string
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 10:58:32
+Error  Controller :HttpRequest.php
+Line: 178
+Message: Object of class stdClass could not be converted to string
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 11:26:24
+Error  Controller :HttpRequest.php
+Line: 178
+Message: The Response content must be a string or object implementing __toString(), "boolean" given.
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 11:54:25
+Error  Controller :HttpRequest.php
+Line: 178
+Message: file_get_contents(C:\wamp64\tmp\php5B0.tmpThe-Soul.jpg): failed to open stream: No such file or directory
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 11:54:40
+Error  Controller :HttpRequest.php
+Line: 178
+Message: file_get_contents(C:\wamp64\tmp\php3E69.tmpAnnablle 3.jpg): failed to open stream: No such file or directory
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 14:14:05
+Error  Controller :HttpRequest.php
+Line: 178
+Message: Method Illuminate\Http\UploadedFile::getOriginalName does not exist.
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 15:00:23
+Error  Controller :HttpRequest
+Line: 45
+Message: Trying to get property 'status_code' of non-object
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-31 15:00:48
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Trying to get property 'status_code' of non-object
+-------------End -------------------

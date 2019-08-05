@@ -1,12 +1,21 @@
 @extends('template.master')
+@section('title') Project Listing @endsection
 @section('content')
+    @component('components.alert',['title'=>'Change Status','message'=>'','class_action'=>'project','action'=>'OK'])
+        @endcomponent
+    <datalist id="project_list">
+        @foreach($datalist->result as $value)
+        <option value="{{$value->name}}"></option>
+            @endforeach
+        
+    </datalist>
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
             <div class="row m-0">
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>New Project</h1>
+                            <h1>Project Listing </h1>
                         </div>
                     </div>
                 </div>
@@ -15,7 +24,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb text-right">
                                 <li><a href="#">Home</a></li>
-                                <li><a href="#">New Project</a></li>
+                                <li><a href="#">Project Listing</a></li>
                             </ol>
                         </div>
                     </div>
@@ -30,7 +39,13 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="parameter" content="{{$parameter}}"></div>
+                            <script>
+                                $('.limit-page option[value="{{$limit}}"]').attr('selected','selected');
+                            </script>
                             <div id="bootstrap-data-table_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                                {{-- Fillter Bar --}}
+                                <div class="filter-blog">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="position-relative form-group">
@@ -38,7 +53,10 @@
                                                 <select name="select" id="select" class="form-control"
                                                         style="margin-right: 10px;">
                                                     <option value="0">--All Countres--</option>
-                                                    <option value="1">Cambodia</option>
+                                                    @foreach($country->result as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        @endforeach
+
                                                 </select> <select name="select" id="select" class="form-control"
                                                                   style="margin-right: 10px;">
                                                     <option value="">--All Cities--</option>
@@ -69,8 +87,10 @@
                                         </div>
                                     </div>
 
-                                   
+
                                 </div>
+                                </div>
+                                {{-- End Fillter Bar --}}
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
                                         <div class="dataTables_length" id="bootstrap-data-table_length">
@@ -79,7 +99,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Show</span>
                                                 </div>
-                                                <select placeholder="Search by name" name="title" class="form-control" style="border-radius: 1px;">
+                                                    <select placeholder="Search by name" name="title" class="form-control limit-page" style="border-radius: 1px;">
                                                     <option value="10">10</option>
                                                     <option value="20">20</option>
                                                     <option value="40">40</option>
@@ -88,17 +108,7 @@
                                             </div>
                                             </span>
                                             <span class="type-select" style="width: 200px;">
-                                            <div class="input-group" style="padding: 0px 0rem; margin: 0px;">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Type</span>
-                                                </div>
-                                                <select placeholder="Search by name" name="title" class="form-control" style="border-radius: 1px;">
-                                                    <option value="10">All</option>
-                                                    <option value="20">Agent</option>
-                                                    <option value="40">Admin</option>
-                                                    <option value="100">User</option>
-                                                </select>
-                                            </div>
+
                                             </span>
                                         </div>
                                     </div>
@@ -107,11 +117,11 @@
                                             <span class="type-select" style="width: 100%">
                                             <div class="input-group" style="padding: 0px 0rem; margin: 0px;">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                                    <span class="input-group-text goto-search" data><i class="fa fa-search"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="Search ...">
+                                                <input type="text" class="form-control search-project-listing" placeholder="Search ..." value="{{$search}}" list="project_list">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-primary"><i class="fa fa-filter ml-2 mr-2"></i>Filter</button>
+                                                    <button class="btn btn-primary filter-action"><i class="fa fa-filter ml-2 mr-2"></i>Filter</button>
                                                 </div>
                                             </div>
                                             </span>
@@ -119,8 +129,9 @@
                                         </div>
 
                                     </div>
-
                                 </div>
+                                <div class="mt-3" style="text-align: right"> Total Page: <strong style="margin-left: 5px;">{{$paginate->total_page}}</strong> |  Total Items: <strong style="margin-left: 5px;">{{$paginate->total_item}}</strong></div>
+
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -129,118 +140,64 @@
                                             <tr role="row">
                                                 <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">#
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Photo
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Image
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 193px;">Full Name
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name
+                                                </th>
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: auto;">Country
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="">Type
                                                 </th>
-                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 139px;">Phone
+                                                <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 250px;">Price
                                                 </th>
-                                                <th class="sorting_asc" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Salary: activate to sort column descending" aria-sort="ascending">Company
+
+                                                <th class="sorting_asc" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Salary: activate to sort column descending" aria-sort="ascending" style="width: 15px;">Remove
                                                 </th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr class="odd">
-                                                <td class="">01</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">02</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">03</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">04</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">05</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">06</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">07</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">08</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">09</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="">010</td>
-                                                <td class=""><div style="width:50px;height: 50px;background: #ded9ff;border-radius: 50px;;margin: 0 auto"></div></td>
-                                                <td class=""><div> Sparth</div></td>
-                                                <td class=""><div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">Admin</div></td>
-                                                <td class="">086 48 33 36</td>
-                                                <td class="sorting_1">Century 21 Apex Property</td>
-                                            </tr>
+                                            @foreach($result as $item)
+                                            <tr class="odd item-project">
+                                                <td class="id_project" id="{{$item->id}}">{{$item->id}}</td>
+                                                <td class=""><div style="width:100px;height: auto;background: #ded9ff;margin: 0 auto">
+                                                        <img class="lazyload" data-src="{{$item->thumbnail}}"></div>
+                                                </td>
+                                                <td style="width: 500px;">
+                                                    <p>{{$item->name}}</p>
+                                                </td>
+                                                <td class="">
+                                                    <div style="text-align: center">
+                                                        <i class="flag-icon flag-icon-kh h4 mb-0" title="kh" id="kh"></i>
+                                                    </div>
+                                                </td>
+                                                <td class="">{{$item->project_type}}</td>
+                                                <td class="">{{$item->price}}  GRR: {{$item->grr}}</td>
+                                             {{--   <td class="sorting_1">
+                                                    <div class="custom-control custom-switch" style="text-align:center" datasrc="{{route('change-status-project')}}">
+                                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" @if($item->status=="true") checked @endif>
+                                                        <label class="custom-control-label" for="customSwitch1"></label>
+                                                    </div>
+                                                </td>--}}
+                                                <td style="text-align: center;font-size: 12px;color: darkred" class="delete-project"><i class="fas fa-trash"></i></td>
 
+                                            </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
+                                        @if($paginate->total_item<=0)
+                                        <div class="alert alert-danger">Project not Found</div>
+                                            @endif
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">Showing 1 to 57 of 57 entries
+                                        @php $showving = ($paginate->page * $paginate->limit) - $paginate->limit + 1; @endphp
+                                        <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">Showing @php if($showving>$paginate->total_item){ echo 0; }else { echo $showving;} @endphp  to {{$paginate->total_item}} of {{$paginate->total_item}} entries
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="bootstrap-data-table_paginate" style="text-align: right">
-                                            <ul class="pagination">
-                                                <li class="paginate_button page-item previous disabled" id="bootstrap-data-table_previous"><a href="#" aria-controls="bootstrap-data-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                                </li>
-                                                <li class="paginate_button page-item active"><a href="#" aria-controls="bootstrap-data-table" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                                </li>
-                                                <li class="paginate_button page-item next disabled" id="bootstrap-data-table_next"><a href="#" aria-controls="bootstrap-data-table" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
-                                            </ul>
+                                        <div class="dataTables_paginate paging_simple_numbers" id="bootstrap-data-table_paginate" style="text-align: right;float: right">
+                                                     @php echo $render_paginate @endphp
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +213,7 @@
     <script>
         var doc = $(document);
         $(document).ready(function () {
-            $('.project').addClass('active');
+            $('.project-bar').addClass('active');
             $('.project-list').addClass('active');
         });
     </script>

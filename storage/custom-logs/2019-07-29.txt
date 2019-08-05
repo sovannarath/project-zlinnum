@@ -1,0 +1,444 @@
+
+------------- Start ---------------------
+Date: 19-07-29 08:27:20
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:28:47
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:29:40
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:32:18
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?%7B%22email%22:%22vira.pha@zillennium.com%22,%22password%22:%22asdfasdfasdf%22%7D` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:33:28
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?%7B%22email%22:%22vira.pha@zillennium.com%22,%22password%22:%22123412312312%22%7D` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:37:34
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?%7B%22email%22:%22vira.pha@zillennium.com%22,%22password%22:%22123123123123123%22%7D` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:37:40
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?%7B%22email%22:%22vira.pha@zillennium.com%22,%22password%22:%2212345678%22%7D` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:37:51
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?%7B%22email%22:%22vira.pha@zillennium.com%22,%22password%22:%2212345678%22%7D` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:40:13
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?email=vira.pha%40zillennium.com&password=12345678` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:40:21
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in?email=vira.pha%40zillennium.com&password=12345678` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:44:29
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:46:09
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in?email=vira.pha%40zillennium.com&password=12345678` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:49:09
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:51:20
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 08:55:12
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:20:25
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:34:40
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:35:08
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:35:52
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:36:37
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:37:05
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:39:16
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 09:40:07
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://localhost/api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 10:05:12
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http:/localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 10:05:35
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http:/localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 10:06:48
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http:/localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 10:11:03
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http:/localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 10:11:38
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http:/localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 15:12:37
+Error  Controller :HttpRequest
+Line: 45
+Message: Client error: `GET http://192.168.177.128/apis/user-info` resulted in a `404 Not Found` response:
+{"status_code":404,"message":"Full authentication is required to access this resource"}
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 15:45:19
+Error  Controller :HttpRequest
+Line: 45
+Message: Client error: `GET http://192.168.177.128/apis/user-info` resulted in a `404 Not Found` response:
+{"status_code":404,"message":"Full authentication is required to access this resource"}
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 16:03:26
+Error  Controller :HttpRequest.php
+Line: 18
+Message: cURL error 3:  (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 16:59:05
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:07:24
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:08:21
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:10:18
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:10:44
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:12:26
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 6: Could not resolve host: 192.168.88.58apis (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:15:06
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 6: Could not resolve host: 192.168.88.58apis (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-29 17:16:29
+Error  Controller :HttpRequest
+Line: 45
+Message: Client error: `GET http://192.168.88.58/apis/user-info` resulted in a `404 Not Found` response:
+{"status_code":404,"message":"Full authentication is required to access this resource"}
+
+-------------End -------------------

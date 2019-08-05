@@ -1,0 +1,261 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+
+class projectController extends MasterController
+{
+    //
+    public function post_image(Request $request)
+    {   $gallery = $request->gallery;
+        $id   = $request->id;
+        $thumbnail = $request->thumbnail;
+        $length_thumbnail = $request->length_thum;
+        $role = [
+            'thumbnail'=>'mimes:jpeg,bmp,png,jpg',
+        ];
+        $message = [
+            'thumbnail.mimes'=>"Thumbnail Invalid Type",
+        ];
+        $request->validate($role,$message);
+        $file = [];
+        $gallery1 = [];
+        $thumbnail1 = [];
+        $file = $file + ['projectID'=>$id];
+        if($request->length_gallery>0){
+            $result  = $this->http->post_image($gallery,$request->length_gallery,'galleries');
+            if($result){
+              $gallery1 =$result;
+              $file  = $file + $gallery1;
+            }else{
+                return Response(['galleries'=>"Gallery Error"],'500');
+            }
+        }
+
+        if($length_thumbnail>0){
+            $result  = $this->http->post_image($thumbnail,$length_thumbnail,'thumbnail');
+
+            if($result){
+                $thumbnail1 = ['thumbnail'=>$result];
+                $file  = $file + $thumbnail1;
+            }else{
+                return Response(['thumbnail'=>"thumbnail Error"],'500');
+            }
+        }
+        $reporse = $this->http->sent_image($file);
+        return $reporse;
+
+
+
+
+
+    }
+    public function add_project(){
+        $type_project = $this->http->project_type();
+        if($type_project->status_code==200){
+            $type = $type_project->result;
+        }else{
+            $type = [];
+
+        }
+        $city = $this->http->project_city();
+        if($city->status_code==200){
+            $citylist = $city->result[0]->cities;
+            $country [] = $city->result[0];
+        }else{
+            $citylist = [];
+            $country  = [];
+
+        }
+
+        return view('template.add-project',compact(
+            'type',
+            'citylist',
+            'country'));
+
+    }
+    public function store_project(Request $request){
+        $pro_type       = $request->pro_type;
+        $pro_title      = $request->pro_title;
+        $buil_date      = $request->buil_date;
+        $complete_date  = $request->complete_date;
+        $grr            = $request->grr;
+        $downpay        = $request->downpay;
+        $sale_rent      = $request->sale_rent;
+        $total_price    = $request->total_price;
+        $pri_s          = $request->pri_s;
+        $country        = json_decode($request->country);
+        $city           = $request->city;
+        $address1       = $request->address1;
+        $address2       = $request->address2;
+        $baseinfo       = $request->baseinfo;
+        $featuretitle   = $request->featuretitle;
+        $featureinfo    = $request->featureinfo;
+        $propertytype   = $request->propertytype;
+        $tower          = $request->tower;
+
+
+                $rule  = [
+                   'pro_title'      =>'required',
+                   'buil_date'      =>'required',
+                   'grr'            =>['required',
+                       function ($attribute, $value, $fail) {
+                        if($value==0){
+                            $fail('Please Enter GRR');
+                        }
+                       }
+                   ],
+                   'downpay'        =>'required',
+                   'total_price'    =>['required',
+                       function ($attribute, $value, $fail) {
+                           if($value==0){
+                               $fail('Please Enter Total Price');
+                           }
+                       }
+                   ],
+                   'country'        =>'required',
+                   'city'           =>'required',
+                   'address1'       =>'required',
+                   'baseinfo'       =>['required',
+                       function ($attribute, $value, $fail) {
+                           if($value=="<p><br></p>"){
+                               $fail('Please Enter Basic Information');
+                           }
+                       }
+                   ],
+                   'featuretitle'   =>'required',
+                   'featureinfo'    =>['required',
+                       function ($attribute, $value, $fail) {
+                           if($value=="<p><br></p>"){
+                               $fail('Please Enter Feature Description');
+                           }
+                       }
+                   ],
+
+                ];
+                $message = [
+                    'pro_title.required'    =>"Please Project Enter Title",
+                    'buil_date.required'    =>"Please Select Buill Date",
+                    'grr.required'          =>"Please Enter Guaranteed Rental Returns",
+                    'downpay.required'      =>"Please Enter Down Payment",
+                    'total_price.required'  =>"Please Enter Total Price",
+                    'country.required'      =>"Please Select Country",
+                    'city.required'         =>"Please Select City",
+                    'address1.required'     =>"Please Enter Address",
+                    'baseinfo.required'     =>"Please Enter Basic Introductions",
+                    'featuretitle.required' =>"Please Enter Feature Title",
+                    'featureinfo.required'  =>"Please Enter Feature Description",
+                ];
+                $validation = Validator::make($request->all(),$rule,$message);
+
+
+        if ($validation->fails()) {
+            return  $this->validateWith($validation, $request);
+         }else{
+            $token = Session::get('access');
+            $data = [
+                'address_1'     =>$address1,
+                'address_2'     =>$address2,
+                'title'         =>$pro_title,
+                'built_date'    =>$buil_date,
+                'status'        =>true,
+                'rent_or_buy'   =>$sale_rent,
+                'city'          =>$city,
+                'completed_date'=>$complete_date,
+                'country'       =>$country->name,
+                'country_id'    =>$country->id,
+                'description'   =>$baseinfo,
+                'down_payment'  =>$downpay,
+                'grr'           =>$grr,
+                'tower_types'    =>$tower,
+                 'introductions'=>[
+                     array('name'=>$featuretitle,'description'=>$featureinfo)
+                 ],
+                'price'=>$total_price,
+                'property_types'=>$propertytype,
+                'sqm_price'=>$pri_s,
+            ];
+
+            $result = $this->http->addProject($token,$data);
+            return $result;
+
+        }
+
+
+    }
+    public function project_listing(Request $request){
+        $page = 1;
+        if (isset($request->page)){
+            $page = $request->page;
+        }
+        $limit = 10;
+        if(isset($request->limit)){
+            $limit = $request->limit;
+        }
+
+        $body = [
+            'status'=>'true'
+        ];
+        $country = json_decode($this->http->get_country());
+
+
+        $datalist = json_decode($this->http->all_title_project());
+        if(isset($request->search)){
+          $body = $body + ['name'=>$request->search];
+          $search = $request->search;
+        }else{
+            $search = false;
+        }
+        $project = json_decode($this->http->project_listing_show($body,$page,$limit));
+        if($project->status_code==200){
+            $message = "";
+            $result = $project->result;
+            $paginate = $project->paginate;
+
+        }else{
+            $paginate = [];
+            $result = [];
+           $message = $project->message;
+        }
+
+
+        $parameter = json_encode($request->all());
+        $render_paginate = $this->created_paginate($paginate);
+        return view('template.project-listing',
+            compact('result',
+                'item',
+                'message',
+                'paginate',
+                'render_paginate',
+                'limit','parameter','search','datalist','country'));
+    }
+    public function change_status(Request $request){
+
+        if(Session::has('access')){
+            $token = Session::get('access');
+
+            $data = [
+                'projectID'=> $request->id,
+                'status'=>$request->status
+            ];
+            $check = $this->http->update_project($data,$token);
+            $check = json_decode($check);
+            if($check->status_code==200){
+                return response()->json($check);
+            }else{
+                return response('',$check->status_code)->json($check);
+            }
+        }else{
+            return response(['status_code'=>404,'message'=>'Invalid Auth']);
+        }
+
+
+    }
+
+
+    }

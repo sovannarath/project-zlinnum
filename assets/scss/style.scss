@@ -286,12 +286,13 @@ aside.left-panel {
     position: fixed;
     left: 0;
     bottom: 0;
-    top: 55px;
+    top: 0;
     z-index: 999;
     &:hover {
         overflow-x: scroll;
     }
 }
+
 .open aside.left-panel:hover {
     overflow-x: inherit;
 }

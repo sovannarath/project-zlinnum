@@ -46,32 +46,39 @@
                                 <div class="col-12 col-sm-12">
                                     <div class="position-relative form-group"><label class="">Project
                                             Type</label><select name="projectType" class="form-control">
-                                            <option value="Borey">Borey</option>
-                                            <option value="Condo">Condo</option>
-                                            <option value="Apartment">Apartment</option>
+                                            @foreach($type as $value)
+                                                <option value="{{$value->type}}">{{\App\Http\Controllers\MasterController::check_centen($value->type)}}</option>
+                                                @endforeach
                                         </select></div>
                                 </div>
                             </div>
 
 
                             <div class="row">
+
                                 <div class="col-12 col-sm-12">
-                                    <div class="position-relative form-group"><label class="">Project
+                                    <div class="position-relative form-group">
+                                        <label class="">Project
                                             Title</label>
-                                        <input type="text" class="form-control" placeholder="Enter Project Title"></div>
+                                        <input type="text" class="form-control project-title" placeholder="Enter Project Title">
+                                        <small class="form-text has-error-text"></small>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group">
                                         <label class="">Buil Date</label>
-                                        <input type="text" class="form-control" placeholder="Enter Buil Date" id="datepicker"></div>
+                                        <input type="text" class="form-control buil-date" placeholder="Enter Buil Date" id="datepicker">
+                                        <small class="form-text has-error-text"></small>
+                                    </div>
 
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group">
                                         <label class="">Complete Date</label>
-                                        <input type="text" class="form-control" placeholder="Enter Complete Date" id="datepicker1"></div>
+                                        <input type="text" class="form-control complete-date" placeholder="Enter Complete Date" id="datepicker1"></div>
 
                                 </div>
                             </div>
@@ -80,18 +87,20 @@
                                     <label class="">Guaranteed Rental Returns(%)</label>
                                     <div class="position-relative form-group">
                                         <div class="input-group mb-3">
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control grr" value="0">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon1">%</span>
                                             </div>
                                         </div>
+                                        <small class="form-text has-error-text"></small>
                                     </div>
 
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group">
                                         <label class="">Down Payment</label>
-                                        <input type="text" class="form-control" value="0"></div>
+                                        <input type="text" class="form-control down-payment" value="0">
+                                    </div>
 
                                 </div>
                             </div>
@@ -120,11 +129,11 @@
                                     <div class="position-relative form-group">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">$</span>
+                                                <span class="input-group-text " id="basic-addon1">$</span>
                                             </div>
-                                            <input type="number" class="form-control" value="0">
-
+                                            <input type="number" class="form-control total-price" value="0">
                                         </div>
+                                        <small class="form-text has-error-text"></small>
                                     </div>
 
                                 </div>
@@ -134,14 +143,15 @@
                                     <div class="position-relative form-group">
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">$</span>
+                                                <span class="input-group-text " id="basic-addon1">$</span>
                                             </div>
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control pri-s" value="0">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Per Sqm</span>
                                             </div>
 
                                         </div>
+                                        <small class="form-text has-error-text"></small>
                                     </div>
 
                                 </div>
@@ -156,7 +166,7 @@
                                          <div class="col-12 col-sm-4">
                                           <div class="position-relative form-group">
                                         <div class="input-group">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control tower-item">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon2">Remove</span>
                                             </div>
@@ -168,7 +178,7 @@
                                          <div class="col-12 col-sm-4">
                                           <div class="position-relative form-group">
                                         <div class="input-group">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control tower-item">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon2">Remove</span>
                                             </div>
@@ -180,7 +190,7 @@
                                          <div class="col-12 col-sm-4">
                                           <div class="position-relative form-group">
                                         <div class="input-group">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control tower-item">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon2">Remove</span>
                                             </div>
@@ -202,35 +212,41 @@
                             <div class="header-title">
                                 <strong style="font-size: 20px;">Address</strong>
                             </div>
+
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group"><label class="">Country</label>
-                                        <select name="" id="" class="custom-select">
+                                        <select name="" id="" class="custom-select country-select">
                                             <option value="">-- Please Select Country--</option>
-                                            <option value="">Sale</option>
-                                            <option value="">Rent</option>
+                                         @foreach($country as $value)
+                                                <option value='{"name":"{{$value->country_name}}","id":"{{$value->country_id}}"}'>{{$value->country_name}}</option>
+                                            @endforeach
                                         </select>
+                                        <small class="form-text has-error-text"></small>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group"><label class="">City</label>
-                                        <select name="" id="" class="custom-select">
+                                        <select name="" id="" class="custom-select city-select">
                                             <option value="">-- Please Select City--</option>
-                                            <option value="">Phnom Penh</option>
-                                            <option value="">Siem Reap</option>
+                                            @foreach($citylist as $value)
+                                             <option value="{{$value}}">{{$value}}</option>
+                                                @endforeach
                                         </select>
+                                        <small class="form-text has-error-text"></small>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group"><label class="">Address 1#</label>
-                                        <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Enter Address 1#"></textarea>
+                                        <textarea name="" id="" cols="30" rows="5" class="form-control address1" placeholder="Enter Address 1#"></textarea>
+                                        <small class="form-text has-error-text"></small>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <div class="position-relative form-group"><label class="">Address 1#</label>
-                                        <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Enter Address 2#"></textarea>
+                                    <div class="position-relative form-group"><label class="">Address 2#</label>
+                                        <textarea name="" id="" cols="30" rows="5" class="form-control address2" placeholder="Enter Address 2#"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -238,8 +254,18 @@
                                 <strong style="font-size: 20px;">Basic Information</strong>
                             </div>
 
+                            <div id="standalone-container" style="max-width: 800px;">
 
-                                <div id="editor"></div>
+                                     <div id="editor" class="quill"></div>
+                                     <small class="form-text has-error-text"></small>
+
+                            </div>
+
+
+
+
+
+
 
                             <div class="header-title">
                                 <strong style="font-size: 20px;">Feature</strong>
@@ -250,20 +276,23 @@
 
                                     <div class="position-relative form-group">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Title">
+                                            <input type="text" class="form-control feature-title" placeholder="Title" style="max-width: 800px">
                                         </div>
+                                          <small class="form-text has-error-text"></small>
                                     </div>
 
                                 </div>
                             </div>
-
+                        <div id="standalone-container" style="max-width: 800px;">
                                 <div id="editor1"></div>
+                               <small class="form-text has-error-text"></small>
+                                </div>
 
                             <div class="header-title">
                                 <strong style="font-size: 20px;">Property Type</strong>
                             </div>
                             <div class="row">
-                                <div class="col-12 col-sm-12">
+                                <div class="col-12 col-sm-12 property-type">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -273,6 +302,7 @@
                                         <th scope="col">Floor</th>
                                         <th scope="col">Parking</th>
                                         <th scope="col">Width</th>
+                                        <th scope="col">Height</th>
                                         <th scope="col">Delete</th>
                                     </tr>
                                     </thead>
@@ -284,15 +314,7 @@
                                         <td><input type="text" class="form-control" value="0" name="floor"></td>
                                         <td><input type="text" class="form-control" value="0" name="packing"></td>
                                         <td><input type="text" class="form-control" value="0" name="width"></td>
-                                        <td><button class="btn btn-dark remove-item-list">Remove</button></td>
-                                    </tr>
-                                     <tr class="item-list">
-                                        <th><input type="text" class="form-control" placeholder="Type" name="type"></th>
-                                        <td><input type="text" class="form-control" value="0" name="bedroom"></td>
-                                        <td><input type="text" class="form-control" value="0" name="bathroom"></td>
-                                        <td><input type="text" class="form-control" value="0" name="floor"></td>
-                                        <td><input type="text" class="form-control" value="0" name="packing"></td>
-                                        <td><input type="text" class="form-control" value="0" name="width"></td>
+                                        <td><input type="text" class="form-control" value="0" name="height"></td>
                                         <td><button class="btn btn-dark remove-item-list">Remove</button></td>
                                     </tr>
                                     <tbody class="add-more-item-list"></tbody>
@@ -319,7 +341,7 @@
                                             <span class="close-f remove-button showoff">
                                                 <i class="fa fa-close"></i>
                                             </span>
-                                            <div class="select-image"><input type="file" name="thumbnail" class="get-image">Select Thumbnail Image <br> <i class="fas fa-image" style="font-size: 50px;margin-top: 5px;"></i></div>
+                                            <div class="select-image"><input type="file" name="thumbnail" class="get-image" accept="gif|jpg|png">Select Thumbnail Image <br> <i class="fas fa-image" style="font-size: 50px;margin-top: 5px;"></i></div>
 
                                         </div>
                                     </div>
@@ -343,7 +365,7 @@
                                     <div class="row">
                                         <div class="col12 col-4"></div>
                                         <div class="col12 col-4"></div>
-                                        <div class="col12 col-4" style="text-align: right"><button class="btn btn-success">Insert Project</button></div>
+                                        <div class="col12 col-4" style="text-align: right"><button class="btn btn-success save-project" datasrc="{{route('store-project')}}" data-image="{{route('add-image')}}">Insert Project</button></div>
                                     </div>
 
                             </div>
@@ -356,7 +378,7 @@
                             </div>
                                 <div class="row">
                                     <div class="col-12 col-sm-12">
-                                    <div class="position-relative form-group"><label class="">Title</label><input type="text" class="form-control" placeholder="Enter Title of property"></div>
+                                    <div class="position-relative form-group"><label class="">Title</label><input type="text" class="form-control property-title" placeholder="Enter Title of property"></div>
                                 </div>
                                 </div>
                                 <div class="row">
@@ -372,7 +394,7 @@
                                         </div>
                                         <div class="col-12 col-sm-6">
                                     <div class="position-relative form-group"><label class="">Type (Sale/Rent)</label>
-                                            <select name="" id="" class="form-control">
+                                            <select name="" id="sale_rent" class="form-control">
                                                 <option value="sale">Sale</option>
                                                 <option value="rent">rent</option>
                                             </select>
@@ -386,7 +408,7 @@
                                                <div class="input-group-prepend">
                                                    <span class="input-group-text">$ </span>
                                                </div>
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control unit-price" value="0">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon1">Per Unit</span>
                                             </div>
@@ -399,7 +421,7 @@
                                                <div class="input-group-prepend">
                                                    <span class="input-group-text">$ </span>
                                                </div>
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control pri-per-s" value="0">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon1">Per Sqm</span>
                                             </div>
@@ -412,7 +434,7 @@
                                         <div class="position-relative form-group">
                                             <label for="">Land Width</label>
                                             <div class="input-group">
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control land-width" value="0">
                                             <div class="input-group-append">
                                                 <div class="input-group-text">m</div>
                                             </div>
@@ -423,7 +445,7 @@
                                         <div class="position-relative form-group">
                                             <label for="">Land Lenght</label>
                                             <div class="input-group">
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control land-length" value="0">
                                             <div class="input-group-append">
                                                 <div class="input-group-text">m</div>
                                             </div>
@@ -434,7 +456,7 @@
                                         <div class="position-relative form-group">
                                             <label for="">Total Land Area</label>
                                             <div class="input-group">
-                                            <input type="number" class="form-control" value="0">
+                                            <input type="number" class="form-control total-area" value="0">
                                             <div class="input-group-append">
                                                 <div class="input-group-text">sqm</div>
                                             </div>
@@ -448,7 +470,7 @@
                                         <div class="position-relative form-group">
                                             <label>Building Width</label>
                                             <div class="input-group">
-                                                <input type="number"  class="form-control" value="0">
+                                                <input type="number"  class="form-control building-width" value="0">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">m</div>
                                                 </div>
@@ -460,7 +482,7 @@
                                         <div class="position-relative form-group">
                                             <label>Bed Room</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control bed-room">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -482,7 +504,7 @@
                                         <div class="position-relative form-group">
                                             <label>Building Height</label>
                                             <div class="input-group">
-                                                <input type="number"  class="form-control" value="0">
+                                                <input type="number"  class="form-control building-height" value="0">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">m</div>
                                                 </div>
@@ -494,7 +516,7 @@
                                         <div class="position-relative form-group">
                                             <label>Bathrooms</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control bathroom">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -516,7 +538,7 @@
                                         <div class="position-relative form-group">
                                             <label>Common Area</label>
                                             <div class="input-group">
-                                                <input type="number"  class="form-control" value="0">
+                                                <input type="number"  class="form-control common-area" value="0">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">m</div>
                                                 </div>
@@ -528,7 +550,7 @@
                                         <div class="position-relative form-group">
                                             <label>Living Room</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control living-room">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -547,7 +569,7 @@
                                         <div class="position-relative form-group">
                                             <label>No of Floor</label>
                                             <div class="input-group">
-                                                <input type="text"  class="form-control" value="">
+                                                <input type="text"  class="form-control no-of-floor" value="">
 
                                             </div>
 
@@ -557,7 +579,7 @@
                                         <div class="position-relative form-group">
                                             <label>Dinning Room</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control dinning-room">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -577,7 +599,7 @@
                                         <div class="position-relative form-group">
                                             <label>Mazzanine Floor</label>
                                             <div class="input-group">
-                                                <input type="number"  class="form-control" value="0">
+                                                <input type="number"  class="form-control mazzanine-floor" value="0">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">m</div>
                                                 </div>
@@ -589,7 +611,7 @@
                                         <div class="position-relative form-group">
                                             <label>Kitchen</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control kitchen">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -609,7 +631,7 @@
                                         <div class="position-relative form-group">
                                             <label>Total Building Area</label>
                                             <div class="input-group">
-                                                <input type="number"  class="form-control" value="0">
+                                                <input type="number"  class="form-control total-building" value="0">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">m</div>
                                                 </div>
@@ -621,7 +643,7 @@
                                         <div class="position-relative form-group">
                                             <label>Air Conditioner</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control air-con">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -643,7 +665,7 @@
                                         <div class="position-relative form-group">
                                             <label>Parking</label>
                                             <div class="input-group">
-                                                <select name="" id="" class="form-control">
+                                                <select name="" id="" class="form-control parking">
                                                     <option value="">--None--</option>
                                                     <option value="">1</option>
                                                     <option value="">2</option>
@@ -666,7 +688,7 @@
                                         <div class="position-relative form-group">
                                             <label>Balcony</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" value="0">
+                                                <input type="text" class="form-control balcony" value="0">
                                             </div>
 
                                         </div>
@@ -676,7 +698,7 @@
                                     <div class="col-12 col-sm-12">
                                     <div class="position-relative form-group"><label for="">Description</label>
                                     <div class="input-group">
-                                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                                        <textarea name="" id="" cols="30" rows="5" class="form-control description-property"></textarea>
                                     </div>
                                     </div>
                                     </div>
@@ -691,34 +713,34 @@
                             <div class="row">
                                 <div class="col-12 col-sm-4">
                                     <div class="position-relative form-group"><label for="">Street No</label>
-                                        <div class="input-group"><input type="text" class="form-control" placeholder="Street No"></div>
+                                        <div class="input-group"><input type="text" class="form-control st-no" placeholder="Street No"></div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="position-relative form-group"><label for="">House No</label>
-                                        <div class="input-group"><input type="text" class="form-control" placeholder="House No"></div>
+                                        <div class="input-group"><input type="text" class="form-control ho-no" placeholder="House No"></div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="position-relative form-group"><label for="">City/Province</label>
-                                        <div class="input-group"><input type="text" class="form-control" placeholder="Privince/City"></div>
+                                        <div class="input-group"><input type="text" class="form-control city" placeholder="Privince/City"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-4">
                                     <div class="position-relative form-group"><label for="">Khan/District</label>
-                                        <div class="input-group"><input type="text" class="form-control" placeholder="District/Khan"></div>
+                                        <div class="input-group"><input type="text" class="form-control khan" placeholder="District/Khan"></div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="position-relative form-group"><label for="">Sangkat/Commune</label>
-                                        <div class="input-group"><input type="text" class="form-control" placeholder="Commune"></div>
+                                        <div class="input-group"><input type="text" class="form-control sangkat" placeholder="Commune"></div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="position-relative form-group"><label for="">Phum/Village</label>
-                                        <div class="input-group"><input type="text" class="form-control" value="village"></div>
+                                        <div class="input-group"><input type="text" class="form-control phum" value="village"></div>
                                     </div>
                                 </div>
                             </div>
@@ -732,8 +754,8 @@
                                 </thead>
                                 <tbody>
                                 <tr class="item-list">
-                                    <th><input type="text" class="form-control" placeholder="Address" name="address"></th>
-                                    <td><input type="text" class="form-control" value="0" name="bedroom"></td>
+                                    <th><input type="text" class="form-control address-property" placeholder="Address" name="address"></th>
+                                    <td><input type="text" class="form-control distance-property" value="0" name="bedroom"></td>
                                 </tr>
 
                                 </tbody><tbody class="add-more-item-list"></tbody>
@@ -756,13 +778,13 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12">
                                     <div class="loading" style="text-align: center;padding: 60px;">
-                                        <img src="http://localhost/project-zillen/assets/custom/media/ShadowyGratefulHamster-size_restricted.gif" alt="" style="width: 30px">
+                                        <img src="{{asset('assets/custom/media/ShadowyGratefulHamster-size_restricted.gif')}}" alt="" style="width: 30px">
                                     </div>
                                     <div style="width: 100%;" class="review-image"></div>
                                     <span class="close-f remove-button showoff">
                                                 <i class="fa fa-close"></i>
                                             </span>
-                                    <div class="select-image"><input type="file" name="gallery-image" multiple="" class="get-image">Select Galleries Image <br> <i class="fas fa-image" style="font-size: 50px;margin-top: 5px;"></i></div>
+                                    <div class="select-image"><input type="file" name="gallery-image" multiple="" class="get-image" accept="gif|jpg|png">Select Galleries Image <br> <i class="fas fa-image" style="font-size: 50px;margin-top: 5px;"></i></div>
 
                                 </div>
                             </div>
@@ -770,7 +792,7 @@
                                 <div class="row">
                                         <div class="col12 col-4"></div>
                                         <div class="col12 col-4"></div>
-                                        <div class="col12 col-4" style="text-align: right"><button class="btn btn-success">Insert Project</button></div>
+                                        <div class="col12 col-4" style="text-align: right"><button class="btn btn-success save-project" datasrc="{{route('store-project')}}" data-image="{{route('add-image')}}">Insert Project</button></div>
                                     </div>
                                  </span>
                             {{-- Property End Element --}}
@@ -780,41 +802,25 @@
 
 
             </div>
+            <button class="test">Test</button>
         </div><!-- .animated -->
     </div>
 @endsection
 @section('script')
+    {{-- Script --}}
     <script>
         var doc = $(document);
         $(document).ready(function () {
             $('.new-project').addClass('active');
-            $('.sub-new1').addClass('active');
+            $('.project-bar').addClass('active');
             $('#datepicker').datetimepicker({
-                format:"D-MMM-Y"
+                format:"Y-MM-D"
             });
             $('#datepicker1').datetimepicker({
-                format:"D-MMM-Y"
+                format:"Y-MM-D"
             });
         });
-        var toolbarOptions = [
-            [{ 'header': 1 }, { 'header': 2 }],
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote'],// custom button values
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
 
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean'],
-            ['link','image','video']
-
-
-        ];
         new Quill('#editor', {
             theme: 'snow',
             modules: {

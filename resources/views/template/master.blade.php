@@ -15,25 +15,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_token" content="{{csrf_token()}}">
 
-    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+{{--    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">--}}
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="{{asset('assets/c-css/normalize.min.css')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('assets/c-css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/c-css/themify-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/c-css/pe-icon-7-stroke.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/c-css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/cs-skin-elastic.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-    <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+    <link href="{{asset('assets/c-css/chartist.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/c-css/jqvmap.min.css')}}" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link href="{{asset('assets/c-css/weather-icons.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/c-css/fullcalendar.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/custom/css/master.css')}}" rel="stylesheet">
     <link href="{{asset('assets/js/bootstrap-datetimepicker.css')}}" rel="stylesheet">
     <link href="{{asset('assets/js/bootstrap-datetimepicker-standalone.css')}}" rel="stylesheet">
@@ -41,7 +42,9 @@
     <link href="{{asset('assets/quill/quill.core.css')}}" rel="stylesheet">
     <link href="{{asset('assets/quill/quill.snow.css')}}" rel="stylesheet">
     <link href="{{asset('assets/fas-icon/css/all.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/fas-icon/css/all.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
 
 
 
@@ -79,39 +82,59 @@
         #cellPaiChart{
             height: 160px;
         }
+        .loading-background{
+            background-image: url('{{asset('assets/custom/media/ShadowyGratefulHamster-size_restricted.gif')}}') !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-size: 30px !important;
+        }
+        .user-menu.dropdown-menu.show {
+            position: absolute !important;
+        }
+        .lazyloading{
+            background: url({{asset('assets/media/loadem.svg')}});
+            background-size: 200px !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+        }
 
     </style>
     @yield('style')
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    {{--<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>--}}
+    <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/c-js/popper.min.js')}}"></script>
+    <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/jqery-match-height/dist/jquery.matchHeight.min.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
-    <script src="{{asset('assets/quill/quill.core.js')}}"></script>
     <script src="{{asset('assets/quill/quill.js')}}"></script>
     <script src="{{asset('assets/quill/quill.min.js')}}"></script>
-    <script src="{{asset('assets/quill/quill.snow.css')}}"></script>
+    <script src="{{asset('assets/bootstrap/js/bootstrap.js')}}"></script>
+    <script src="{{asset('assets/js/lazysizes.min.js')}}"></script>
+    <script src="{{asset('assets/js/ls.bgset.min.js')}}"></script>
 
 
 
 
     <!--  Chart js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+    <script src="{{asset('assets/chart.js/dist/Chart.bundle.min.js')}}"></script>
 
     <!--Chartist Chart-->
-    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+    <script src="{{asset('assets/c-js/chartist.min.js')}}"></script>
+    <script src="{{asset('assets/c-js/chartist-plugin-legend.min.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+    <script src="{{asset('assets/c-js/jquery.flot.min.js')}}"></script>
+    <script src="{{asset('assets/c-js/jquery.flot.pie.min.js')}}"></script>
+    <script src="{{asset('assets/c-js/jquery.flot.spline.min.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="{{asset('assets/c-js/jquery.simpleWeather.min.js')}}"></script>
     <script src="{{asset('assets/js/init/weather-init.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+    <script src="{{asset('assets/c-js/moment.min.js')}}"></script>
+    <script src="{{asset('assets/c-js/fullcalendar.min.js')}}"></script>
     <script src="{{asset('assets/js/init/fullcalendar-init.js')}}"></script>
 
     <script src="{{asset('assets/chart.js/dist/chart.js')}}"></script>
@@ -120,6 +143,11 @@
     <script src="{{asset('assets/custom/js/custom.js')}}"></script>
 </head>
 <body>
+<div class="notification">
+</div>
+<div style="width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.35);z-index: 1080" id="loading">
+    <img src="http://localhost/project/assets/custom/media/load.svg" alt="" style="margin: 0 auto;display: block;top: 30%;position: relative">
+</div>
 <!-- Left Panel -->
 
 <aside id="left-panel" class="left-panel">
@@ -133,31 +161,31 @@
                     <a href="{{route('dashboard')}}"><i class="menu-icon fa fa-handshake-o"></i>Member </a>
                 </li>--}}
                 <li>
-                    <a href="{{route('dashboard')}}"><i class="menu-icon fa fa-bar-chart-o"></i>My Listing </a>
+                    <a href="#"><i class="menu-icon fa fa-bar-chart-o"></i>My Listing </a>
                 </li>
                 <li class="all-user">
                     <a href="{{route('all-user')}}"><i class="menu-icon fa fa-users"></i>All User </a>
                 </li>
-                <li class="menu-item-has-children dropdown sub-new1 project">
+                <li class="menu-item-has-children dropdown sub-new1 project-bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fas fa-building"></i></i>Project</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li class="new-project"><i class="fa fa-puzzle-piece"></i><a href="{{route('add-project')}}">New Project</a></li>
-                        <li class="project"><i class="fas fa-list-ul"></i><a href="ui-badges.html">Project Listing</a></li>
-                        <li><i class="fas fa-list-ul"></i><a href="ui-badges.html">property listing </a></li>
+                        <li class="project-list"><i class="fas fa-list-ul"></i><a href="{{route(('show-project'))}}">Project Listing</a></li>
+                        <li class="property-list"><i class="fas fa-list-ul"></i><a href="{{route('show-property')}}">Property Listing </a></li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown">
+                <li class="menu-item-has-children dropdown event-bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gift"></i>Event</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">New Event</a></li>
-                        <li><i class="fas fa-list-ul"></i><a href="ui-badges.html">Event Listing</a></li>
+                        <li class="new-event"><i class="fa fa-puzzle-piece"></i><a href="{{route('new-event')}}">New Event</a></li>
+                        <li class="event-list"><i class="fas fa-list-ul"></i><a href="{{route('show-event')}}">Event Listing</a></li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown">
+                <li class="menu-item-has-children dropdown banner-bar">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Banner</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">New Banner</a></li>
-                        <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Banner Listing</a></li>
+                        <li class="new-banner"><i class="fa fa-puzzle-piece"></i><a href="{{route('new-banner')}}">New Banner</a></li>
+                        <li class="list-banner"><i class="fa fa-id-badge"></i><a href="{{route('list-banner')}}">Banner Listing</a></li>
                     </ul>
                 </li>
              {{--   <li class="menu-title">UI elements</li><!-- /.menu-title -->
@@ -219,7 +247,7 @@
                         <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
                     </ul>
                 </li>
-                <li class="menu-title">Extras</li><!-- /.menu-title -->
+                <li class="menu-tit  tras</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Pages</a>
                     <ul class="sub-menu children dropdown-menu">
@@ -239,8 +267,8 @@
     <header id="header" class="header">
         <div class="top-left">
             <div class="navbar-header">
-                <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-                <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
+                <a class="navbar-brand" href="./"><img src="{{asset('images/logo.png')}}" alt="Logo"></a>
+                <a class="navbar-brand hidden" href="./"><img src="{{asset('images/logo2.png')}}" alt="Logo"></a>
                 <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
             </div>
         </div>
@@ -285,7 +313,7 @@
                         <div class="dropdown-menu" aria-labelledby="message">
                             <p class="red">You have 4 Mails</p>
                             <a class="dropdown-item media" href="#">
-                                <span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
+                                <span class="photo media-left"><img alt="avatar" src="{{asset('images/avatar/1.jpg')}}"></span>
                                 <div class="message media-body">
                                     <span class="name float-left">Jonathan Smith</span>
                                     <span class="time float-right">Just now</span>
@@ -293,7 +321,7 @@
                                 </div>
                             </a>
                             <a class="dropdown-item media" href="#">
-                                <span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
+                                <span class="photo media-left"><img alt="avatar" src="{{asset('images/avatar/2.jpg')}}"></span>
                                 <div class="message media-body">
                                     <span class="name float-left">Jack Sanders</span>
                                     <span class="time float-right">5 minutes ago</span>
@@ -301,7 +329,7 @@
                                 </div>
                             </a>
                             <a class="dropdown-item media" href="#">
-                                <span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
+                                <span class="photo media-left"><img alt="avatar" src="{{asset('images/avatar/3.jpg')}}"></span>
                                 <div class="message media-body">
                                     <span class="name float-left">Cheryl Wheeler</span>
                                     <span class="time float-right">10 minutes ago</span>
@@ -309,7 +337,7 @@
                                 </div>
                             </a>
                             <a class="dropdown-item media" href="#">
-                                <span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
+                                <span class="photo media-left"><img alt="avatar" src="{{asset('images/avatar/4.jpg')}}"></span>
                                 <div class="message media-body">
                                     <span class="name float-left">Rachel Santos</span>
                                     <span class="time float-right">15 minutes ago</span>
@@ -322,17 +350,15 @@
 
                 <div class="user-area dropdown float-right">
                     <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                        <img class="user-avatar rounded-circle" src="{{Session::get('photo')}}" alt="User Avatar">
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
-
-                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+                        <a class="nav-link" href="{{route('view-profile')}}"><i class="fa fa- user"></i>My Profile</a>
 
                         <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
 
-                        <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
+                        <a class="nav-link" href="{{route('logout')}}"><i class="fa fa-power -off"></i>Logout</a>
                     </div>
                 </div>
 
@@ -359,6 +385,27 @@
 </div>
 <!-- /#right-panel -->
 <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
+<script>
+    var toolbarOptions = [
+        [{ 'header': 1 }, { 'header': 2 }],
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote'],// custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+
+        ['clean'],
+        ['link','image','video']
+
+
+    ];
+</script>
 @yield('script')
 
 </body>

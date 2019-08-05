@@ -1,0 +1,20 @@
+
+
+------------- Start ---------------------
+Date: 19-07-27 09:33:41
+Error  Controller :HttpRequest
+Line: 18
+Message: Request API Error
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-07-27 09:34:40
+Error  Controller :HttpRequest
+Line: 18
+Message: Server error: `POST http://localhost/api//api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[HY000] [1049] Unknown database &#039;laravel&#039; (S (truncated...)
+
+-------------End -------------------
