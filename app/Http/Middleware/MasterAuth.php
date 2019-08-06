@@ -19,29 +19,28 @@ class MasterAuth
     public function handle($request, Closure $next)
     {
 
-        if(!Cookie::has('access') && !session::has('access')){
-          return redirect()->route('show-login');
+        if(Cookie::has('access')  || session::has('access') || isset($request->key)){
+            if(isset($request->key)){
+                $key = $request->key;
+            }else{
+                if(Cookie::has('access')){
+                    $key =  Cookie::get('access');
+                    Session::put('access',$key);
+                    Cookie::queue('access',cookie::get('access'),60*24*30);
+                }else{
+                    $key = Session::get('access');
+                }
+            }
+            $http = new HttpRequest();
+            $check  = $http->UserDetail($key);
+            if(!$check){
+                Session::forget('access');
+                Cookie::queue('access','',-1);
+                return redirect()->route('show-login');
+            }
+
         }else{
-          if(Cookie::has('access')){
-
-              $key =  Cookie::get('access');
-              Session::put('access',$key);
-              Cookie::queue('access',cookie::get('access'),60*24*30);
-          }else{
-              $key = Session::get('access');
-          }
-
-
-           $http = new HttpRequest();
-
-           $check  = $http->UserDetail($key);
-
-           if(!$check){
-               Session::forget('access');
-               Cookie::queue('access','',-1);
-               return redirect()->route('show-login');
-           }
-
+            return redirect()->route('show-login');
         }
             return $next($request);
 

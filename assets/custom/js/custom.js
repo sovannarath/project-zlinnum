@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var tokent = $('meta[name="csrf_token"]').attr('content');
+    var curren_url = window.location.href.split('?')[0] + "?";
     var doc = $(document);
     doc.on('click','.remove-item-list',function () {
        $(this).closest('.item-list').remove();
@@ -1047,9 +1048,7 @@ function popup_message(message,title,type) {
         });
 
     });
-    function get_url(limit=false,
-                     page=false,
-                     search=false){
+    function get_url(limit=false,page=false,search=false,other=false){
         var parameter = JSON.parse($('.parameter').attr('content'));
         var str="";
 
@@ -1076,16 +1075,68 @@ function popup_message(message,title,type) {
                 str += "&search="+search;
             }
         }
+        if(parameter.country!=undefined && other.country==undefined){
+            str += "&country="+parameter.country;
+        }else{
+            if(other.country!=undefined){
+                str  += "&country="+other.country;
+            }
+        }
+        if(parameter.city!=undefined && other.city==undefined){
+            str += "&city="+parameter.city;
+        }else{
+            if(other.city!=undefined){
+                str  += "&city="+other.city;
+            }
+        }
+        if(parameter.project_type!=undefined && other.project_type==undefined){
+            str += "&project_type="+parameter.project_type;
+        }else{
+            if(other.project_type!=undefined ){
+                str  += "&project_type="+other.project_type;
+            }
+        }
+        if(parameter.sall_or_rent!=undefined && other.sall_or_rent==undefined){
+            str += "&sall_or_rent="+parameter.sall_or_rent;
+        }else{
+            if(other.sall_or_rent!=undefined){
+                str  += "&sall_or_rent="+other.sall_or_rent;
+            }
+        }
+        if(parameter.room_select!=undefined && other.room_select==undefined){
+            str += "&room_select="+parameter.room_select;
+        }else{
+            if(other.room_select!=undefined){
+                str  += "&room_select="+other.room_select;
+            }
+        }
+        if(parameter.min_price!=undefined && other.min_price==undefined){
+            str += "&min_price="+parameter.min_price;
+        }else{
+            if(other.min_price!=undefined){
+                str  += "&min_price="+other.min_price;
+            }
+        }
+        if(parameter.max_price!=undefined && other.max_price==undefined){
+            str += "&max_price="+parameter.max_price;
+        }else{
+            if(other.max_price!=undefined){
+                str  += "&max_price="+other.max_price;
+            }
+        }
+        var url = window.location.href.split('?')[0];
+        loadingmode('on');
+        $.get(url+"?"+str,{},function (data) {
+            var element =  $(data).find('.card-body').html();
+            $('.card-body').html(element);
+            loadingmode('off');
+        });
+
         return str;
     }
     doc.on('change','.limit-page',function () {
-
-
         var limit = $(this).val();
         var str = get_url(limit);
-
-
-
        window.history.pushState({},'','?'+str);
         var url = window.location.href.split('?')[0];
         loadingmode('on');
@@ -1099,7 +1150,6 @@ function popup_message(message,title,type) {
         if(e.key=="Enter"){
             search_project();
         }
-
     });
     doc.on('click','.goto-search',function () {
             search_project();
@@ -1121,6 +1171,49 @@ function popup_message(message,title,type) {
             }
 
         }
+        /* Fillter */
+        doc.on('change','.country',function () {
+            var data = $(this).val();
+            var str = get_url('','','',{country:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        doc.on('change','.city',function () {
+            var data = $(this).val();
+            console.log(data);
+            var str = get_url('','','',{city:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        doc.on('change','.project_type',function () {
+            var data = $(this).val();
+            console.log(data);
+            var str = get_url('','','',{project_type:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        doc.on('change','.sall_or_rent',function () {
+            var data = $(this).val();
+            console.log(data);
+            var str = get_url('','','',{sall_or_rent:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        doc.on('change','.room-select',function () {
+            var data = $(this).val();
+            console.log(data);
+            var str = get_url('','','',{room_select:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        doc.on('focusout','.min-price',function () {
+            var data = $(this).val();
+            console.log(data);
+            var str = get_url('','','',{min_price:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        doc.on('focusout','.max-price',function () {
+            var data = $(this).val();
+            console.log(data);
+            var str = get_url('','','',{max_price:data});
+            window.history.pushState({},'',curren_url+str);
+        });
+        /* End Fillter */
 
 });
 

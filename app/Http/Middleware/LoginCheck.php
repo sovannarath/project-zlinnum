@@ -32,7 +32,7 @@ class LoginCheck
              $check =  $http->UserDetail($key);
 
              if($check){
-                    return redirect()->route('dashboard');
+                    return redirect()->route('dashboard')->with(['key'=>$key]);
              }
         }
         return $next($request);

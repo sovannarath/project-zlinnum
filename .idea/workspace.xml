@@ -2,54 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3431e5c-f49c-4eb7-92b6-02225ad9e80c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../api/app/Http/Controllers/api/GeneralController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../api/app/Http/Middleware/AccessDenied.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/MasterController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/MasterLoginController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/auth_test.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/log.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/custom/css/alert.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/custom/js/alert.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/_var.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/sass/alert.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/401.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/test-login.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/components/alert.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/notification.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/template/event-listing.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/template/list-banner.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/template/new-banner.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/template/new-event.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/template/profile.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/template/property-listing.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/test.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../api/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/app/Http/Controllers/api/ProjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/app/Http/Controllers/api/ProjectController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/app/Http/Controllers/api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/app/Http/Controllers/api/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/btckhqu69srlvd0a4e2n-1562748159.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/gn21yk9sw8b05ioufh36-1563328557.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/gndg174mu9pxiohc2rtq-1563356021.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/lv2qbtgho84i6dwkcfnr-1562748437.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/mb61c0uo7hfpvixg92ts-1563355122.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/s6m143e0wxcdbivur5g9-1563355372.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/vg4xmqueys91nx75f8hl-1563271153.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/asset/media/w7gxnqbkuptr2es90vyc-1563355337.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/config/l5-swagger.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/config/l5-swagger.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/storage/api-docs/api-docs.json" beforeDir="false" afterPath="$PROJECT_DIR$/../api/storage/api-docs/api-docs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/webpack.mix.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/projectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/projectController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/custom/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/custom/js/custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/template/project-listing.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/template/project-listing.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,17 +24,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/template/project-listing.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="57" column="67" lean-forward="true" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
+            <state relative-caret-position="731">
+              <caret line="81" column="86" lean-forward="true" selection-start-line="81" selection-start-column="86" selection-end-line="81" selection-end-column="86" />
+              <folding>
+                <element signature="e#2031#2079#0#HTML" expanded="true" />
+                <element signature="e#2497#2524#0#HTML" expanded="true" />
+                <element signature="e#4231#4258#0#HTML" expanded="true" />
+                <element signature="e#5621#5729#0#HTML" expanded="true" />
+                <element signature="e#6593#6720#0#HTML" expanded="true" />
+                <element signature="e#5468#5515#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/projectController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="81" column="25" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="25" />
+            <state relative-caret-position="275">
+              <caret line="256" column="41" selection-start-line="256" selection-start-column="41" selection-end-line="256" selection-end-column="41" />
               <folding>
                 <element signature="e#40#62#0#PHP" expanded="true" />
               </folding>
@@ -83,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1149">
-              <caret line="102" column="25" lean-forward="true" selection-start-line="102" selection-start-column="25" selection-end-line="102" selection-end-column="25" />
+            <state relative-caret-position="216">
+              <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
               <folding>
                 <element signature="e#40#85#0#PHP" expanded="true" />
               </folding>
@@ -96,10 +63,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/log.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="11" column="43" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+              <folding>
+                <element signature="e#40#58#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+            <state relative-caret-position="275">
+              <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="443">
+              <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -107,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="233" column="65" selection-start-line="233" selection-start-column="65" selection-end-line="233" selection-end-column="65" />
+            <state relative-caret-position="1224">
+              <caret line="301" column="9" selection-start-line="301" selection-start-column="9" selection-end-line="301" selection-end-column="9" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -117,10 +105,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/sass/_var.scss">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/_types.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+            <state relative-caret-position="147">
+              <caret line="97" column="89" lean-forward="true" selection-start-line="97" selection-start-column="89" selection-end-line="97" selection-end-column="89" />
             </state>
           </provider>
         </entry>
@@ -137,17 +125,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/custom/js/custom.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26544">
-              <caret line="1106" column="36" selection-start-line="1106" selection-start-column="36" selection-end-line="1106" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/custom/js/alert.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="1" column="5" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="44" />
+            <state relative-caret-position="1560">
+              <caret line="1122" column="41" selection-start-line="1122" selection-start-column="41" selection-end-line="1122" selection-end-column="41" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -156,28 +144,18 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>change_profile</find>
-      <find>change-profile</find>
-      <find>/apis/users</find>
-      <find>listuser</find>
-      <find>projectlist</find>
-      <find>t</find>
       <find>change</find>
       <find>status</find>
       <find>index</find>
       <find>hover</find>
       <find>type</find>
       <find>paginate</find>
-      <find>show</find>
       <find>showtin</find>
       <find>cardbod</find>
-      <find>listing</find>
       <find>aside.left-panel</find>
       <find>search ...</find>
       <find>paramate</find>
       <find>body</find>
-      <find>paramet</find>
-      <find>search</find>
       <find>showing</find>
       <find>not</find>
       <find>searhc</find>
@@ -186,6 +164,16 @@
       <find>datalist</find>
       <find>store</find>
       <find>country</find>
+      <find>log</find>
+      <find>show</find>
+      <find>listing</find>
+      <find>all city</find>
+      <find>rome</find>
+      <find>search</find>
+      <find>filter-blog</find>
+      <find>paramet</find>
+      <find>max_price</find>
+      <find>sale</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -223,7 +211,6 @@
         <option value="$PROJECT_DIR$/resources/views/template/dashboard.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" />
         <option value="$PROJECT_DIR$/resources/views/template/profile.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" />
         <option value="$PROJECT_DIR$/../request.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/MasterController.php" />
@@ -239,15 +226,16 @@
         <option value="$PROJECT_DIR$/resources/views/components/alert.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/resources/sass/alert.scss" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php" />
         <option value="$PROJECT_DIR$/assets/scss/style.scss" />
         <option value="$USER_HOME$/Desktop/index.html" />
         <option value="$PROJECT_DIR$/assets/custom/css/master.css" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Controller.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php" />
         <option value="$PROJECT_DIR$/assets/custom/js/custom.js" />
+        <option value="$PROJECT_DIR$/resources/views/template/project-listing.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/projectController.php" />
-        <option value="$PROJECT_DIR$/resources/views/template/project-listing.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Controller.php" />
       </list>
     </option>
   </component>
@@ -359,6 +347,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -369,20 +358,25 @@
             <path>
               <item name="project" type="b2602c69:ProjectViewProjectNode" />
               <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project" type="b2602c69:ProjectViewProjectNode" />
               <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="custom" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project" type="b2602c69:ProjectViewProjectNode" />
               <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="custom" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Middleware" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="project" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="project" type="b2602c69:ProjectViewProjectNode" />
@@ -393,7 +387,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -472,11 +465,13 @@
       <workItem from="1564725885953" duration="8674000" />
       <workItem from="1564735889678" duration="4309000" />
       <workItem from="1564795469021" duration="9713000" />
+      <workItem from="1564970095932" duration="16253000" />
+      <workItem from="1565054917882" duration="13111000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185278000" />
+    <option name="totallyTimeSpent" value="214642000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -509,32 +504,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1525">
-          <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/guzzlehttp/guzzle/src/Client.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../New folder/api/app/Http/Controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/Compressed/c21apex-api-php-v1.0-20190726-0708/html/app/Http/Controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="33" column="38" lean-forward="true" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/Compressed/c21apex-api-php-v1.0-20190726-0708/html/.env">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -587,16 +556,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/log.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
-          <folding>
-            <element signature="e#40#58#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/template/add-project.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1104">
@@ -639,13 +598,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
           <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="24" column="42" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -816,10 +768,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/custom/js/alert.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../api/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1296" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa11676.46520/ProjectController.php" />
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa11676.12783/store_image.php" />
     <entry file="file://$PROJECT_DIR$/resources/sass/_var.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
           <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
+          <folding>
+            <element signature="e#40#85#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/log.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="11" column="43" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+          <folding>
+            <element signature="e#40#58#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -830,60 +823,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/_types.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="97" column="89" lean-forward="true" selection-start-line="97" selection-start-column="89" selection-end-line="97" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/assets/custom/js/custom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26544">
-          <caret line="1106" column="36" selection-start-line="1106" selection-start-column="36" selection-end-line="1106" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/custom/js/alert.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" column="5" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/MasterAuth.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="233" column="65" selection-start-line="233" selection-start-column="65" selection-end-line="233" selection-end-column="65" />
+        <state relative-caret-position="1560">
+          <caret line="1122" column="41" selection-start-line="1122" selection-start-column="41" selection-end-line="1122" selection-end-column="41" />
           <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/template/project-listing.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="57" column="67" lean-forward="true" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
+        <state relative-caret-position="731">
+          <caret line="81" column="86" lean-forward="true" selection-start-line="81" selection-start-column="86" selection-end-line="81" selection-end-column="86" />
+          <folding>
+            <element signature="e#2031#2079#0#HTML" expanded="true" />
+            <element signature="e#2497#2524#0#HTML" expanded="true" />
+            <element signature="e#4231#4258#0#HTML" expanded="true" />
+            <element signature="e#5621#5729#0#HTML" expanded="true" />
+            <element signature="e#6593#6720#0#HTML" expanded="true" />
+            <element signature="e#5468#5515#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/HttpRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1224">
+          <caret line="301" column="9" selection-start-line="301" selection-start-column="9" selection-end-line="301" selection-end-column="9" />
+          <folding>
+            <element signature="e#40#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/projectController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="81" column="25" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="25" />
+        <state relative-caret-position="275">
+          <caret line="256" column="41" selection-start-line="256" selection-start-column="41" selection-end-line="256" selection-end-column="41" />
           <folding>
             <element signature="e#40#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1149">
-          <caret line="102" column="25" lean-forward="true" selection-start-line="102" selection-start-column="25" selection-end-line="102" selection-end-column="25" />
-          <folding>
-            <element signature="e#40#85#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

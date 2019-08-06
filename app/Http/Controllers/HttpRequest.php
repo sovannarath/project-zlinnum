@@ -215,18 +215,104 @@ class HttpRequest extends Controller
         return $result;*/
         return (object)['status_code'=>404];
     }
-    public function project_listing_show($data,$page,$limit){
+    public function project_listing_show($data,$page,$limit,$other=[]){
+        $city_all = [];
         $parameter = [
         'limit'=>$limit,
-            'page'=>$page,
+         'page'=>$page,
         ];
-        $host = $this->host."/api/search";
         $url = http_build_query($parameter);
+        $host = $this->host."/api/search";
+
+        $country_id = false;
+        $other = (object)$other;
+        if(isset($other->country)){
+            $country = $this->client->get($this->host."/api/countries?name=".$other->country);
+            if($country->getStatusCode()==200){
+                $country_id = json_decode($country->getBody()->getContents())->result[0]->id;
+                $data += ['country_id'=>$country_id];
+                $query = http_build_query([
+                    'country_id'=>$country_id,
+                    'city_in_listing'=>'true'
+                ]);
+                $city = $this->client->get($this->host."/api/project/city?".$query);
+                $city_all  = json_decode($city->getBody()->getContents())->result;
+            }
+        }
+        if(isset($other->city)){
+            if(isset($other->country)){
+                $result =  collect();
+                foreach($city_all as $value){
+                   $result->push($value);
+                }
+               $result = $result->where('country_id',$country_id);
+               $city_all = $result;
+               $result = $result->where('name',$other->city);
+               $city  = $result;
+               if($city->count()>0){
+                   $data += ['city_id'=>$city->first()->id];
+               }
+
+            }else{
+                $city = $this->client->get($this->host."/api/project/city?".$query);
+                $city_all  = json_decode($city->getBody()->getContents());
+                if($city->getStatusCode()==200){
+                    $city_id = json_decode($city->getBody()->getContents())->result[0]->id;
+                    $data += ['city_id'=>$city_id];
+                }
+            }
+
+        }
         $result = $this->client->post($host."?".$url,[
             'body'=>json_encode($data)
         ]);
+        $item = $result->getBody()->getContents();
+        $project_type = json_decode($item);
+        $project_type_item = collect();
+        foreach ($project_type->result as $value){
+            $project_type_item->push($value);
+        }
+        $project_type_item = $project_type_item->groupBy('project_type')->toArray();
+        $project_type_result  = array_keys($project_type_item);
 
-        return $result->getBody()->getContents();
+
+        if(isset($other->project_type)){
+
+            $project_type = $this->client->get($this->host."/api/project-types?name=".$other->project_type);
+
+            if($project_type->getStatusCode()==200){
+                $data1 = collect(json_decode($project_type->getBody()->getContents())->result);
+                $id = $data1->first()->id;
+                $data += ['project_type_id'=>$id];
+            }
+
+        }
+
+        if(isset($other->sall_or_rent)){
+            $data += ['rent_or_buy'=>$other->sall_or_rent];
+        }
+        if(isset($other->min_price)){
+            $data += ['from_price'=>$other->min_price];
+        }
+        if(isset($other->max_price)){
+            $data += ['to_price'=>$other->max_price];
+        }
+        if(isset($other->room)){
+            $data += ['room'=>$other->room];
+        }
+        $result = $this->client->post($host."?".$url,[
+            'body'=>json_encode($data)
+        ]);
+        $item = $result->getBody()->getContents();
+
+
+        $return = [
+            'result'=>$item,
+            'city'=>$city_all,
+            'project_type'=>$project_type_result,
+        ];
+
+        return $return ;
 
     }
     public function get_country(){

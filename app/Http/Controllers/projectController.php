@@ -190,6 +190,7 @@ class projectController extends MasterController
     }
     public function project_listing(Request $request){
         $page = 1;
+
         if (isset($request->page)){
             $page = $request->page;
         }
@@ -197,13 +198,35 @@ class projectController extends MasterController
         if(isset($request->limit)){
             $limit = $request->limit;
         }
-
+        $other  = [];
+        if(isset($request->country)) {
+            $country_data = $request->country;
+            $other += ['country' => $country_data];
+        }
+        if(isset($request->city)){
+            $city  = $request->city;
+            $other += ['city'=>$city];
+        }
+        if(isset($request->project_type)){
+            $project_type = $request->project_type;
+            $other += ['project_type'=>$request->project_type];
+        }
+        if(isset($request->sall_or_rent)){
+            $other += ['sall_or_rent'=>$request->sall_or_rent];
+        }
+        if(isset($request->min_price)){
+            $other += ['min_price'=>$request->min_price];
+        }
+        if(isset($request->max_price)){
+            $other += ['max_price'=>$request->max_price];
+        }
+        if(isset($request->room_select) && $request->room_select!="else"){
+            $other += ['room'=>$request->room_select];
+        }
         $body = [
             'status'=>'true'
         ];
         $country = json_decode($this->http->get_country());
-
-
         $datalist = json_decode($this->http->all_title_project());
         if(isset($request->search)){
           $body = $body + ['name'=>$request->search];
@@ -211,28 +234,44 @@ class projectController extends MasterController
         }else{
             $search = false;
         }
-        $project = json_decode($this->http->project_listing_show($body,$page,$limit));
+        $response    = $this->http->project_listing_show($body,$page,$limit,$other);
+        $project = json_decode($response['result']);
+        $project_type = $response['project_type'];
         if($project->status_code==200){
             $message = "";
             $result = $project->result;
             $paginate = $project->paginate;
-
+            $city = $response['city'];
         }else{
             $paginate = [];
             $result = [];
            $message = $project->message;
+            $city = [];
+        }
+        if(isset($request->country)
+            ||isset($request->city)
+            ||isset($request->project_type)
+            ||isset($request->sall_or_rent)
+            ||isset($request->min_price)
+            ||isset($request->max_price)
+            ||isset($request->room_select)){
+            $filter = 1;
+        }else{
+            $filter = 0;
         }
 
 
-        $parameter = json_encode($request->all());
+        $parameter = $request->all();
         $render_paginate = $this->created_paginate($paginate);
+
         return view('template.project-listing',
             compact('result',
+                'city',
                 'item',
                 'message',
                 'paginate',
                 'render_paginate',
-                'limit','parameter','search','datalist','country'));
+                'limit','parameter','search','datalist','country','project_type','filter'));
     }
     public function change_status(Request $request){
 

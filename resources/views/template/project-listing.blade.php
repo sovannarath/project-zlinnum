@@ -39,50 +39,72 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="parameter" content="{{$parameter}}"></div>
+                            <div class="parameter" content="{{json_encode($parameter)}}"></div>
                             <script>
                                 $('.limit-page option[value="{{$limit}}"]').attr('selected','selected');
                             </script>
                             <div id="bootstrap-data-table_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                                 {{-- Fillter Bar --}}
-                                <div class="filter-blog">
+                                <div class="filter-blog" @if($filter)  style="display: block !important;"  @endif>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="position-relative form-group">
                                             <div class="input-group" style="padding: 0px 0rem; margin: 1.5rem 0px;">
-                                                <select name="select" id="select" class="form-control"
+                                                @php $parameter = (object)$parameter; @endphp
+                                                <select name="select" class="form-control country"
                                                         style="margin-right: 10px;">
-                                                    <option value="0">--All Countres--</option>
+                                                    <option value="">--All Countres--</option>
+
                                                     @foreach($country->result as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+
+                                                        <option value="{{$item->name}}" @if(isset($parameter->country) && $parameter->country==$item->name) selected @endif>{{$item->name}}</option>
                                                         @endforeach
 
-                                                </select> <select name="select" id="select" class="form-control"
+                                                </select> <select name="select" class="form-control city"
                                                                   style="margin-right: 10px;">
                                                     <option value="">--All Cities--</option>
-                                                </select> <select name="select" id="select" class="form-control"
+
+                                                    @foreach($city as $value)
+                                                        <option value="{{$value->name}}" @if(isset($parameter->city) && $parameter->city==$value->name) selected @endif>{{$value->name}}</option>
+                                                        @endforeach
+                                                </select>
+
+                                                <select name="select" class="form-control project_type"
                                                                   style="margin-right: 10px;">
-                                                    <option value="0">--All Projects--</option>
-                                                </select> <select name="select" id="select" class="form-control"
-                                                                  style="margin-right: 10px;">
+                                                    <option value="">--All Projects--</option>
+                                                    @foreach($project_type as $value)
+
+                                                      <option value="{{$value}}" @if(isset($parameter->project_type) && $parameter->project_type==$value) selected @endif>{{$value}}</option>
+                                                        @endforeach
+                                                </select>
+                                                <select name="select" id="select" class="form-control sall_or_rent" style="margin-right: 10px;">
                                                     <option value="">--Sale And Rent--</option>
-                                                    <option value="Rent">Rent</option>
-                                                    <option value="Sale">Sale</option>
-                                                </select><input placeholder="--Min Price" name="title" type="text"
-                                                                class="form-control" value=""
+                                                    @foreach(["buy","Sale"] as $value)
+                                                    <option value="{{$value}}" @if(isset($parameter->sall_or_rent) && $parameter->sall_or_rent==$value) selected @endif>{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if(isset($parameter->min_price))
+                                                    @php $min_price = $parameter->min_price; @endphp
+                                                    @else
+                                                    @php $min_price = ""; @endphp
+                                                @endif
+                                                @if(isset($parameter->max_price))
+                                                    @php $max_price = $parameter->max_price; @endphp
+                                                @else
+                                                    @php $max_price = ""; @endphp
+                                                @endif
+
+                                                <input placeholder="--Min Price" name="title" type="text"
+                                                                class="form-control min-price" value="{{$min_price}}"
                                                                 style="border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-right: none; text-align: center;">
                                                 <input placeholder="Max Price--" name="title" type="text"
-                                                       class="form-control" value=""
-                                                       style="border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; margin-right: 10px;"><select
-                                                        name="select" id="select" class="form-control"
-                                                        style="margin-right: 10px; text-align: center;">
+                                                       class="form-control max-price" value="{{$max_price}}"
+                                                       style="border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left: none; margin-right: 10px;text-align: center">
+                                                <select name="select" id="select" class="form-control room-select"style="margin-right: 10px; text-align: center;">
                                                     <option value="">--All Rooms--</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="else">Else</option>
+                                                    @foreach([1,2,3,4,5,"else"] as $value)
+                                                    <option value="{{$value}}" @if(isset($parameter->room_select) && $parameter->room_select==$value) selected @endif>{{$value}}</option>
+                                                    @endforeach
                                                 </select></div>
                                         </div>
                                     </div>
@@ -156,6 +178,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+
                                             @foreach($result as $item)
                                             <tr class="odd item-project">
                                                 <td class="id_project" id="{{$item->id}}">{{$item->id}}</td>
@@ -215,6 +238,7 @@
         $(document).ready(function () {
             $('.project-bar').addClass('active');
             $('.project-list').addClass('active');
+            $('.limit-page option[value="{{$limit}}"]').attr('selected','selected');
         });
     </script>
 @endsection
