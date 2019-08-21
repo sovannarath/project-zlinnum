@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var tokent = $('meta[name="csrf_token"]').attr('content');
+    let obj_public = {'token':tokent};
     var curren_url = window.location.href.split('?')[0] + "?";
     var doc = $(document);
     doc.on('click','.remove-item-list',function () {
@@ -51,7 +52,7 @@ $(document).ready(function () {
         var obj = $(this).closest('.row');
         var c =  getBase64(file,'.review-image',this,'gallery');
         if(c!="error"){
-        obj.find('.select-image').hide();
+    /*    obj.find('.select-image').hide();*/
         obj.find('.review-image').show();
         obj.find('.loading').show();}
     });
@@ -156,19 +157,23 @@ $(document).ready(function () {
             console.log(element+','+e   .target.result);
         });*/
     };
-    doc.on('change','select[name="projectType"]',function () {
-        var type = $(this).val();
+    ref();
+    function ref (){
+        var THIS  = $('select[name="projectType"]');
+        var type = THIS.val();
         switch (type){
-            case "condo":      defa(); $('.tower').show();   break;
-            case "apartment":  defa(); $('.sale-rent').hide(); $('.apartment-option').show();   break;
-            default :          defa();
+            case "2":      defa(); $('.tower').show();   break;
+            case "3":      defa(); $('.sale-rent').hide(); $('.apartment-option').show();   break;
+            default :      defa();
         }
         function defa() {
             $('.tower').hide();
             $('.sale-rent').show();
             $('.apartment-option').hide();
         }
-
+    }
+    doc.on('change','select[name="projectType"]',function () {
+        ref();
     });
     doc.on('click','.add-more-borhood',function () {
         $(this).closest('.card-body').find('.add-more-item-list').append('<tr><th><input type="text" class="form-control address-property" placeholder="Address" name="address"></th><th><input type="number" class="form-control distance-property" value="0"></th></tr>');
@@ -271,7 +276,7 @@ $(document).ready(function () {
                 console.error(error);
                 notification("Something Error",'false');
 
-                
+
             }
 
         });
@@ -498,7 +503,7 @@ var i=0;
             $('.list-box').fadeOut(200);
             $('.search-load').fadeOut(300);
         }
-        
+
     });
     doc.on('click','.search-button-click',function () {
         var search = $('.search-user-option').val();
@@ -522,30 +527,47 @@ doc.on('click','.test',function () {
    upload_image(str,url,id);*/
    var type  = $('.main-item.active').attr('type');
 });
-function upload_image(result,url,id) {
+
+function create_form_image(obj) {
+        /* Image Gallery */
+        var gallery_len =  obj.img_class.length;
+        if(gallery_len>0){
+            for(var i=0;i<gallery_len;i++){
+                var base64 =  obj.img_class.eq(i).find('img').attr('src');
+                var type_image = dataURLtoFile(base64,randomstr(20));
+                var type1 = type_image.type.substr(6,type_image.type.length);
+
+                var gallery1 = dataURLtoFile(base64,randomstr(20)+"."+type1);
+                obj.formdata.append('gallery[]', gallery1);
+            }
+            obj.formdata.append('length_gallery',gallery_len);
+        }else{
+            console.log('Gallery Not Found');
+        }
+
+    
+}
+function upload_image(result,url,id,message) {
     var img_lan = $('.review-image').find('img').length;
     $.ajaxSetup({
         processData:false,
         contentType:false,
         enctype: 'multipart/form-data',
     });
-
-    var file     = $('input[name="thumbnail"]').prop('files');
     var formdata = new FormData();
-    var len_thumbnail = $('.review-image').find('img').length;
+    var len_thumbnail = $('.thumbnail').find('img').length;
+    console.log(len_thumbnail);
     if(len_thumbnail>0){
-        var base64thum = $('.review-image').find('img').attr('src');
+        var base64thum = $('.thumbnail').find('img').attr('src');
         formdata.append('thumbnail',dataURLtoFile(base64thum,randomstr(20)));
         var thumbnail = dataURLtoFile(base64thum,randomstr(20));
         var type = thumbnail.type.substr(6,thumbnail.type.length);
 
         var thumbnail1 = dataURLtoFile(base64thum,randomstr(20)+"."+type);
         formdata.append('thumbnail',thumbnail1);
-
-
     }
     formdata.append('_token',tokent);
-    formdata.append('length_thum',file.length);
+    formdata.append('length_thum',len_thumbnail);
     formdata.append('id',id);
     if(img_lan){
         /* Image Gallery */
@@ -568,15 +590,21 @@ function upload_image(result,url,id) {
 
     }
         loadingmode('on');
+
      $.post(url,formdata,function (data) {
+         console.log(data);
          var json = JSON.parse(data);
          if(json.status=="OK"){
-            notification('Insert Success !!!','ok');
+            notification(message.true,'ok');
+            setTimeout(function () {
+                window.open(message.next,'_self');
+            },1000);
          }
-         loadingmode('off');
+             loadingmode('off');
 
      }).fail(function (error) {
          loadingmode('off');
+         notification(message.false);
          console.log(error);
          var message =  error.responseJSON;
          if(typeof message.errors.gallery!="undefined"){
@@ -597,16 +625,16 @@ function upload_image(result,url,id) {
 }
 function validation(json=[]){
     var message = [];
-
-    if(typeof json.pro_title!="undefined"){
+    if(typeof json.title!="undefined"){
         $('.project-title').addClass('has-error');
-        $('.project-title').closest('.row').find('.has-error-text').text(json.pro_title).show();
-        message.push("* "+json.pro_title);
+        $('.project-title').closest('.row').find('.has-error-text').text(json.title).show();
+        message.push("* "+json.title);
     }else{
         $('.project-title').removeClass('has-error');
         $('.project-title').closest('.row').find('.has-error-text').hide();
 
     }
+
     if(typeof  json.buil_date !="undefined"){
         $('.buil-date').addClass('has-error');
         $('.buil-date').closest('.row').find('.has-error-text').text(json.buil_date).show();
@@ -655,6 +683,22 @@ function validation(json=[]){
         $('.total-price').removeClass('has-error');
         $('.total-price').closest('.col-12').find('.has-error-text').hide();
     }
+    if(typeof  json.from_price !="undefined"){
+        $('.from-price').addClass('has-error');
+        $('.from-price').closest('.col-12').find('.has-error-text').text(json.from_price).show();
+        message.push("* "+json.from_price);
+    }else{
+        $('.from-price').removeClass('has-error');
+        $('.from-price').closest('.col-12').find('.has-error-text').hide();
+    }
+    if(typeof  json.to_price !="undefined"){
+        $('.to-price').addClass('has-error');
+        $('.to-price').closest('.col-12').find('.has-error-text').text(json.to_price).show();
+        message.push("* "+json.to_price);
+    }else{
+        $('.to-price').removeClass('has-error');
+        $('.to-price').closest('.col-12').find('.has-error-text').hide();
+    }
     if(typeof  json.featuretitle !="undefined"){
         $('.feature-title').addClass('has-error');
         $('.feature-title').closest('.col-12').find('.has-error-text').text(json.featuretitle).show();
@@ -678,45 +722,60 @@ function validation(json=[]){
     return message.join('<br>');
 
 }
-function store_prototype(){
+function store_prototype(THIS){
     loadingmode('on');
-    var url             = $(this).attr('datasrc');
-    var tokenb          = $('meta[name="csrf_token"]').attr('content');
-    var image_url       = $(this).attr('data-image');
-    var property_title  = $('.property-title').val();
-    var property_select = $('.property-type-select').val();
-    var sale_or_rent    = $('#sale_rent').val();
-    var unitprice       = $('.unit-price').val();
-    var price_p_s       = $('.pri-per-s').val();
-    var lan_width       = $('.land-width').val();
-    var lan_length      = $('.land-length').val();
-    var total_land      = $('.total-area').val();
-    var st_no           = $('.st-no').val();
-    var house_no        = $('.ho-no').val();
-    var city            = $('.city').val();
-    var khan            = $('.khan').val();
-    var sangkat         = $('.sangkat').val();
-    var phum            = $('.phum').val();
+    var url             = THIS.attr('datasrc');
+    var image_url       = THIS.attr('data-image');
+    var property_title  = $('.property-title').val();// ☑
+    var property_select = $('#property-type-select').val();// ☑
+    var sale_or_rent    = $('#sale_rent').val();// ☑
+    var unitprice       = $('.unit-price').val();// ☑
+    var price_p_s       = $('.pri-per-s').val();// ☑
+    var lan_width       = $('.land-width').val();// ☑
+    var lan_length      = $('.land-length').val();// ☑
+    var total_land      = $('.total-area').val();// ☑
+    var st_no           = $('.st-no').val();// ☑
+    var house_no        = $('.ho-no').val();// ☑
+    var city            = $('.city_property').val();// ☑
+    var country         = $('.country_property').val();// ☑
+    var khan            = $('.khan').val();// ☑
+    var sangkat         = $('.sangkat').val();// ☑
+    var phum            = $('.phum').val();// ☑
     var len_location    = $('.address-property').length;
-    var buildingwidth;
-    var bed_room;
-    var buildingheight;
-    var bathroom;
-    var commentarea;
-    var living_room;
-    var dinning_room;
+    var enable_project  = $('#enable_project_name:checked').val();// ☑
+    var no_of_floor     = $('.no-of-floor').val();
+    var project_id      = $('.project-title-in-property').val();
+    if(typeof enable_project !="undefined"){
+        enable_project = "true";
+    }else{
+        enable_project = "false";
+    }
+    var buildingwidth; // ☑
+    var bed_room;// ☑
+    var buildingheight;// ☑
+    var private_area;
+    var bathroom;// ☑
+    var commentarea;// ☑
+    var living_room;// ☑
+    var dinning_room;// ☑
     var mazzaninefloor;
-    var kitchen;
+    var kitchen;// ☑
     var total_build_area;
-    var aircon;
-    var parking;
-    var balcony;
-    var descriptionproperty;
+    var aircon;// ☑
+    var parking;// ☑
+    var balcony;// ☑
+    var total_building;
+    var show_map = $('.show-map-checkbox:checked').val();
+    if(typeof show_map !="undefined"){
+        show_map = "true";
+    }else{
+        show_map = "false";
+    }
 
-
-
-
+    var descriptionproperty;// ☑
     var location   = [];
+    var lat = $('.lat-number').val();// ☑
+    var lng = $('.lnt-number').val();// ☑
     if(len_location>0){
         for(var i=0;i<len_location;i++){
             var address  = $('.address-property:eq('+ i +')').val();
@@ -727,9 +786,10 @@ function store_prototype(){
         }
     }
     if(property_select!="land"){
+         aircon          = $('.air-con').val();
          buildingwidth   = $('.building-width').val();
          bed_room        = $('.bed-room').val();
-         buildingheight  = $('.buillding-height').val();
+         buildingheight  = $('.building-height').val();
          bathroom        = $('.bathroom').val();
          commentarea     = $('.common-area').val();
          living_room     = $('.living-room').val();
@@ -740,25 +800,34 @@ function store_prototype(){
          aircon          = $('.air-con').val();
          parking         = $('.parking').val();
          balcony         = $('.balcony').val();
+         private_area    = $('.private_area').val();
          descriptionproperty = $('.description-property').val();
+        total_building    = $('.total-building').val();
 
     }
+
     $.post(url,{
         _token:tokent,
+        enable_project:enable_project,
         property_title:property_title,
         property_select:property_select,
         sale_or_rent:sale_or_rent,
         unitprice:unitprice,
-        price_p_s:price_p_s,
-        lan_width:lan_width,
-        lan_length:lan_length,
+        show_map:show_map,
+        sqm_price:price_p_s,
+        project_id:project_id,
+        land_width:lan_width,
+        land_length:lan_length,
         total_land:total_land,
         st_no:st_no,
+        floor_no:no_of_floor,
         house_no:house_no,
         city:city,
+        total_building:total_building,
+        country:country,
         khan:khan,
         sangkat:sangkat,
-        phum:phum,
+        village:phum,
         buildingwidth:buildingwidth,
         bed_room:bed_room,
         buildingheight:buildingheight,
@@ -766,35 +835,364 @@ function store_prototype(){
         commentarea:commentarea,
         living_room:living_room,
         dinning_room:dinning_room,
-        mazzaninefloor:mazzaninefloor,
-        kitchen:kitchen,
-        total_build_area:total_build_area,
-        aircon:aircon,
-        parking:parking,
-        balcony:balcony,
-        descriptionproperty:descriptionproperty,
+       mazzaninefloor:mazzaninefloor,
+       private_area:private_area,
+       kitchen:kitchen,
+
+
+    total_build_area:total_build_area,
+    aircon:aircon,
+    parking:parking,
+    balcony:balcony,
+    descriptionproperty:descriptionproperty,
+    lat:lat,
+    lng:lng,
+    location:location
     },function (data) {
-        console.log(data);
-
-        
+        validation_property([]);
+        if(data.status_code==200){
+            var formdata = new FormData();
+            formdata.append('id',data.result.property_id);
+            formdata.append('_token',tokent);
+            var img_obj = $('.get-image-property').find('.image-plus');
+            var obj = {formdata:formdata,url:image_url,img_class:img_obj};
+            $.ajaxSetup({
+                processData:false,
+                contentType:false,
+                enctype: 'multipart/form-data'
+            });
+            create_form_image(obj);
+            $.post(obj.url,obj.formdata,function (data) {
+              var json = JSON.parse(data);
+              if(json.status_code=200){
+                  notification('Insert Property Successfully','ok');
+              }
+            }).fail(function (errro) {
+                notification("Insert Gallery False",'false');
+            });
+        }else{
+            notification('Insert Property Unsuccess','false');
+        }
+    }).fail(function (error) {
+        console.log(error.responseJSON.message);
+        let message = {message:0};
+        validation_property(error.responseJSON.message,message);
+        notification(message.message,'false');
     });
+    function validation_property(json,message1=null) {
+        loadingmode('off');
+        var message   = [];
+        var obj = $('.property-title');
+        if(typeof json.title!= "undefined"){
+            message.push("* "+json.title);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.title).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+         obj = $('.unit-price');
+        if(typeof json.unit_price!= "undefined"){
+            message.push("* "+json.unit_price);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.unit_price).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+         obj = $('.pri-per-s');
+        if(typeof json.sqm_price!= "undefined"){
+            message.push("* "+json.sqm_price);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.sqm_price).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+         obj = $('.land-width');
+        if(typeof json.land_width!= "undefined"){
+            message.push("* "+json.land_width);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.land_width).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
 
+        obj = $('.land-length');
+        if(typeof json.land_length!= "undefined"){
+            message.push("* "+json.land_length);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.land_length).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
 
+        obj = $('.total-area');
+        if(typeof json.total_land_area!= "undefined"){
+            message.push("* "+json.total_land_area);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.total_land_area).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.st-no');
+        if(typeof json.street_no!= "undefined"){
+            message.push("* "+json.street_no);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.street_no).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.phum');
+        if(typeof json.village!= "undefined"){
+            message.push("* "+json.village);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.village).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.lat-number');
+        if(typeof json.lat!= "undefined"){
+            message.push("* "+json.lat);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.lat).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.lnt-number');
+        if(typeof json.lng!= "undefined"){
+            message.push("* "+json.lng);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.lng).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.city_property');
+        if(typeof json.city!= "undefined"){
+            message.push("* "+json.city);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.city).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.country_property');
+        if(typeof json.country!= "undefined"){
+            message.push("* "+json.country);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.country).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.ho-no');
+        if(typeof json.house_no!= "undefined"){
+            message.push("* "+json.house_no);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.house_no).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.khan');
+        if(typeof json.district!= "undefined"){
+            message.push("* "+json.district);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.district).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.sangkat');
+        if(typeof json.commune!= "undefined"){
+            message.push("* "+json.commune);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.commune).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.building-width');
+        if(typeof json.building_width!= "undefined"){
+            message.push("* "+json.building_width);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.building_width).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.building-height');
+        if(typeof json.building_height!= "undefined"){
+            message.push("* "+json.building_height);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.building_height).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+
+        obj = $('.air-con');
+        if(typeof json.air_conditioner!= "undefined"){
+            message.push("* "+json.air_conditioner);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.air_conditioner).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.balcony');
+        if(typeof json.balcony!= "undefined"){
+            message.push("* "+json.balcony);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.balcony).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.bathroom');
+        if(typeof json.bathroom!= "undefined"){
+            message.push("* "+json.bathroom);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.bathroom).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.bed-room');
+        if(typeof json.bedroom!= "undefined"){
+            message.push("* "+json.bedroom);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.bedroom).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.common-area');
+        if(typeof json.common_area!= "undefined"){
+            message.push("* "+json.common_area);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.common_area).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.no-of-floor');
+        if(typeof json.floor_no!= "undefined"){
+             message.push("* "+json.floor_no);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.floor_no).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.kitchen');
+        if(typeof json.kitchen!= "undefined"){
+            message.push("* "+json.kitchen);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.kitchen).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.living-room');
+        if(typeof json.living_room!= "undefined"){
+            message.push("* "+json.living_room);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.living_room).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.parking');
+        if(typeof json.parking!= "undefined"){
+            message.push("* "+json.parking);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.parking).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.private_area');
+        if(typeof json.private_area!= "undefined"){
+            message.push("* "+json.private_area);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.private_area).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.dinning-room');
+        if(typeof json.dinning_room!= "undefined"){
+            message.push("* "+json.dinning_room);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.dinning_room).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.total-building');
+        if(typeof json.total_building!= "undefined"){
+            message.push("* "+json.total_building);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.total_building).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        obj = $('.mazzanine-floor');
+        if(typeof json.mazzaninefloor!= "undefined"){
+            message.push("* "+json.mazzaninefloor);
+            obj.addClass('is-invalid').removeClass('is-valid');
+            obj.closest('.form-group').find('.form-text').text(json.mazzaninefloor).show();
+        }else{
+            obj.removeClass('is-invalid').addClass('is-valid');
+            obj.closest('.form-group').find('.form-text').hide();
+        }
+        if(message1!=null){
+            message1.message = message.join('<br>');
+        }
+
+    }
 }
+    doc.on('click','.update-project',function () {
+        var THIS = $(this);
+
+        var id  = THIS.attr('data-id');
+        var obj = {id:id};
+
+        store_project(THIS,true,obj);
+
+    });
     doc.on('click','.save-project',function () {
         var item = $('.item.active').attr('type');
-
+        var THIS = $(this);
         switch (item) {
-            case "project": store_project(); break;
-            case "property": store_prototype(); break;
+            case "project": store_project(THIS); break;
+            case "property": store_prototype(THIS); break;
 
         }
 
     });
-function store_project() {
+doc.on('click','#enable_project_name',function () {
+     var check = $('#enable_project_name:checked').val();
+     if(check=="on"){
+        $('.project_use').slideDown();
+     }else{
+         $('.project_use').slideUp();
+
+     }
+});
+function store_project(THIS,update=false,obj=null) {
     loadingmode('on');
-    var tokenb = $('meta[name="csrf_token"]').attr('content');
-    var image_url =  $(this).attr('data-image');
+    var tokenb =     $('meta[name="csrf_token"]').attr('content');
+    var image_url       = THIS.attr('data-image');
     var pro_type        = $('select[name="projectType"]').val();
     var pro_title       = $('.project-title').val();
     var buil_date       = $('.buil-date').val();
@@ -803,8 +1201,12 @@ function store_project() {
     var downpay         = $('.down-payment').val();
     var sale_rent       = $('.sale-rent').val();
     var total_price     = $('.total-price').val();
+    var from_price      = $('.from-price').val();
+    var to_price        = $('.to-price').val();
     var pri_s           = $('.pri-s').val();
     var country         = $('.country-select').val();
+    var country_name    = JSON.parse(country).name;
+    var country_id      = JSON.parse(country).id;
     var city            = $('.city-select').val();
     var address1        = $('.address1').val();
     var address2        = $('.address2').val();
@@ -812,31 +1214,39 @@ function store_project() {
     var featuretitle    = $('.feature-title').val();
     var featureinfo     = $('#editor1').find('.ql-editor').html();
     var lenpropertytype = $('.property-type').find('.item-list').length;
-    var url             = $(this).attr('datasrc');
+    var url             = THIS.attr('datasrc');
     var tower  = [];
     var propertytype = [];
-    if(pro_type=="borey"){
+    if(pro_type==1){
         for(var i=0;i<lenpropertytype;i++){
             var check =   $('.property-type').find('.item-list:eq('+ i +')').find('input[name="type"]').val();
             if(check!=""){
-                var type      = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="type"]').val();
+                var name      = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="type"]').val();
                 var bedroom   = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="bedroom"]').val();
                 var bathroom  = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="bathroom"]').val();
                 var floor     = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="floor"]').val();
                 var packing   = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="packing"]').val();
                 var width     = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="width"]').val();
                 var height     = $('.property-type').find('.item-list:eq('+ i +')').find('input[name="height"]').val();
-                propertytype.push({type:type,bedroom:bedroom,bathroom:bathroom,floor:floor,height:height,packing:packing,width:width})
-
+                var prty = {name:name,bedroom:bedroom,bathroom:bathroom,floor:floor,height:height,packing:packing,width:width};
+                if(update!=false){
+                    var id = $('.property-type').find('.item-list').eq(i).find('.id_property_type').val();
+                  $.extend(prty,{id:id})
+                }
+                propertytype.push(prty);
             }
         }
-    }else if(pro_type=="condo"){
+    }else if(pro_type==2){
         var len = $('.tower-item').length;
         if(len>0){
             for(var i=0;i<len;i++){
                 var result = $('.tower-item:eq('+ i +')').val();
                 if(result!=""){
-                    tower.push({id:0,type:result});
+                    var id = 0;
+                    if(update!=false){
+                        id = $('.tower-item').eq(i).attr('id');
+                    }
+                    tower.push({id:id,type:result});
                 }
             }
 
@@ -850,17 +1260,20 @@ function store_project() {
         },
     });
     loadingmode('off');
-
-    $.post(url,{
+    var dd = {
         _token:tokenb,
         pro_type:pro_type,
-        pro_title:pro_title,
+        title:pro_title,
         buil_date:buil_date,
         grr:grr,
         downpay:downpay,
         sale_rent:sale_rent,
         total_price:total_price,
+        country_name:country_name,
+        country_id:country_id,
         pri_s:pri_s,
+        from_price:from_price,
+        to_price:to_price,
         country:country,
         city:city,
         address1:address1,
@@ -871,24 +1284,32 @@ function store_project() {
         featureinfo:featureinfo,
         propertytype:propertytype,
         tower:tower
-    },function (data) {
-        console.log(data);
-        var result = JSON.parse(data);
-        if(result.status=="OK") {
-            upload_image(result,image_url,result.result.id);
+    };
+    if(update!=false){
+        var id_feature  = $('.feature-title').attr('id');
+      $.extend(dd,{id:obj.id,feature_id:id_feature});
+    };
+
+
+   $.post(url,dd,function (data) {
+        if(data.status_code==200) {
+            if(update!=false){
+                var message = {true:"Update Successfully",false:"Update Unsuccessfuly",next:THIS.attr('next-link')};
+                upload_image(data,image_url,data.result.id,message);
+            }else{
+                var message = {true:"Insert Successfully",false:"Insert Unsuccessfuly",next:THIS.attr('next-link')};
+                upload_image(data,image_url,data.result.id,message);
+            }
         }
         validation();
-
-
     }).fail(function (error) {
         console.log(error);
         loadingmode('off');
-        var json = JSON.parse(error.responseText).errors;
-        var message  =  validation(json);
+        var json = error.responseJSON;
+        var message  =  validation(json.messge);
         notification(message,'false');
-
     });
-    
+
 }
     function search_mode(search) {
         if(search!=""){
@@ -948,7 +1369,7 @@ function store_project() {
             }
 
         }
-        
+
     }
 
     function dataURLtoFile(dataurl, filename) {
@@ -1033,12 +1454,21 @@ function popup_message(message,title,type) {
         $('body').css('overflow','auto');
     });
 }
+    doc.on('click','.custom-pagination-property li.page-item-list a',function (e) {
+        e.preventDefault();
+        var page = $(this).attr('tabindex');
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.page = page;
+        check_parameter_property(json);
+        refresh_data(json);
+
+    });
     doc.on('click','.custom-pagination li.page-item-list a',function (e) {
         e.preventDefault();
         var url =  window.location.href.split('?');
         var page = $(this).attr('tabindex');
         var str = get_url('',page);
-
         history.pushState({},'',"?"+str);
         loadingmode('on');
         $.get(url[0]+"?"+str,{},function (data) {
@@ -1214,6 +1644,270 @@ function popup_message(message,title,type) {
             window.history.pushState({},'',curren_url+str);
         });
         /* End Fillter */
+    /* Filter Property Listing */
 
+    doc.on('change','.limit-property',function () {
+        var limit = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.limit = limit;
+        check_parameter_property(json);
+        refresh_data(json);
+
+
+    });
+    doc.on('change','.project_id',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.project_id = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.property-country',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.country_id = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.city_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.city_id = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.district_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.district = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.commune_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.commune = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.property_types_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.property_type = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.sale_of_rent_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.sale_or_rent = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('focusout','.min_price_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.min_price = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('focusout','.max_price_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.max_price = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.bathroom_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.bathroom = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.bedroom_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.bedroom = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('change','.sale_of_rent_filter',function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.sale_or_rent = data;
+        check_parameter_property(json);
+        refresh_data(json);
+    });
+    doc.on('keypress','.data-search-property',function (e) {
+        if(e.key=="Enter"){
+            search_property();
+        }
+    });
+    doc.on('click','.search-property',function () {
+       search_property();
+    });
+    function search_property() {
+        var data = $('.data-search-property').val();
+        if(data!=""){
+            var in_parameter = $('.parameter').attr('content');
+            var json = JSON.parse(in_parameter);
+            json.search = data;
+            check_parameter_property(json);
+            refresh_data(json);
+        }else{
+            notification("invalid Search",'false');
+        }
+    }
+    function refresh_data(json) {
+        loadingmode('on');
+        $.get(json.current_url+"?"+json.result,{},function (data) {
+            var newdata = $(data).find('.card-body').html();
+            $('.card-body').html(newdata);
+            loadingmode('off');
+        });
+    }
+    function check_parameter_property(json=[]){
+        var current_url = window.location.href.split('?')[0];
+        var query = [];
+        if(typeof json.limit!="undefined" && json.limit!=null){
+            query.push("limit="+json.limit);
+        }
+        if(typeof json.country_id!="undefined" && json.country_id!=null){
+            query.push("country_id="+json.country_id);
+        }
+        if(typeof json.city_id!="undefined" && json.city_id!=null){
+            query.push("city_id="+json.city_id);
+        }
+        if(typeof json.project_id != "undefined" && json.project_id!=null){
+            query.push("project_id="+json.project_id)
+        }
+        if(typeof json.page !="undefined" && json.page!=null){
+            query.push("page="+json.page);
+        }
+        if(typeof json.search !="undefined" && json.search!=null){
+            query.push("search="+json.search);
+        }
+        if(typeof json.district !="undefined" && json.district!=null){
+            query.push("district="+json.district);
+        }
+        if(typeof json.commune != "undefined" && json.commune!=null){
+            query.push('commune='+json.commune);
+        }
+        if(typeof json.property_type != "undefined" && json.property_type!=null){
+            query.push('property_type='+json.property_type);
+        }
+        if(typeof json.sale_or_rent != "undefined" && json.sale_or_rent!=null){
+            query.push('sale_or_rent='+json.sale_or_rent);
+        }
+        if(typeof json.min_price != "undefined" && json.min_price!=null){
+            query.push('min_price='+json.min_price);
+        }
+        if(typeof json.max_price != "undefined" && json.max_price!=null){
+            query.push('max_price='+json.max_price);
+        }
+        if(typeof json.bathroom != "undefined" && json.bathroom!=null){
+            query.push('bathroom='+json.bathroom);
+        }
+        if(typeof json.bedroom != "undefined" && json.bedroom!=null){
+            query.push('bedroom='+json.bedroom);
+        }
+
+        json.current_url = current_url;
+        json.result = query.join('&');
+        window.history.pushState({},"",current_url+"?"+json.result);
+
+    }
+
+    /* End Filter Property Listing*/
+
+    /* Add mi */
+    doc.on('change','.country_property',function () {
+        var country_id = JSON.parse($(this).val()).id;
+        var url = $(this).attr('datasrc');
+        get_city(country_id,url,'.city_property');
+    });
+    function country_show(THIS){
+        var country_id = JSON.parse(THIS.val()).id;
+        var url = THIS.attr('datasrc');
+        var cr = $('.city-select').attr('data-value');
+        get_city(country_id,url,'.city-select',cr);
+
+
+
+    }
+    country_show($('.country-select'));
+    doc.on('change','.country-select',function () {
+        country_show($(this));
+
+    });
+    function get_city(country_id,url,output,select=null) {
+        var act="";
+        $.get(url,{country_id:country_id},function (data) {
+            if(data.status_code==200){
+                $(output).html('<option value="">-- Please Select City --</option>');
+                data.result.forEach(function (item,index) {
+                    if(select!=null){
+                        if((item.name).toLowerCase() == select.toLowerCase()){
+                            act = "selected='selected'";
+                        }else{
+                            act = "";
+                        }
+                    }
+                    var option = "<option value='"+item.id+"' "+act+">"+item.name+"</option>";
+                    $(output).append(option);
+                });
+            }
+
+        });
+
+    }
+    /* End Add Project*/
+/* Property Listing */
+    doc.on('click','.delete-property',function () {
+        var id = $(this).attr('id');
+        var status = "false";
+        var url = $(this).attr('datasrc');
+        console.log(url,id);
+        $('.popup-model').find('.action-btn-property')
+            .attr('datasrc',url)
+            .attr('id_project',id)
+            .attr('status',status);
+        popup_message('Are Want to Delete ? ','Waning','change-status');
+
+    });
+    doc.on('click','.action-btn-property',function () {
+        var id = $(this).attr('id_project');
+        var url = $(this).attr('datasrc');
+        $.post(url+"/"+id,{_token:tokent},function (data) {
+            var response  = JSON.parse(data);
+            if(response.status_code==200){
+                $('.popup-model').fadeOut();
+                var in_parameter = $('.parameter').attr('content');
+                var json = JSON.parse(in_parameter);
+                check_parameter_property(json);
+                refresh_data(json);
+                notification("Delete Property Successfully",'ok');
+            }else{
+                notification("Delete Property Unsuccess","false");
+            }
+        }).fail(function (error) {
+            console.log(error);
+        });
+    });
+/* End Property Listing */
 });
 

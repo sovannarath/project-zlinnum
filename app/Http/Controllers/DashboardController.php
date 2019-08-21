@@ -15,11 +15,6 @@ class DashboardController extends MasterController
         $result =$this->http->ProjectStatistic($key);
         $p1 = $this->http->Projectfind(['status' => 'false']);
 
-
-
-
-
-
         $apartment_count = "--";
         $condo_count = "--";
         $borey_count = "--";
@@ -50,8 +45,18 @@ class DashboardController extends MasterController
             $user_count = $result->user->USER->total;
 
             $property_count = $result->property->total;
-            $propertyoff_count = $result->property->disable->total;
-            $propertyon_count =$result->property->enable->total;
+            if(isset($result->property->disable->total)){
+                $propertyoff_count = $result->property->disable->total;
+            }else{
+                $propertyoff_count = 0;
+            }
+            if(isset($result->property->enable->total)){
+                $propertyon_count = $result->property->enable->total;
+            }else{
+                $propertyon_count = 0;
+            }
+
+
 
             $apartment_count = $result->project->countries[0]->types[2]->total;
             $condo_count = $result->project->countries[0]->types[1]->total;

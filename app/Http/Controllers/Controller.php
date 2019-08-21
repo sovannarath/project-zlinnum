@@ -12,7 +12,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public  $host = "http://192.168.88.58";
 
-    public function created_paginate($pagiate){
+    public function created_paginate($pagiate,$class="custom-pagination"){
       $backpage = $pagiate->page-1;
       $nextpage = $pagiate->page+1;
 
@@ -26,7 +26,7 @@ class Controller extends BaseController
         }else{
             $nextpage1 = "";
         }
-        $result = "<ul class=\"pagination custom-pagination\">";
+        $result = "<ul class=\"pagination ".$class." \">";
         $result .= '<li class="paginate_button page-item previous '.$disable.' " id="bootstrap-data-table_previous">
                     <a href="#" aria-controls="bootstrap-data-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
                    </li>';

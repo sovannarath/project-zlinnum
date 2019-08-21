@@ -1,0 +1,12 @@
+
+------------- Start ---------------------
+Date: 19-08-20 11:50:23
+Error  Controller :HttpRequest.php
+Line: 576
+Message: Server error: `PUT http://192.168.88.58/apis/project/update` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+Illuminate\Database\QueryException: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datet (truncated...)
+
+-------------End -------------------

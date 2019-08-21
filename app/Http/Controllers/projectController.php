@@ -12,7 +12,8 @@ class projectController extends MasterController
 {
     //
     public function post_image(Request $request)
-    {   $gallery = $request->gallery;
+    {
+        $gallery = $request->gallery;
         $id   = $request->id;
         $thumbnail = $request->thumbnail;
         $length_thumbnail = $request->length_thum;
@@ -57,31 +58,35 @@ class projectController extends MasterController
     }
     public function add_project(){
         $type_project = $this->http->project_type();
+        $datalist = json_decode($this->http->all_title_project());
         if($type_project->status_code==200){
             $type = $type_project->result;
         }else{
             $type = [];
 
         }
+        $country = $this->http->project_country();
+        if($country->status_code==200){
+            $country_list = $country->result;
+        }else{
+            $country_list = [];
+        }
         $city = $this->http->project_city();
         if($city->status_code==200){
-            $citylist = $city->result[0]->cities;
-            $country [] = $city->result[0];
+            $citylist = $city->result;
         }else{
             $citylist = [];
-            $country  = [];
-
         }
 
         return view('template.add-project',compact(
             'type',
             'citylist',
-            'country'));
+            'country_list','datalist'));
 
     }
     public function store_project(Request $request){
         $pro_type       = $request->pro_type;
-        $pro_title      = $request->pro_title;
+        $pro_title      = $request->title;
         $buil_date      = $request->buil_date;
         $complete_date  = $request->complete_date;
         $grr            = $request->grr;
@@ -99,9 +104,8 @@ class projectController extends MasterController
         $propertytype   = $request->propertytype;
         $tower          = $request->tower;
 
-
                 $rule  = [
-                   'pro_title'      =>'required',
+                   'title'      =>'required',
                    'buil_date'      =>'required',
                    'grr'            =>['required',
                        function ($attribute, $value, $fail) {
@@ -118,6 +122,18 @@ class projectController extends MasterController
                            }
                        }
                    ],
+                   'from_price'=>['required',function ($attribute, $value, $fail) {
+                       if($value==0){
+                           $fail('Please Enter From Price');
+                       }
+                   }
+                   ],
+                   'to_price'=>['required',function ($attribute, $value, $fail) {
+                        if($value==0){
+                            $fail('Please Enter To Price');
+                        }
+                    }
+                    ],
                    'country'        =>'required',
                    'city'           =>'required',
                    'address1'       =>'required',
@@ -139,7 +155,7 @@ class projectController extends MasterController
 
                 ];
                 $message = [
-                    'pro_title.required'    =>"Please Project Enter Title",
+                        'pro_title.required'    =>"Please Project Enter Title",
                     'buil_date.required'    =>"Please Select Buill Date",
                     'grr.required'          =>"Please Enter Guaranteed Rental Returns",
                     'downpay.required'      =>"Please Enter Down Payment",
@@ -151,21 +167,22 @@ class projectController extends MasterController
                     'featuretitle.required' =>"Please Enter Feature Title",
                     'featureinfo.required'  =>"Please Enter Feature Description",
                 ];
-                $validation = Validator::make($request->all(),$rule,$message);
+       $validation = Validator::make($request->all(),$rule,$message);
 
 
         if ($validation->fails()) {
-            return  $this->validateWith($validation, $request);
+            return  response(['message'=>$validation->errors()],422);
          }else{
             $token = Session::get('access');
             $data = [
                 'address_1'     =>$address1,
+                'project_type_id'=>$pro_type,
                 'address_2'     =>$address2,
                 'title'         =>$pro_title,
                 'built_date'    =>$buil_date,
                 'status'        =>true,
                 'rent_or_buy'   =>$sale_rent,
-                'city'          =>$city,
+                'city_id'          =>$city,
                 'completed_date'=>$complete_date,
                 'country'       =>$country->name,
                 'country_id'    =>$country->id,
@@ -177,13 +194,14 @@ class projectController extends MasterController
                      array('name'=>$featuretitle,'description'=>$featureinfo)
                  ],
                 'price'=>$total_price,
+                'avg_annual_rent_from'=>$request->from_price,
+                'avg_annual_rent_to'=>$request->to_price,
                 'property_types'=>$propertytype,
                 'sqm_price'=>$pri_s,
             ];
 
             $result = $this->http->addProject($token,$data);
             return $result;
-
         }
 
 
@@ -198,7 +216,8 @@ class projectController extends MasterController
         if(isset($request->limit)){
             $limit = $request->limit;
         }
-        $other  = [];
+
+        $other  = ['sort_type'=>'updated_at','sort_format'=>'desc'];
         if(isset($request->country)) {
             $country_data = $request->country;
             $other += ['country' => $country_data];
@@ -234,6 +253,7 @@ class projectController extends MasterController
         }else{
             $search = false;
         }
+        $body += ['sort_type'=>'updated_at','sort_format'=>'desc'];
         $response    = $this->http->project_listing_show($body,$page,$limit,$other);
         $project = json_decode($response['result']);
         $project_type = $response['project_type'];
@@ -292,6 +312,132 @@ class projectController extends MasterController
         }else{
             return response(['status_code'=>404,'message'=>'Invalid Auth']);
         }
+
+
+    }
+    public function detail($id){
+        $project = $this->http->project_detail($id);
+        try { $project = json_decode($project);}catch (\Exception $exception){}
+        $type_project = $this->http->project_type();
+        if($type_project->status_code==200){
+            $type = $type_project->result;
+        }else{
+            $type = [];
+
+        }
+        if($project->status_code==200){
+            $project_result = $project->result;
+        }else{
+            $project_result = [];
+        }
+
+        $country = $this->http->project_country();
+        if($country->status_code==200){
+            $country_list = $country->result;
+        }else{
+            $country_list = [];
+        }
+        if($project->status_code!=200){
+            return view('404');
+        }
+        return view('template.project-detail',compact('country_list','type','project_result'));
+
+    }
+    public function update_project(Request $request){
+        $pro_type       = $request->pro_type;
+        $pro_title      = $request->title;
+        $buil_date      = $request->buil_date;
+        $complete_date  = $request->complete_date;
+        $grr            = $request->grr;
+        $downpay        = $request->downpay;
+        $sale_rent      = $request->sale_rent;
+        $total_price    = $request->total_price;
+        $pri_s          = $request->pri_s;
+        $country_name   = $request->country_name;
+        $country_id     = $request->country_id;
+        $city           = $request->city;
+        $address1       = $request->address1;
+        $address2       = $request->address2;
+        $baseinfo       = $request->baseinfo;
+        $featuretitle   = $request->featuretitle;
+        $featureinfo    = $request->featureinfo;
+        $propertytype   = $request->propertytype;
+        $tower          = $request->tower;
+
+        $data = [
+            'address_1'     =>$address1,
+            'project_type_id'=>$pro_type,
+            'address_2'     =>$address2,
+            'title'         =>$pro_title,
+            'built_date'    =>$buil_date,
+            'status'        =>true,
+            'rent_or_buy'   =>$sale_rent,
+            'city_id'       =>$city,
+            'id'            =>$request->id,
+            'completed_date'=>$complete_date,
+            'country'       =>$country_name,
+            'country_id'    =>$country_id,
+            'description'   =>$baseinfo,
+            'down_payment'  =>$downpay,
+            'grr'           =>$grr,
+            'tower_types'    =>$tower,
+            'introductions'=>[
+                array('name'=>$featuretitle,
+                    'description'=>$featureinfo,
+                    'id'=>$request->feature_id)
+            ],
+            'price'=>$total_price,
+            'avg_annual_rent_from'=>$request->from_price,
+            'avg_annual_rent_to'=>$request->to_price,
+            'property_types'=>$propertytype,
+            'sqm_price'=>$pri_s,
+        ];
+        $token  = Session::get('access');
+        $result = $this->http->change_project($data,$token);
+        return $result;
+    }
+    public function update_image(Request $request){
+        $gallery = $request->gallery;
+        $id   = $request->id;
+        $thumbnail = $request->thumbnail;
+        $length_thumbnail = $request->length_thum;
+        $role = [
+            'thumbnail'=>'mimes:jpeg,bmp,png,jpg',
+        ];
+        $message = [
+            'thumbnail.mimes'=>"Thumbnail Invalid Type",
+        ];
+        $request->validate($role,$message);
+        $file = [];
+        $gallery1 = [];
+        $thumbnail1 = [];
+        $file = $file + ['projectID'=>$id];
+        if($request->length_gallery>0){
+            $token = Session::get('access');
+            $delete = $this->http->delete_image($id,$token);
+            $result  = $this->http->post_image($gallery,$request->length_gallery,'galleries');
+            if($result){
+                $gallery1 =$result;
+                $file  = $file + $gallery1;
+            }else{
+                return Response(['galleries'=>"Gallery Error"],'500');
+            }
+        }
+
+        if($length_thumbnail>0){
+            $result  = $this->http->post_image($thumbnail,$length_thumbnail,'thumbnail');
+
+            if($result){
+                $thumbnail1 = ['thumbnail'=>$result];
+                $file  = $file + $thumbnail1;
+            }else{
+                return Response(['thumbnail'=>"thumbnail Error"],'500');
+            }
+        }
+
+        $reporse = $this->http->sent_image($file);
+       return $reporse;
+
 
 
     }

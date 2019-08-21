@@ -186,7 +186,7 @@
                                                         <img class="lazyload" data-src="{{$item->thumbnail}}"></div>
                                                 </td>
                                                 <td style="width: 500px;">
-                                                    <p>{{$item->name}}</p>
+                                                    <a href="{{route('project-detail',['id'=>$item->id])}}" class="linker">{{$item->name}}</a>
                                                 </td>
                                                 <td class="">
                                                     <div style="text-align: center">
@@ -194,7 +194,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="">{{$item->project_type}}</td>
-                                                <td class="">{{$item->price}}  GRR: {{$item->grr}}</td>
+                                                <td class="">{{number_format($item->price,2)." $"}}  GRR: {{$item->grr}}</td>
                                              {{--   <td class="sorting_1">
                                                     <div class="custom-control custom-switch" style="text-align:center" datasrc="{{route('change-status-project')}}">
                                                         <input type="checkbox" class="custom-control-input" id="customSwitch1" @if($item->status=="true") checked @endif>
@@ -236,8 +236,13 @@
     <script>
         var doc = $(document);
         $(document).ready(function () {
-            $('.project-bar').addClass('active');
-            $('.project-list').addClass('active');
+            $('.project-bar')
+                .addClass('active show')
+                .find('.project-list')
+                .addClass('active')
+                .closest('.project-bar')
+                .find('.sub-menu')
+                .addClass('show');
             $('.limit-page option[value="{{$limit}}"]').attr('selected','selected');
         });
     </script>

@@ -21,9 +21,19 @@ div#main-menu {
 .goto-search:hover{
     opacity: 0.7;
 }
+.project_use{
+    display: none;
+}
 .has-error-text{
     color:#a94442;
     display: none;
+}
+.red-star{
+    color: red;
+    padding: 0px 3px;
+    font-size: 15px;
+    position: relative;
+    top: 3px;
 }
 .has-error:focus {
     border-color: #843534 !important;

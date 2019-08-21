@@ -1,0 +1,14 @@
+
+------------- Start ---------------------
+Date: 19-08-14 13:03:15
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-14 13:03:19
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------

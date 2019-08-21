@@ -1,0 +1,14 @@
+
+------------- Start ---------------------
+Date: 19-08-17 08:16:03
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Connection refused (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-17 08:16:15
+Error  Controller :HttpRequest.php
+Line: 18
+Message: cURL error 7: Failed to connect to 192.168.88.58 port 80: Connection refused (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------

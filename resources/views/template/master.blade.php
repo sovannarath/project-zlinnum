@@ -21,6 +21,7 @@
     <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">--}}
 
 
+    <link rel="stylesheet" href="{{asset('assets/custom/css/scss-model.css')}}">
     <link rel="stylesheet" href="{{asset('assets/c-css/normalize.min.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('assets/c-css/font-awesome.min.css')}}">
@@ -375,7 +376,7 @@
         <div class="footer-inner bg-white">
             <div class="row">
                 <div class="col-sm-6">
-                    Copyright &copy; @php echo date('Y') @endphp Zillennium
+                    Copyright &copy; @php if(date('Y')!="2019") {echo "2019 -";}echo date('Y') @endphp Zillennium
                 </div>
 
             </div>

@@ -1,0 +1,40 @@
+
+------------- Start ---------------------
+Date: 19-08-16 08:08:52
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to api port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-16 08:14:32
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-16 08:14:56
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://api/api/sign-in` resulted in a `500 Internal Server Error` response:
+<!DOCTYPE html><!--
+
+
+GuzzleHttp\Exception\ConnectException: cURL error 6: Could not resolve host: api (see http://curl. (truncated...)
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-16 08:43:11
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Server error: `POST http://api/api/sign-in` resulted in a `500 Internal Server Error` response:
+{"status_code":500,"message":"cURL error 6: Could not resolve host: api (see http:\/\/curl.haxx.se\/libcurl\/c\/libcurl- (truncated...)
+
+-------------End -------------------
