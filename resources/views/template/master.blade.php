@@ -15,15 +15,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf_token" content="{{csrf_token()}}">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
-{{--    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">--}}
+    {{--    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+        <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">--}}
 
 
     <link rel="stylesheet" href="{{asset('assets/custom/css/scss-model.css')}}">
     <link rel="stylesheet" href="{{asset('assets/c-css/normalize.min.css')}}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('assets/c-css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/c-css/themify-icons.css')}}">
     <link rel="stylesheet" href="{{asset('assets/c-css/pe-icon-7-stroke.min.css')}}">
@@ -34,8 +35,8 @@
     <link href="{{asset('assets/c-css/chartist.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/c-css/jqvmap.min.css')}}" rel="stylesheet">
 
-    <link href="{{asset('assets/c-css/weather-icons.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/c-css/fullcalendar.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/c-css/weather-icons.css')}}" rel="stylesheet"/>
+    <link href="{{asset('assets/c-css/fullcalendar.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('assets/custom/css/master.css')}}" rel="stylesheet">
     <link href="{{asset('assets/js/bootstrap-datetimepicker.css')}}" rel="stylesheet">
     <link href="{{asset('assets/js/bootstrap-datetimepicker-standalone.css')}}" rel="stylesheet">
@@ -47,56 +48,68 @@
     <link href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
 
-
-
     <style>
         #weatherWidget .currentDesc {
-            color: #ffffff!important;
+            color: #ffffff !important;
         }
+
         .traffic-chart {
             min-height: 335px;
         }
-        #flotPie1  {
+
+        #flotPie1 {
             height: 150px;
         }
+
         #flotPie1 td {
-            padding:3px;
+            padding: 3px;
         }
+
         #flotPie1 table {
-            top: 20px!important;
-            right: -10px!important;
+            top: 20px !important;
+            right: -10px !important;
         }
+
         .chart-container {
             display: table;
-            min-width: 270px ;
+            min-width: 270px;
             text-align: left;
             padding-top: 10px;
             padding-bottom: 10px;
         }
-        #flotLine5  {
+
+        #flotLine5 {
             height: 105px;
         }
 
         #flotBarChart {
             height: 150px;
         }
-        #cellPaiChart{
+
+        #cellPaiChart {
             height: 160px;
         }
-        .loading-background{
+
+        .loading-background {
             background-image: url('{{asset('assets/custom/media/ShadowyGratefulHamster-size_restricted.gif')}}') !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
             background-size: 30px !important;
         }
+
         .user-menu.dropdown-menu.show {
             position: absolute !important;
         }
-        .lazyloading{
+
+        .lazyloading {
             background: url({{asset('assets/media/loadem.svg')}});
             background-size: 200px !important;
             background-repeat: no-repeat !important;
             background-position: center !important;
+        }
+
+        .right-panel {
+            position: absolute;
         }
 
     </style>
@@ -116,8 +129,6 @@
     <script src="{{asset('assets/bootstrap/js/bootstrap.js')}}"></script>
     <script src="{{asset('assets/js/lazysizes.min.js')}}"></script>
     <script src="{{asset('assets/js/ls.bgset.min.js')}}"></script>
-
-
 
 
     <!--  Chart js -->
@@ -147,7 +158,8 @@
 <div class="notification">
 </div>
 <div style="width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.35);z-index: 1080" id="loading">
-    <img src="http://localhost/project/assets/custom/media/load.svg" alt="" style="margin: 0 auto;display: block;top: 30%;position: relative">
+    <img src="http://localhost/project/assets/custom/media/load.svg" alt=""
+         style="margin: 0 auto;display: block;top: 30%;position: relative">
 </div>
 <!-- Left Panel -->
 
@@ -168,95 +180,105 @@
                     <a href="{{route('all-user')}}"><i class="menu-icon fa fa-users"></i>All User </a>
                 </li>
                 <li class="menu-item-has-children dropdown sub-new1 project-bar">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fas fa-building"></i></i>Project</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false"> <i class="menu-icon fas fa-building"></i></i>Project</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li class="new-project"><i class="fa fa-puzzle-piece"></i><a href="{{route('add-project')}}">New Project</a></li>
-                        <li class="project-list"><i class="fas fa-list-ul"></i><a href="{{route(('show-project'))}}">Project Listing</a></li>
-                        <li class="property-list"><i class="fas fa-list-ul"></i><a href="{{route('show-property')}}">Property Listing </a></li>
+                        <li class="new-project"><i class="fa fa-puzzle-piece"></i><a href="{{route('add-project')}}">New
+                                Project</a></li>
+                        <li class="project-list"><i class="fas fa-list-ul"></i><a href="{{route(('show-project'))}}">Project
+                                Listing</a></li>
+                        <li class="property-list"><i class="fas fa-list-ul"></i><a href="{{route('show-property')}}">Property
+                                Listing </a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown event-bar">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gift"></i>Event</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false"> <i class="menu-icon fa fa-gift"></i>Event</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li class="new-event"><i class="fa fa-puzzle-piece"></i><a href="{{route('new-event')}}">New Event</a></li>
-                        <li class="event-list"><i class="fas fa-list-ul"></i><a href="{{route('show-event')}}">Event Listing</a></li>
+                        <li class="new-event"><i class="fa fa-puzzle-piece"></i><a href="{{route('new-event')}}">New
+                                Event</a></li>
+                        <li class="event-list"><i class="fas fa-list-ul"></i><a href="{{route('show-event')}}">Event
+                                Listing</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown banner-bar">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Banner</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Banner</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li class="new-banner"><i class="fa fa-puzzle-piece"></i><a href="{{route('new-banner')}}">New Banner</a></li>
-                        <li class="list-banner"><i class="fa fa-id-badge"></i><a href="{{route('list-banner')}}">Banner Listing</a></li>
+                        <li class="new-banner"><i class="fa fa-puzzle-piece"></i><a href="{{route('new-banner')}}">New
+                                Banner</a></li>
+                        <li class="list-banner"><i class="fa fa-id-badge"></i><a href="{{route('list-banner')}}">Banner
+                                Listing</a></li>
                     </ul>
                 </li>
-             {{--   <li class="menu-title">UI elements</li><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Components</a>
-                    <ul class="sub-menu children dropdown-menu">                            <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
-                        <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
-                        <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
+                {{--   <li class="menu-title">UI elements</li><!-- /.menu-title -->
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Components</a>
+                       <ul class="sub-menu children dropdown-menu">                            <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
+                           <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
+                           <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
 
-                        <li><i class="fa fa-id-card-o"></i><a href="ui-cards.html">Cards</a></li>
-                        <li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
-                        <li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
-                        <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
-                        <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
-                        <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
-                        <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                        <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                        <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                    </ul>
-                </li>
+                           <li><i class="fa fa-id-card-o"></i><a href="ui-cards.html">Cards</a></li>
+                           <li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
+                           <li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
+                           <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
+                           <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
+                           <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
+                           <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
+                       </ul>
+                   </li>
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
+                       <ul class="sub-menu children dropdown-menu">
+                           <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
+                           <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
+                       </ul>
+                   </li>
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
+                       <ul class="sub-menu children dropdown-menu">
+                           <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
+                           <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
+                       </ul>
+                   </li>
 
-                <li class="menu-title">Icons</li><!-- /.menu-title -->
+                   <li class="menu-title">Icons</li><!-- /.menu-title -->
 
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>Icons</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Font Awesome</a></li>
-                        <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themefy Icons</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widgets </a>
-                </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Charts</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">Chart JS</a></li>
-                        <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Chart</a></li>
-                        <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Chart</a></li>
-                    </ul>
-                </li>
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>Icons</a>
+                       <ul class="sub-menu children dropdown-menu">
+                           <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Font Awesome</a></li>
+                           <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themefy Icons</a></li>
+                       </ul>
+                   </li>
+                   <li>
+                       <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widgets </a>
+                   </li>
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Charts</a>
+                       <ul class="sub-menu children dropdown-menu">
+                           <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">Chart JS</a></li>
+                           <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Chart</a></li>
+                           <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Chart</a></li>
+                       </ul>
+                   </li>
 
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Maps</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Maps</a></li>
-                        <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
-                    </ul>
-                </li>
-                <li class="menu-tit  tras</li><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Pages</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-                        <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
-                        <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
-                    </ul>
-                </li>--}}
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Maps</a>
+                       <ul class="sub-menu children dropdown-menu">
+                           <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Maps</a></li>
+                           <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
+                       </ul>
+                   </li>
+                   <li class="menu-tit  tras</li><!-- /.menu-title -->
+                   <li class="menu-item-has-children dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Pages</a>
+                       <ul class="sub-menu children dropdown-menu">
+                           <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
+                           <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
+                           <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
+                       </ul>
+                   </li>--}}
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -279,13 +301,15 @@
                     <button class="search-trigger"><i class="fa fa-search"></i></button>
                     <div class="form-inline">
                         <form class="search-form">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..."
+                                   aria-label="Search">
                             <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
                         </form>
                     </div>
 
                     <div class="dropdown for-notification">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="notification"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell"></i>
                             <span class="count bg-danger">3</span>
                         </button>
@@ -307,7 +331,8 @@
                     </div>
 
                     <div class="dropdown for-message">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="message"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-envelope"></i>
                             <span class="count bg-primary">4</span>
                         </button>
@@ -350,7 +375,8 @@
                 </div>
 
                 <div class="user-area dropdown float-right">
-                    <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="{{Session::get('photo')}}" alt="User Avatar">
                     </a>
 
@@ -368,8 +394,8 @@
     </header>
     <!-- /#header -->
     <!-- Content -->
- @yield('content')
-    <!-- /.content -->
+@yield('content')
+<!-- /.content -->
     <div class="clearfix"></div>
     <!-- Footer -->
     <footer class="site-footer">
@@ -388,21 +414,21 @@
 <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
 <script>
     var toolbarOptions = [
-        [{ 'header': 1 }, { 'header': 2 }],
+        [{'header': 1}, {'header': 2}],
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         ['blockquote'],// custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+        [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+        [{'direction': 'rtl'}],                         // text direction
 
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
 
-        [{ 'font': [] }],
-        [{ 'align': [] }],
+        [{'font': []}],
+        [{'align': []}],
 
         ['clean'],
-        ['link','image','video']
+        ['link', 'image', 'video']
 
 
     ];

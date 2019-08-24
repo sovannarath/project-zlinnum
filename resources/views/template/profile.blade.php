@@ -2,6 +2,13 @@
 @section('meta')
     <meta name="CSRF_TOKEN" content="{{Session::get('access')}}">
     @endsection
+@section('style')
+    <style>
+        .right-panel{
+            position: relative;
+        }
+    </style>
+    @endsection
 @section('content')
 <div class="content">
     <div class="row">
@@ -27,14 +34,14 @@
                     </li>--}}
                     <li class="active">
                         <div class="row">
-                            <div class="col-12 col-sm-2"><i class="fas fa-cogs"></i></div>
-                            <div class="col-12 col-sm-10 pl-1 pr-1">Account Setting</div>
+                            <div class="col-1 col-sm-2"><i class="fas fa-cogs"></i></div>
+                            <div class="col col-sm-10 pl-1 pr-1">Account Setting</div>
                         </div>
                     </li>
                     <li>
                         <div class="row">
-                            <div class="col-12 col-sm-2"><i class="fas fa-question-circle"></i></div>
-                            <div class="col-12 col-sm-10 pl-1 pr-1">Help</div>
+                            <div class="col-1    col-sm-2"><i class="fas fa-question-circle"></i></div>
+                            <div class="col col-sm-10 pl-1 pr-1">Help</div>
                         </div>
                     </li>
                 </ul>

@@ -44,13 +44,13 @@
                             <strong class="card-title">User</strong>
                         </div>--}}
                         <div class="card-body">
-                            @component('components.property',['datalist'=>$datalist,'country_list'=>$country_list])
+                            @component('components.property',['datalist'=>$datalist,'country_list'=>$country_list,'data'=>$data])
                                 @slot('button_action')
                                     <div class="row">
                                         <div class="col12 col-4"></div>
                                         <div class="col12 col-4"></div>
                                         <div class="col12 col-4" style="text-align: right">
-                                            <button class="btn btn-success save-project" datasrc="{{route('store-property')}}" data-image="{{route('add-image-property')}}">Update Property</button>
+                                            <button class="btn btn-success update-property" datasrc="{{route('update-property')}}" data-image="{{route('update-image-property')}}" data-id="{{$data->id}}">Update Property</button>
                                         </div>
                                     </div>
                                 @endslot
@@ -79,6 +79,7 @@
     <script>
         var doc = $(document);
         $(document).ready(function () {
+             obj_function.country_property(".country_property");
             $('.project-bar')
                 .addClass('active show')
                 .find('.property-list')
@@ -92,8 +93,8 @@
             $('#datepicker1').datetimepicker({
                 format:"Y-MM-D"
             });
+            /*country_show_property('.country_property');*/
         });
-
         new Quill('#editor', {
             theme: 'snow',
             modules: {
@@ -108,6 +109,7 @@
             },
             placeholder: 'Detail',
         });
+
     </script>
 
 

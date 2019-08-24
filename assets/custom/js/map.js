@@ -27,8 +27,13 @@ function myMap() {
     map.addListener('click', function(e) {
         deleteMarkers();
         placeMarkerAndPanTo(e.latLng, map);
-
     });
+   var lnt =  parseFloat($('.lnt-number').val());
+   var lat =  parseFloat($('.lat-number').val());
+  if(typeof lnt !="undefined" && typeof lat !="undefined"){
+      placeMarkerAndPanTo(new google.maps.LatLng(lat,lnt),map);
+   }
+
     function handleEvent(latlng) {
         $('.lnt-number').val(latlng.lng());
         $('.lat-number').val(latlng.lat())

@@ -87,7 +87,7 @@ class PropertyController extends MasterController
             $data += ['bedroom' => $request->bedroom];
             $filter = true;
         }
-        $result = $this->http->search_property($page, $data, $limit);
+        $result = $this->property_request->search_property($page, $data, $limit);
 
         $repon = json_decode($result);
 
@@ -178,8 +178,29 @@ class PropertyController extends MasterController
         }
         $data = $property + $general + ['neighborhood' => $neighborhood];
         $token = Session::get('access');
-        $result = $this->http->insert_property($data, $token);
+        $result = $this->property_request->insert_property($data, $token);
         return $result;
+
+    }
+    public function update_image(Request $request){
+        $gallery = $request->gallery;
+        $id = $request->id;
+        $token = Session::get('access');
+        $this->property_request->delete_gallery($id,$token);
+
+        $file = [];
+        $gallery1 = [];
+        $file += ['propertyID' => $id];
+        if ($request->length_gallery > 0) {
+            $result = $this->http->post_image($gallery, $request->length_gallery, 'galleries');
+            if ($result) {
+                $file += $result;
+            } else {
+                return Response(['galleries' => "Gallery Error"], '500');
+            }
+        }
+        $reporse = $this->http->sent_image_property($file);
+        return $reporse;
 
     }
 
@@ -208,7 +229,7 @@ class PropertyController extends MasterController
         if (isset($id)) {
             $token = Session::get('access');
             $data = ['id' => $id];
-            $result = $this->http->delete_property($data, $token);
+            $result = $this->property_request->delete_property($data, $token);
             return $result;
         } else {
             return response(['status_code' => 400, 'message' => 'invalid id']);
@@ -219,7 +240,11 @@ class PropertyController extends MasterController
 
     public function detail($id)
     {
-      $result_property = $this->http->property_detail();
+      $data = $this->property_request->get_property_detail($id);
+      if($data->status_code==404){
+          return view('404');
+      }
+      $data = $data->result;
       $datalist = json_decode($this->http->all_title_project());
       $country = $this->http->project_country();
         if($country->status_code==200){
@@ -227,7 +252,75 @@ class PropertyController extends MasterController
         }else{
             $country_list = [];
       }
-      return view('template.property-detail',compact('country_list','datalist'));
+      return view('template.property-detail',compact('country_list','datalist','data'));
 
     }
+    public function update_property(Request $request){
+        $country = "";
+        if (isset($request->country)) {
+            $country = json_decode($request->country)->id;
+        }
+        $general = [
+            'id'=>$request->id,
+            'country' => $country,
+            'title' => $request->property_title, // ☑
+            'commune' => $request->sangkat, // ☑
+            'city' => $request->city,// ☑
+            'description' => $request->descriptionproperty,// ☑
+            'district' => $request->khan,// ☑
+            'land_length' => $request->land_length,// ☑
+            'land_width' => $request->land_width,// ☑
+            'lat' => $request->lat,// ☑
+            'lng' => $request->lng,// ☑
+            'rent_or_sell' => $request->sale_or_rent,// ☑
+            'show_map' => $request->show_map,
+            'street_no' => $request->st_no,// ☑
+            'sqm_price' => $request->sqm_price,// ☑
+            'total_land_area' => $request->total_land,// ☑
+            'unit_price' => $request->unitprice,// ☑
+            'village' => $request->village,// ☑
+            /* Property Type Select */
+            'property_types' => $request->property_select
+        ];
+        if ($request->enable_project == "true") {
+            $general += ['project_id' => $request->project_id,'enable_project'=>$request->enable_project];// ☑
+        }else{
+            $general += ['enable_project'=>$request->enable_project];// ☑
+        }
+        $property = [
+            'building_width' => $request->buildingwidth,// ☑
+            'building_height' => $request->buildingheight,// ☑
+            'bathroom' => $request->bathroom,// ☑
+            'bedroom' => $request->bed_room,// ☑
+            'living_room' => $request->living_room,// ☑
+            'dinning_room' => $request->dinning_room,// ☑
+            'kitchen' => $request->kitchen,// ☑
+            'air_conditioner' => $request->aircon,// ☑
+            'parking' => $request->parking,// ☑
+            'balcony' => $request->balcony,// ☑
+
+            'common_area' => $request->commentarea,// ☑
+            'floor_no' => $request->floor_no,// ☑
+            'house_no' => $request->house_no,// ☑
+
+            'private_area' => $request->private_area,// ☑
+            'total_area' => $request->total_build_area,// ☑
+            'total_building' => $request->total_build_area,// ☑
+            'mazzaninefloor' => $request->mazzaninefloor,// ☑
+
+
+        ];
+        $neighborhood = [];
+        if (isset($request->location)) {
+            foreach ($request->location as $item) {
+                array_push($neighborhood, ['address' => $item['address'], 'distance' => $item['property']]);
+            }
+        }
+        $data = $property + $general + ['neighborhoods' => $neighborhood];
+        $token = Session::get('access');
+        $result = $this->property_request->update_property($data, $token);
+        return $result;
+    }
+
+
 }

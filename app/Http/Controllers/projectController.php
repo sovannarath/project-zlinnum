@@ -57,7 +57,7 @@ class projectController extends MasterController
 
     }
     public function add_project(){
-        $type_project = $this->http->project_type();
+        $type_project = $this->project_request->project_type();
         $datalist = json_decode($this->http->all_title_project());
         if($type_project->status_code==200){
             $type = $type_project->result;
@@ -200,7 +200,7 @@ class projectController extends MasterController
                 'sqm_price'=>$pri_s,
             ];
 
-            $result = $this->http->addProject($token,$data);
+            $result = $this->project_request->addProject($token,$data);
             return $result;
         }
 
@@ -254,7 +254,7 @@ class projectController extends MasterController
             $search = false;
         }
         $body += ['sort_type'=>'updated_at','sort_format'=>'desc'];
-        $response    = $this->http->project_listing_show($body,$page,$limit,$other);
+        $response    = $this->project_request->project_listing_show($body,$page,$limit,$other);
         $project = json_decode($response['result']);
         $project_type = $response['project_type'];
         if($project->status_code==200){
@@ -302,7 +302,7 @@ class projectController extends MasterController
                 'projectID'=> $request->id,
                 'status'=>$request->status
             ];
-            $check = $this->http->update_project($data,$token);
+            $check = $this->project_request->update_project($data,$token);
             $check = json_decode($check);
             if($check->status_code==200){
                 return response()->json($check);
@@ -316,9 +316,9 @@ class projectController extends MasterController
 
     }
     public function detail($id){
-        $project = $this->http->project_detail($id);
+        $project = $this->project_request->project_detail($id);
         try { $project = json_decode($project);}catch (\Exception $exception){}
-        $type_project = $this->http->project_type();
+        $type_project = $this->project_request->project_type();
         if($type_project->status_code==200){
             $type = $type_project->result;
         }else{
@@ -393,7 +393,7 @@ class projectController extends MasterController
             'sqm_price'=>$pri_s,
         ];
         $token  = Session::get('access');
-        $result = $this->http->change_project($data,$token);
+        $result = $this->project_request->change_project($data,$token);
         return $result;
     }
     public function update_image(Request $request){
@@ -414,7 +414,7 @@ class projectController extends MasterController
         $file = $file + ['projectID'=>$id];
         if($request->length_gallery>0){
             $token = Session::get('access');
-            $delete = $this->http->delete_image($id,$token);
+            $delete = $this->project_request->delete_image($id,$token);
             $result  = $this->http->post_image($gallery,$request->length_gallery,'galleries');
             if($result){
                 $gallery1 =$result;

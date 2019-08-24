@@ -1,5 +1,12 @@
 @extends('template.master')
 @section('title') New Event @endsection
+@section('style')
+    <style>
+        .has-error-text{
+            display: none;
+        }
+    </style>
+    @endsection
 @section('content')
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -27,7 +34,6 @@
     <div class="content">
         <div class="animated fadeIn">
             <div class="row">
-
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -44,39 +50,51 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <input type="file" class="input-file new-event-image">
-                                        <div
-                                            style="width: 100%;height: 200px;background-image:url('{{asset('assets/media/no_image.f1ee5199.jpg')}}')" class="add-background receive-background"></div>
-                                        <p style="text-align: center">Select to Chouse File</p>
+                                        <div style="width: 100%;height: 200px;background-image:url('{{asset('assets/media/no_image.f1ee5199.jpg')}}')" class="add-background receive-background" check_image="false">
+
+                                        </div>
+                                        <p style="text-align: center;margin-top: 10px;">Select to Chouse File</p>
+                                        <p style="text-align: center;margin-top: 10px;display: none" class="message">Select to Chouse File</p>
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group position-relative">
-                                                <label>Title</label>
-                                                <input type="text" class="form-control" placeholder="Enter title">
+                                                    <label>Title</label>
+                                                        <input type="text" class="form-control title-event"
+                                                               placeholder="Enter title">
+                                                    <small class="form-text has-error-text"></small>
+
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label for="">Event start Date</label>
+                                                <div class="form-group position-relative">
                                                 <input type="text" class="form-control event-date" placeholder="Enter Event Date">
+                                                    <small class="form-text has-error-text"></small>
+                                                </div>
+
                                             </div>
                                         </div>
-                                        <div class="row" style="margin-top: 50px">
+                                        <div class="row" style="margin-top: 20px">
                                             <div class="col-sm-12" style="font-size: 23px;">Description</div>
                                         </div>
                                         <div class="d-lg-block position-relative">
                                             <div class="col-sm-12 pl-0 mt-3">
+                                                <div class="form-group position-relative">
                                                 <div id="des-event" style="height: 200px;">
 
                                                 </div>
+                                                    <div class="form-group position-relative">
+                                                <small class="form-text has-error-text"></small>
 
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12 mt-3">
-                                                <button class="btn btn-success" style="width: 100%;">Save</button>
+                                                <button class="btn btn-success save-event" style="width: 100%;" datasrc="{{route('store-event')}}">Save</button>
                                             </div>
                                         </div>
 
@@ -89,6 +107,8 @@
             </div>
         </div>
     </div>
+    </div>
+        </div>
     </div>
 @endsection
 @section('script')

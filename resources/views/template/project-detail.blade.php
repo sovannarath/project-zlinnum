@@ -78,6 +78,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCemCVmfbBlPHgxU7SxVtvxivZM8HopGY&callback=myMap"></script>
     {{-- Script --}}
     <script>
+
         var doc = $(document);
         $(document).ready(function () {
             $('.project-bar')
@@ -87,6 +88,8 @@
                 .closest('.project-bar')
                 .find('.sub-menu')
                 .addClass('show');
+
+
             $('#datepicker').datetimepicker({
                 format:"Y-MM-D"
             });
@@ -94,6 +97,10 @@
                 format:"Y-MM-D"
             });
         });
+        setTimeout(function () {
+            obj_function.country_show_project('.country-select');
+        },500);
+
 
         new Quill('#editor', {
             theme: 'snow',
@@ -109,6 +116,7 @@
             },
             placeholder: 'Detail',
         });
+
     </script>
 
 

@@ -398,7 +398,7 @@
                                                             style="width:100px;height: auto;background: #ded9ff;margin: 0 auto">
                                                             <img class="lazyload" data-src="{{$photo}}"></div>
                                                     </td>
-                                                    <td class="" style="width: 400px;"><p>{{$item->title}}</p></td>
+                                                    <td class="" style="width: 400px;"><a class="linker" href="{{route('property-detail',['id'=>$item->id])}}">{{$item->title}}</a></td>
                                                     <td class="">
                                                         <div style="text-align: center">
                                                             @if(strtolower($item->country)=="cambodia")
