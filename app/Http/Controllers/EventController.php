@@ -10,7 +10,19 @@ class EventController extends MasterController
 {
     public function index(Request $request)
     {
-        $result = $this->event_request->listing();
+        $filter = [];
+        if(isset($request->limit)){
+            $filter += ['limit'=>$request->limit];
+        }
+        if(isset($request->status)){
+            if($request->status=="enable"){
+                $filter += ['status'=>'true'];
+            }else if($request->status=="disable"){
+                $filter += ['status'=>'false'];
+            }
+
+        }
+        $result = $this->event_request->listing($filter);
         if ($result->status_code == 200) {
             $data = $result->result;
             $paginate = $result->paginate;
@@ -19,8 +31,8 @@ class EventController extends MasterController
             $paginate = [];
         }
         $render_paginate = $this->created_paginate($paginate);
-
-        return view('template.event-listing', compact('data', 'paginate', 'render_paginate'));
+        $parameter = $request->all();
+        return view('template.event-listing', compact('data', 'paginate', 'render_paginate','parameter'));
     }
 
     public function add_event()
@@ -46,18 +58,52 @@ class EventController extends MasterController
         $result = $this->event_request->insert_event($data, $token);
 
         $re = json_decode($result, true);
-        return response($re, $re['status_code']);
+        return response($re, (int)$re['status_code']);
 
 
     }
-    public function delete($id){
+    public function delete($id,Request $request){
         $token = Session::get('access');
         $data = [
         'eventID'=>$id,
-        'status'=>'false'
+        'status'=>$request->status
         ];
-        $this->event_request->change_status($data,$token);
+        $result  = $this->event_request->change_status($data,$token);
+        $data = json_decode($result,true);
+        try{
+        return response($data,(int)$data['status_code']);
+        }catch (\Exception $ex){
+        return response($result,500);
+        }
 
 
+    }
+    public function detail($id=null){
+        if($id!=null){
+            $result = $this->event_request->detail($id);
+            if($result->status_code==200){
+                $data = $result->result;
+                return view('template.edit-event',compact('data'));
+            }
+        }
+            return view('404');
+
+    }
+    public function update(Request $request){
+        $data = $request->except('_token', 'file', 'event_date');
+        if (isset($request->event_date)) {
+            $date = date_create_from_format('d/m/Y', $request->event_date);
+            $date = date_format($date, 'Y-m-d');
+            $data += ['event_date' => $date];
+        }
+        $token = Session::get('access');
+        $file = $request->file('file');
+        if (isset($file)) {
+            $file = curl_file_create($file, $file->getMimeType(), $file->getClientOriginalName());
+            $data += ['file' => $file];
+        }
+        $result = $this->event_request->update_event($data, $token);
+        $ar = json_decode($result,true);
+        return response($ar,(int)$ar['status_code']);
     }
 }

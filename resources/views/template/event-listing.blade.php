@@ -1,14 +1,6 @@
 @extends('template.master')
 @section('title') Event Listing @endsection
 @section('content')
-    @component('components.alert',
-    [
-    'title'=>'Wanning',
-    'message'=>'Are Your Sure ?',
-    'class_action'=>'delete-event',
-    'action'=>'Delete'
-    ])
-    @endcomponent
     <span class="delete-event-link" datasrc="{{route('delete-event')}}"></span>
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -40,6 +32,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="parameter" content="{{json_encode($parameter)}}"></div>
                             <div id="bootstrap-data-table_wrapper"
                                  class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
@@ -53,12 +46,17 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Show</span>
                                                 </div>
-                                                <select placeholder="Search by name" name="title" class="form-control"
+                                                <select class="form-control limit-list-event"
                                                         style="border-radius: 1px;">
-                                                    <option value="10">10</option>
-                                                    <option value="20">20</option>
-                                                    <option value="40">40</option>
-                                                    <option value="100">100</option>
+
+                                                    @foreach([10,20,40,100] as $item)
+                                                        @if(isset($parameter['limit']) && $parameter['limit']==$item) @php $check = "selected"; @endphp
+                                                        @else   @php $check =""; @endphp
+                                                        @endif
+                                                        <option value="{{$item}}" {{$check}}>{{$item}}</option>
+                                                    @endforeach
+
+
                                                 </select>
                                             </div>
                                             </span>
@@ -69,11 +67,15 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Status</span>
                                                 </div>
-                                                <select placeholder="Search by name" name="title" class="form-control"
+                                                <select class="form-control status-list-event"
                                                         style="border-radius: 1px;">
-                                                    <option value="10">All</option>
-                                                    <option value="20">Enable</option>
-                                                    <option value="40">Disable</option>
+                                                    @foreach(['all','enable','disable'] as $item)
+                                                        @if(isset($parameter['status']) && $parameter['status']==$item) @php $check = "selected"; @endphp
+                                                        @else   @php $check =""; @endphp
+                                                        @endif
+                                                        <option value="{{$item}}" {{$check}}>{{ ucwords($item)}}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
 
@@ -137,7 +139,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($data as $item)
+                                            @foreach($data as $position => $item)
 
                                                 <tr class="odd">
                                                     <td id="event_id">{{$item->id}}</td>
@@ -149,19 +151,12 @@
                                                         </div>
                                                     </td>
                                                     <td class="" style="width: 400px;">
-                                                        <p>{{$item->title}}</p></td>
+                                                        <p><a class="linker" href="{{route('detail-event')."/".$item->id}}">{{$item->title}}</a></p></td>
                                                     <td class="">{{date_format(date_create($item->expired_date),'d M Y')}}</td>
                                                     <td class="sorting_1">
-                                                        <div class="custom-control custom-switch"
-                                                             style="text-align:center">
-                                                            <input type="checkbox" class="custom-control-input event-status"
-                                                                   id="customSwitch1"
-                                                                   @if($item->status=="true") checked @endif>
-                                                            <label class="custom-control-label"
-                                                                   for="customSwitch1"></label>
-                                                        </div>
+                                                        <div class="v-switch-button status_check"
+                                                             @if($item->status=="true") checked @endif></div>
                                                     </td>
-
 
 
                                                 </tr>

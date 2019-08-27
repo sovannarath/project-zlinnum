@@ -11,6 +11,7 @@ class MasterController extends Controller
     public $property_request;
     public $project_request;
     public $event_request;
+    public $banner;
 
     public function __construct()
     {
@@ -20,6 +21,7 @@ class MasterController extends Controller
         $this->property_request = new properties_request();
         $this->project_request = new project_request();
         $this->event_request = new event_request();
+        $this->banner = new slider_request();
     }
 
     static public function check_centen($str)

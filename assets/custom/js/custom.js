@@ -332,21 +332,10 @@ $(document).ready(function () {
 
     function notification(message, status) {
         if (status == "ok") {
-            $('.notification').append(' <div class="noti-item success slider-down-in">\n' +
-                '        <div class="row m-0">\n' +
-                '            <div class="col-11 p-0 m-0">' + message + '</div>\n' +
-                '            <div class="col-1 p-0 m-0" style="text-align: center;cursor: pointer;padding: 5px;"><span class="close-noti-item">x</span></div>\n' +
-                '        </div>\n' +
-                '    </div>');
+            v.notify.message({type: "success", message: message});
         } else {
-            $('.notification').append(' <div class="noti-item unsuccess slider-down-in">\n' +
-                '        <div class="row m-0">\n' +
-                '            <div class="col-11 p-0 m-0">' + message + '</div>\n' +
-                '            <div class="col-1 p-0 m-0" style="text-align: center;cursor: pointer;padding: 5px;"><span class="close-noti-item">x</span></div>\n' +
-                '        </div>\n' +
-                '    </div>');
+            v.notify.message({type: "danger", message: message});
         }
-        sw(1);
 
     }
 
@@ -1532,7 +1521,7 @@ $(document).ready(function () {
         }
     });
 
-    function popup_message(message, title, type) {
+    function popup_message(message, title, type, cls=null) {
         $('.popup-model').fadeIn(300).attr('type', type);
         var check = false;
         $('body').css('overflow', 'hidden');
@@ -1559,7 +1548,11 @@ $(document).ready(function () {
         doc.on('click', '.cancel-btn', function () {
             $(this).closest('.popup-model').fadeOut(300);
             $('body').css('overflow', 'auto');
+
         });
+        if (cls != null) {
+            $('.action-btn').removeClass().addClass('btn-custom ' + "action-btn-" + cls);
+        }
     }
 
     doc.on('click', '.custom-pagination-property li.page-item-list a', function (e) {
@@ -2045,6 +2038,10 @@ $(document).ready(function () {
         var THIS = $(this);
         event_process('', THIS);
     });
+    doc.on('click', '.update-event', function () {
+        var THIS = $(this);
+        event_process(true, THIS);
+    });
 
     function event_process(update=false, element) {
         var data = new FormData();
@@ -2053,6 +2050,10 @@ $(document).ready(function () {
         var des = $('#des-event').find('.ql-editor').html();
         var url = element.attr('datasrc');
         var check = $('.receive-background').attr('check_image');
+        if (update != false) {
+            var id = $('.id-event').val();
+            data.append('id', id);
+        }
         data.append('title', title);
         data.append('event_date', event_date);
         data.append('description', des);
@@ -2072,12 +2073,12 @@ $(document).ready(function () {
             }
         });
         $.post(url, data, function (result) {
-            if(result.status_code==200){
+            if (result.status_code == 200) {
                 validation_event([]);
-                if(update!=true){
-                    notification('Insert Event Successfully','ok');
-                }else{
-                    notification('Update Event Successfully')
+                if (update != true) {
+                    notification('Insert Event Successfully', 'ok');
+                } else {
+                    notification('Update Event Successfully', 'ok')
                 }
             }
         }).fail(function (errro) {
@@ -2098,7 +2099,7 @@ $(document).ready(function () {
                 .find('.has-error-text')
                 .text(json.title)
                 .show();
-            message.push("* "+json.title);
+            message.push("* " + json.title);
         } else {
             $('.title-event')
                 .removeClass('is-invalid')
@@ -2116,7 +2117,7 @@ $(document).ready(function () {
                 .find('.has-error-text')
                 .text(json.event_date)
                 .show();
-            message.push("* "+json.event_date);
+            message.push("* " + json.event_date);
         } else {
             $('.event-date')
                 .removeClass('is-invalid')
@@ -2134,36 +2135,112 @@ $(document).ready(function () {
                 .css('color', '#901e1e')
                 .text('Please Select Image')
                 .show();
-            message.push("* "+json.file);
+            message.push("* " + json.file);
         } else {
             $('.receive-background').css('border', 'none')
                 .closest('.row')
                 .find('.message')
                 .hide();
         }
-        notification(message.join('<br>'));
+        if (json.length > 0) {
+            notification(message.join('<br>'));
+        }
 
 
     }
-    doc.on('click','.event-status',function (e) {
-        e.preventDefault();
-        var id = $(this)
-            .closest('.odd')
-            .find('#event_id')
-            .text();
-        $('.action-btn-delete-event').attr('event_id',id);
-        popup_message('Are Your Sure ?','Waning','change-status')
+
+    var index;
+    doc.on('click', '.cancel-enable', function () {
+        console.log(index);
+        v.switchButton.setcheck({
+            fill: index,
+            status: false
+        })
+    });
+    doc.on('click', '.cancel-disable', function () {
+        v.switchButton.setcheck({
+            fill: index,
+            status: true
+        })
     });
 
-    doc.on('click','.action-btn-delete-event',function () {
-        var id = $(this).attr('event_id');
+    doc.on('change', '.status_check', function () {
+
+        var check = v.switchButton.getcheck({fill: this});
+        index = this;
+        if (check.check) {
+            v.alert.set({
+                title: "Message",
+                message: "Are You Want To Enable Event ?",
+                button: "action-enable-event",
+                buttontxt: "Enable",
+                buttonCancel: "cancel-enable"
+            });
+        } else {
+            v.alert.set({
+                title: "Waning",
+                message: "Are You Want To Disable Event ?",
+                button: "action-delete-event",
+                buttontxt: "Disable",
+                buttonCancel: "cancel-disable"
+            });
+        }
+    });
+    doc.on('click', '.action-delete-event', function () {
+        change_status(false);
+    });
+    doc.on('click', '.action-enable-event', function () {
+        change_status(true);
+    });
+
+    function change_status(check) {
+        var id = $(index).closest('.odd').find('#event_id').text();
         var url = $('.delete-event-link').attr('datasrc');
-        $.post(url+"/"+id,{_token:tokent},function (result) {
-            console.log(result);
+        loadingmode('on');
+        $.post(url + "/" + id, {_token: tokent, status: check}, function (result) {
+            if (typeof result.status_code != "undefined" && result.status_code == 200) {
+                window.location.reload();
+            } else {
+                notification('Delete Event False', 'false');
+            }
+
         }).fail(function (error) {
             console.log(error);
+            loadingmode('off');
         });
+    }
+
+    doc.on('change', '.status-list-event', function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.status = data;
+        var page = check_parameter_event(json);
+        window.open(page, '_self');
     });
+    doc.on('change', '.limit-list-event', function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.limit = data;
+        var page = check_parameter_event(json);
+
+        window.open(page, '_self');
+    });
+
+    function check_parameter_event(json={}) {
+        var current_url = window.location.href.split('?')[0];
+        var query = [];
+        if (typeof json.limit != "undefined") {
+            query.push("limit=" + json.limit);
+        }
+        if (typeof json.status != "undefined") {
+            query.push("status=" + json.status);
+        }
+        var result = current_url + "?" + query.join('&');
+        return result;
+    }
+
 
     /* End Event Function */
 });

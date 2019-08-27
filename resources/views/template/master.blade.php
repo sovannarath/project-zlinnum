@@ -46,6 +46,7 @@
     <link href="{{asset('assets/fas-icon/css/all.css')}}" rel="stylesheet">
     <link href="{{asset('assets/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
     <link href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/vquery/kh.vquery.css')}}" rel="stylesheet">
 
 
     <style>
@@ -120,6 +121,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>--}}
     <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/vquery/kh.vquery.js')}}"></script>
     <script src="{{asset('assets/c-js/popper.min.js')}}"></script>
     <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/jqery-match-height/dist/jquery.matchHeight.min.js')}}"></script>
@@ -152,6 +154,8 @@
     <script src="{{asset('assets/chart.js/dist/chart.js')}}"></script>
     <script src="{{asset('assets/chart.js/dist/Chart.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{asset('assets/vquery/bootstrap-notify.min.js')}}"></script>
+    <script src="{{asset('assets/vquery/bootstrap-notify.js')}}"></script>
     <script src="{{asset('assets/custom/js/custom.js')}}"></script>
 </head>
 <body>

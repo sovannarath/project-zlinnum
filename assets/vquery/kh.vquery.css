@@ -1,0 +1,162 @@
+@import "animate.css";
+@import "bootstrap.css";
+@import "bootstrap.min.css";
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#v-loading {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1080;
+}
+#v-loading img {
+  margin: 0 auto;
+  display: block;
+  top: 30%;
+  position: relative;
+}
+
+/* Switch Button */
+.v-switch-button .switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+}
+.v-switch-button .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.v-switch-button span.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.v-switch-button span.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.v-switch-button .round {
+  border-radius: 34px;
+}
+.v-switch-button .round:before {
+  border-radius: 50%;
+}
+.v-switch-button .move-left:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.v-switch-button .move-right:before:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.v-switch-button input:checked + .move-right {
+  background-color: #2196F3;
+}
+.v-switch-button input:focus + .move-right {
+  box-shadow: 0 0 1px #2196F3;
+}
+.v-switch-button input:checked + .move-right:before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}
+.v-switch-button input:checked + .move-left {
+  background-color: #2196F3;
+}
+.v-switch-button input:focus + .move-left {
+  box-shadow: 0 0 1px #2196F3;
+}
+.v-switch-button input:checked + .move-left:before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}
+
+/* End Switch Button */
+.tage-vquery .background-mode {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+.tage-vquery .popup-model {
+  display: none;
+}
+.tage-vquery .main-layout-alert {
+  width: 400px;
+  display: block;
+  min-height: 100px;
+  margin: 0 auto;
+  background: white;
+  position: relative;
+  top: 30%;
+  border-radius: 3px;
+  animation-duration: 400ms;
+}
+.tage-vquery .main-layout-alert .title {
+  padding: 10px 20px;
+  background: #03a9f3;
+  color: white;
+  display: block;
+}
+.tage-vquery .main-layout-alert .body {
+  padding: 10px 20px;
+  font-size: 20px;
+}
+.tage-vquery .main-layout-alert .footer-alert {
+  padding: 10px 10px 10px 10px;
+  text-align: right;
+}
+.tage-vquery .main-layout-alert .btn-custom {
+  padding: 7px 15px;
+  background: rgba(3, 169, 243, 0.9);
+  color: white;
+  display: inline-block;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 300ms;
+}
+.tage-vquery .main-layout-alert .btn-custom:hover {
+  background: #03a9f3;
+  opacity: 0.8;
+}
+
+/*# sourceMappingURL=kh.vquery.css.map */

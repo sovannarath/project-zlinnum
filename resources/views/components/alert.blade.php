@@ -8,7 +8,7 @@
         </div>
         <div class="footer-alert">
             <span class="btn-custom cancel-btn">Cancel</span>
-            <span class="btn-custom action-btn-{{$class_action}}">{{$action}}</span>
+            <span class="btn-custom action-btn action-btn-{{$class_action}}">{{$action}}</span>
         </div>
     </div>
 </div>

@@ -19,8 +19,6 @@ class HttpRequest extends Controller
     }
 
 
-
-
     public function all_title_property()
     {
         $title_property = [];
@@ -76,8 +74,6 @@ class HttpRequest extends Controller
         }
 
     }
-
-
 
 
     public function loginRequest($data)
@@ -209,8 +205,8 @@ class HttpRequest extends Controller
             $subfile = [];
             foreach ($image as $index => $value) {
                 try {
-                    $error = $value->getError() ;
-                    if ( isset($error) && $error != 1) {
+                    $error = $value->getError();
+                    if (isset($error) && $error != 1) {
                         $subfile['' . $name . '[' . $index . ']'] = curl_file_create($value, $value->getMimeType(), $value->getClientOriginalName());
                     }
                 } catch (\Exception $exception) {
@@ -221,8 +217,8 @@ class HttpRequest extends Controller
         } else if ($count_image > 0) {
             if ($name == "galleries") {
                 try {
-                    $error = $image[0]->getError() ;
-                    if ( isset($error) && $error != 1) {
+                    $error = $image[0]->getError();
+                    if (isset($error) && $error != 1) {
                         $cfile['' . $name . '[0]'] = curl_file_create($image[0], $image[0]->getMimeType(), $image[0]->getClientOriginalName());
                         $file = $cfile;
                     } else {
@@ -235,8 +231,8 @@ class HttpRequest extends Controller
 
             } else {
                 try {
-                    $error = $image->getError() ;
-                    if ( isset($error) && $error != 1) {
+                    $error = $image->getError();
+                    if (isset($error) && $error != 1) {
                         $cfile = curl_file_create($image, $image->getMimeType(), $image->getClientOriginalName());
                         $file = $cfile;
                     } else {
@@ -293,7 +289,6 @@ class HttpRequest extends Controller
         $respon = curl_exec($ch);
         return $respon;
     }
-
 
 
     public function getuser($key, $type, $limit, $page = 1, $search)
@@ -370,7 +365,6 @@ class HttpRequest extends Controller
     }
 
 
-
     public function get_country()
     {
         try {
@@ -393,9 +387,6 @@ class HttpRequest extends Controller
     }
 
 
-
-
-
     public function get_city($country_id = null, $city_in_listing = "false")
     {
         $data = [
@@ -415,13 +406,6 @@ class HttpRequest extends Controller
         }
 
     }
-
-
-
-
-
-
-
 
 
 }

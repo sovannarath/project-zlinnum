@@ -98,29 +98,30 @@
                                                 <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: auto;">Name
                                                 <th class="sorting_asc" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Salary: activate to sort column descending" aria-sort="ascending">Status
                                                 </th>
-                                                <th class="sorting_asc" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Salary: activate to sort column descending" aria-sort="ascending" style="width: 20px;">Remove
-                                                </th>
 
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @for($i=0;$i<5;$i++)
+                                            @foreach($data as $value)
                                             <tr class="odd">
                                                 <td class="">01</td>
-                                                <td class=""><div style="width:100px;height: auto;background: #ded9ff;margin: 0 auto"><img src="{{asset('assets/media/catalog-default-img.webp')}}"></div></td>
-                                                <td class="" style="width: 400px;"><p>
-                                                        21世纪柬埔寨看房团</p></td>
+                                                <td class=""><div style="width:100px;height: auto;background: #ded9ff;margin: 0 auto"><img src="{{$value->slider}}"></div></td>
+                                                <td class="" style="width: 400px;"><p>{{$value->title}}</p></td>
                                                 <td class="sorting_1">
-                                                    <div class="custom-control custom-switch" style="text-align:center">
-                                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                                        <label class="custom-control-label" for="customSwitch1"></label>
-                                                    </div>
+                                                    @if(isset($value->status))
+                                                        @if($value->status=="true")
+                                                            @php $check = "checked"; @endphp
+                                                            @else
+                                                            @php $check = ""; @endphp
+                                                            @endif
+                                                        @endif
+                                                    <div class="v-switch-button status_check" {{$check}}></div>
                                                 </td>
-                                                <td style="text-align: center;font-size: 12px;color: darkred"><i class="fas fa-trash"></i></td>
+
 
 
                                             </tr>
-                                                @endfor
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

@@ -53,7 +53,7 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group position-relative">
                                                 <label>Title</label>
-                                                <input type="text" class="form-control" placeholder="Enter title">
+                                                <input type="text" class="form-control title-bannerphp" placeholder="Enter title">
                                             </div>
                                         </div>
                                         </div>

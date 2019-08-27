@@ -53,14 +53,14 @@ Route::prefix('admin')->group(function () {
     Route::GET('/new-event', 'EventController@add_event')->name('new-event');
 
     Route::GET('/event-listing', 'EventController@index')->name('show-event');
+    Route::get('event-detail/{id?}','EventController@detail')->name('detail-event');
+    Route::post('event-update','EventController@update')->name('update-event');
     Route::POST('/delete-event/{id?}', 'EventController@delete')->name('delete-event');
 
     Route::GET('/new-banner', function () {
         return view('template.new-banner');
     })->name('new-banner');
-    Route::GET('/list-banner', function () {
-        return view('template.list-banner');
-    })->name('list-banner');
+    Route::GET('/list-banner','slider@index')->name('list-banner');
     Route::GET('profile', 'UserController@showProfile')->name('view-profile');
     Route::post('change-status-project', 'projectController@change_status')->name('change-status-project');
     Route::PUT('change-profile', 'UserController@change_profile')->name('change-profile');
