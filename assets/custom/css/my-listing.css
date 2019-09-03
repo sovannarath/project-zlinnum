@@ -1,0 +1,100 @@
+@font-face {
+  font-family: "Raleway Regular";
+  src: url("http://localhost/project/assets/fonts//Raleway-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Verdana Regular";
+  src: url("http://localhost/project/assets/fonts//verdana.ttf");
+}
+
+.main {
+  background: #606060;
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  overflow: hidden;
+}
+
+.main .main1 {
+  position: relative;
+}
+
+.main .main1:before {
+  content: "";
+  width: 85%;
+  height: 100%;
+  position: absolute;
+  border-bottom: 1px solid white;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
+.main .main2 {
+  margin-top: 10px !important;
+}
+
+.main .main2 .text {
+  font-family: "Raleway Regular";
+  width: 100px;
+  text-align: center;
+  color: white;
+}
+
+.main .main2 .text .number {
+  font-family: "Verdana Regular";
+}
+
+.main .row .col-lg-4 {
+  padding: 10px;
+}
+
+.main .row .col-lg-8 {
+  padding: 10px;
+}
+
+.main .row .title-profile {
+  color: white;
+  padding-top: 25px;
+  font-family: "Raleway Regular";
+}
+
+.main .row .title-profile h4,
+.main .row .title-profile p {
+  color: white;
+}
+
+.main .row .title-profile h4 {
+  font-size: 24px;
+}
+
+.main .row .title-profile p {
+  font-size: 14px;
+}
+
+.main .profile-image {
+  width: 80px;
+  height: 80px;
+  background: black;
+  border: 2px solid white;
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.25);
+  background-size: calc(100%);
+  margin-bottom: 10px;
+}
+
+.main-1 {
+  padding: 20px 20px;
+}
+
+@media screen and (max-width: 1000px) {
+  .title-profile {
+    text-align: center;
+  }
+
+  .main .main2 .text {
+    width: 33.3333333333%;
+  }
+}
+

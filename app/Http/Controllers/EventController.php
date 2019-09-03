@@ -22,6 +22,9 @@ class EventController extends MasterController
             }
 
         }
+        if(isset($request->page)){
+            $filter += ['page'=>$request->page];
+        }
         $result = $this->event_request->listing($filter);
         if ($result->status_code == 200) {
             $data = $result->result;
@@ -37,7 +40,12 @@ class EventController extends MasterController
 
     public function add_event()
     {
-        return view('template.new-event');
+        if(strtolower(Session::get('role'))=="user"){
+            $no_permission = true;
+        }else{
+            $no_permission = false;
+        }
+        return view('template.new-event',compact('no_permission'));
     }
 
     public function store_event(Request $request)
@@ -58,6 +66,7 @@ class EventController extends MasterController
         $result = $this->event_request->insert_event($data, $token);
 
         $re = json_decode($result, true);
+
         return response($re, (int)$re['status_code']);
 
 
@@ -81,9 +90,14 @@ class EventController extends MasterController
     public function detail($id=null){
         if($id!=null){
             $result = $this->event_request->detail($id);
+            if(strtolower(Session::get('role'))=="user"){
+                $no_permission = true;
+            }else{
+                $no_permission = false;
+            }
             if($result->status_code==200){
                 $data = $result->result;
-                return view('template.edit-event',compact('data'));
+                return view('template.edit-event',compact('data','no_permission'));
             }
         }
             return view('404');

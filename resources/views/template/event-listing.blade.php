@@ -154,8 +154,16 @@
                                                         <p><a class="linker" href="{{route('detail-event')."/".$item->id}}">{{$item->title}}</a></p></td>
                                                     <td class="">{{date_format(date_create($item->expired_date),'d M Y')}}</td>
                                                     <td class="sorting_1">
-                                                        <div class="v-switch-button status_check"
+                                                        @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user")
+                                                            <div class="v-switch-button status_check"
                                                              @if($item->status=="true") checked @endif></div>
+
+                                                            @else
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input" readonly="true" @if($item->status=="true") checked @endif>
+                                                                <label class="custom-control-label" for="customSwitch1"></label>
+                                                            </div>
+                                                        @endif
                                                     </td>
 
 
@@ -163,6 +171,11 @@
                                             @endforeach
                                             </tbody>
                                         </table>
+                                        @if(empty($data))
+                                            <div class="alert alert-danger" role="alert">
+                                                No Found
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row">

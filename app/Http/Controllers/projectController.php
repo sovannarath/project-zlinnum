@@ -77,11 +77,17 @@ class projectController extends MasterController
         }else{
             $citylist = [];
         }
+        $data = [
+            'citylist'=>$citylist,
+            'country_list'=>$country_list,
+            'type'=>$type,
+            'datalist'=>$datalist,
+        ];
+        if(strtolower(Session::get('role'))=="user"){
+            $data += ['no_permission'=>true];
+        }
 
-        return view('template.add-project',compact(
-            'type',
-            'citylist',
-            'country_list','datalist'));
+        return view('template.add-project',$data);
 
     }
     public function store_project(Request $request){
@@ -262,6 +268,7 @@ class projectController extends MasterController
             $result = $project->result;
             $paginate = $project->paginate;
             $city = $response['city'];
+
         }else{
             $paginate = [];
             $result = [];
@@ -340,7 +347,15 @@ class projectController extends MasterController
         if($project->status_code!=200){
             return view('404');
         }
-        return view('template.project-detail',compact('country_list','type','project_result'));
+        $data = [
+        'country_list'=>$country_list,
+        'type'=>$type,
+         'project_result'=>$project_result
+        ];
+        if(strtolower(Session::get('role'))=="user"){
+            $data += ['no_permission'=>true];
+        }
+        return view('template.project-detail',$data);
 
     }
     public function update_project(Request $request){

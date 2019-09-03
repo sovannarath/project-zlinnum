@@ -12,10 +12,11 @@ class slider_request extends HttpRequest
      *
      * @return \Illuminate\Http\Response
      */
-    public function slider_index()
+    public function slider_index($filter)
     {
         try{
-        $result  = $this->client->get($this->host."/api/slider");
+            $query = http_build_query($filter);
+        $result  = $this->client->get($this->host."/api/slider?".$query);
         return  json_decode($result->getBody()->getContents());
         }catch (RequestException $requestException){
         return (object)['status_code'=>$requestException->getResponse()->getStatusCode(),
@@ -39,9 +40,14 @@ class slider_request extends HttpRequest
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function slider_store(Request $request)
+    public function slider_store($data,$token)
     {
-        //
+        try {
+            $result = $this->httpPost($this->host . "/apis/slider/add", $data, $token);
+            return $result;
+        } catch (RequestException $requestException) {
+            return $requestException->getMessage();
+        }
     }
 
     /**
@@ -73,9 +79,19 @@ class slider_request extends HttpRequest
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function slider_update(Request $request, $id)
+    public function slider_update($data,$token)
     {
-        //
+        $query = http_build_query($data);
+        try {
+            $result = $this->client->put($this->host . '/apis/slider/change-status?' . $query, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                ]
+            ]);
+            return $result->getBody()->getContents();
+        } catch (RequestException $requestException) {
+            return $requestException->getMessage();
+        }
     }
 
     /**

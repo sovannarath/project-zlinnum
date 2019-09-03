@@ -252,7 +252,12 @@ class PropertyController extends MasterController
         }else{
             $country_list = [];
       }
-      return view('template.property-detail',compact('country_list','datalist','data'));
+        if(strtolower(Session::get('role'))=="user"){
+            $no_permission = true;
+        }else{
+            $no_permission = false;
+        }
+      return view('template.property-detail',compact('country_list','datalist','data','no_permission'));
 
     }
     public function update_property(Request $request){

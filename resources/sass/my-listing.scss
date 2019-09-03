@@ -1,0 +1,105 @@
+@import "font";
+
+$mobile_screen: 1000px;
+
+.main {
+    background: #606060;
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    overflow: hidden;
+
+    .main1 {
+        position: relative;
+
+        &:before {
+            content: '';
+            width: 85%;
+            height: 100%;
+            position: absolute;
+            border-bottom: 1px solid white;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    .main2 {
+        margin-top: 10px !important;
+
+        .text {
+            font-family: "Raleway Regular";
+            width: 100px;
+            text-align: center;
+            color: white;
+
+            .number {
+                font-family: "Verdana Regular";
+            }
+        }
+    }
+
+    .row {
+        .col-lg-4 {
+            padding: 10px;
+        }
+
+        .col-lg-8 {
+            padding: 10px;
+        }
+
+        .title-profile {
+            color: white;
+            padding-top: 25px;
+            font-family: "Raleway Regular";
+
+            h4, p {
+                color: white;
+            }
+
+            h4 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+        }
+
+
+    }
+
+    .profile-image {
+        width: 80px;
+        height: 80px;
+        background: black;
+        border: 2px solid white;
+        box-shadow: 3px 3px 3px 3px rgb(0, 0, 0, 0.25);
+        -webkit-background-size: calc(100%);
+        background-size: calc(100%);
+        margin-bottom: 10px;
+    }
+
+}
+
+.main-1 {
+    padding: 20px 20px;
+}
+
+@media screen and (max-width: $mobile_screen) {
+    .title-profile {
+        text-align: center;
+    }
+    .main {
+        .main2 {
+            .text {
+                $width:100;
+                width: #{$width /3 *1%};
+
+            }
+        }
+    }
+}
+

@@ -27,6 +27,7 @@ class DashboardController extends MasterController
         }
 
         if ($p1->status_code == 200) {
+
             $projectDisable = $result->result->project->total_project_disable;
         } else {
             $projectDisable = "--";

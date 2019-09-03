@@ -132,12 +132,15 @@ class HttpRequest extends Controller
                 Session::put('first_name', $user->first_name);
                 Session::put('last_name', $user->last_name);
                 Session::put('phone_number', $user->phone_number);
-                Session::put('photo', $user->photo);
+                if(isset($user->photo)){
+                    Session::put('photo', $user->photo);
+                }else{
+                    Session::put('photo',asset('assets/media/profile.jpg'));
+                }
                 Session::put('account_type', $user->account_type);
                 if (!Session::has('access')) {
                     Session::put('access', $token);
                 }
-                Session::put('photo', $user->photo);
                 return 1;
             } else {
                 return 0;
@@ -292,16 +295,19 @@ class HttpRequest extends Controller
 
 
     public function getuser($key, $type, $limit, $page = 1, $search)
-    {
+    {   $query = [
+        'page' => $page,
+        'limit' => $limit,
+        'search' => $search,
+        ];
+        if(isset($type)){
+            $query += ['type'=>$type];
+        }
         $result = $this->client->get($this->host . '/apis/users', [
             'headers' => [
                 'Authorization' => 'Bearer ' . $key,
             ],
-            'query' => [
-                'page' => $page,
-                'limit' => $limit,
-                'search' => $search
-            ]
+            'query' => $query
 
         ]);
         if ($result->getStatusCode() == 200) {
@@ -336,8 +342,10 @@ class HttpRequest extends Controller
                     'country_id' => $country_id,
                     'city_in_listing' => 'true'
                 ]);
+
                 $city = $this->client->get($this->host . "/api/project/city?" . $query);
-                $city_all = json_decode($city->getBody()->getContents())->result;
+
+                $city_all += json_decode($city->getBody()->getContents())->result;
             }
         }
         if (isset($other->city)) {
@@ -362,6 +370,8 @@ class HttpRequest extends Controller
             }
 
         }
+
+        $data += ['city_all'=>$city_all];
     }
 
 
@@ -404,6 +414,9 @@ class HttpRequest extends Controller
         } else {
             return response(['status_code' => $raw->status_code, 'message' => $raw->message], $raw->status_code);
         }
+
+    }
+    public function sign_up_user($user){
 
     }
 

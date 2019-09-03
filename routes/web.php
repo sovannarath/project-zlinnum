@@ -23,6 +23,8 @@ Route::GET('404', function () {
 Route::GET('/', function () {
     return view('welcome');
 });
+Route::get('test','UserController@signup')->name('sign-up');
+Route::post('sign-up','UserController@signup_post')->name('singup.post');
 Route::POST('test-image', 'projectController@post_image')->name('test-image');
 Route::prefix('admin')->group(function () {
     Route::GET('/', 'DashboardController@index')->name('dashboard');
@@ -56,10 +58,19 @@ Route::prefix('admin')->group(function () {
     Route::get('event-detail/{id?}','EventController@detail')->name('detail-event');
     Route::post('event-update','EventController@update')->name('update-event');
     Route::POST('/delete-event/{id?}', 'EventController@delete')->name('delete-event');
-
+    Route::POST('/delete-banner/{id?}', 'slider@destroy')->name('delete-banner');
     Route::GET('/new-banner', function () {
-        return view('template.new-banner');
+        if(strtolower(\Illuminate\Support\Facades\Session::get('role'))=="user"){
+            $no_permission = true;
+        }else{
+            $no_permission = false;
+        }
+        return view('template.new-banner',compact('no_permission'));
+
     })->name('new-banner');
+    Route::post('store-banner','slider@store')->name('store-banner');
+    Route::get('my-listing','MylistingController@index')->name('my-listing');
+    Route::POST('search-user-project','MylistingController@search')->name('search-user-project');
     Route::GET('/list-banner','slider@index')->name('list-banner');
     Route::GET('profile', 'UserController@showProfile')->name('view-profile');
     Route::post('change-status-project', 'projectController@change_status')->name('change-status-project');

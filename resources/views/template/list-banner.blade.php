@@ -1,5 +1,6 @@
 @extends('template.master')
 @section('content')
+    <span class="delete-banner-link" datasrc="{{route('delete-banner')}}"></span>
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
             <div class="row m-0">
@@ -30,6 +31,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="parameter" content="{{json_encode($parameter)}}"></div>
                             <div id="bootstrap-data-table_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
 
                                 <div class="row" style="margin-top: 10px;">
@@ -43,11 +45,14 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Show</span>
                                                 </div>
-                                                <select placeholder="Search by name" name="title" class="form-control" style="border-radius: 1px;">
-                                                    <option value="10">10</option>
-                                                    <option value="20">20</option>
-                                                    <option value="40">40</option>
-                                                    <option value="100">100</option>
+                                                <select placeholder="Search by name" name="title" class="form-control banner-limit" style="border-radius: 1px;">
+                                                    @foreach([10,20,40,100] as $value)
+                                                        @if(isset($parameter['limit']) && $parameter['limit']==$value) @php $check = "selected"; @endphp
+                                                        @else   @php $check =""; @endphp
+                                                        @endif
+
+                                                    <option value="{{$value}}" {{$check}}>{{$value}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             </span>
@@ -58,10 +63,15 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Status</span>
                                                 </div>
-                                                <select placeholder="Search by name" name="title" class="form-control" style="border-radius: 1px;">
-                                                    <option value="10">All</option>
-                                                    <option value="20">Enable</option>
-                                                    <option value="40">Disable</option>
+                                                <select placeholder="Search by name" name="title" class="form-control banner-status" style="border-radius: 1px;">
+                                                    @foreach(['all','enable','disable'] as $value)
+                                                        @if(isset($parameter['status']) && $parameter['status']==$value)
+                                                            @php $check = "selected"; @endphp
+                                                        @else   @php $check =""; @endphp
+                                                        @endif
+                                                    <option value="{{$value}}" {{$check}}>{{ucwords($value)}}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
 
@@ -79,7 +89,11 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
-                                        <div class="mt-1 mb-1" style="text-align: right"> Total Page: <strong style="margin-left: 5px;">4</strong> |  Total Items: <strong style="margin-left: 5px;">35</strong></div>
+                                        <div class="mt-1 mb-1" style="text-align: right"> Total Page: <strong
+                                                style="margin-left: 5px;">@if(isset($paginate->total_page)) {{$paginate->total_page}} @else
+                                                    0 @endif</strong> | Total Items: <strong
+                                                style="margin-left: 5px;">@if(isset($paginate->total_item)) {{$paginate->total_item}} @else
+                                                    0 @endif</strong></div>
                                     </div>
 
                                 </div>
@@ -104,7 +118,7 @@
                                             <tbody>
                                             @foreach($data as $value)
                                             <tr class="odd">
-                                                <td class="">01</td>
+                                                <td class="banner_id">{{$value->id}}</td>
                                                 <td class=""><div style="width:100px;height: auto;background: #ded9ff;margin: 0 auto"><img src="{{$value->slider}}"></div></td>
                                                 <td class="" style="width: 400px;"><p>{{$value->title}}</p></td>
                                                 <td class="sorting_1">
@@ -115,7 +129,14 @@
                                                             @php $check = ""; @endphp
                                                             @endif
                                                         @endif
-                                                    <div class="v-switch-button status_check" {{$check}}></div>
+                                                        @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user")
+                                                            <div class="v-switch-button banner_check" {{$check}}></div>
+                                                            @else
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input" readonly="true" {{$check}}>
+                                                                <label class="custom-control-label" for="customSwitch1"></label>
+                                                            </div>
+                                                            @endif
                                                 </td>
 
 
@@ -124,22 +145,26 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        @if(empty($data))
+                                            <div class="alert alert-danger" role="alert">
+                                                No Found
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="bootstrap-data-table_info" role="status" aria-live="polite">Showing 1 to 57 of 57 entries
+                                        @php $showving = ($paginate->page * $paginate->limit) - $paginate->limit + 1; @endphp
+                                        <div class="dataTables_info" id="bootstrap-data-table_info" role="status"
+                                             aria-live="polite">
+                                            Showing @php if($showving>$paginate->total_item){ echo 0; }else { echo $showving;} @endphp
+                                            to {{$paginate->total_item}} of {{$paginate->total_item}} entries
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="bootstrap-data-table_paginate" style="text-align: right">
-                                            <ul class="pagination">
-                                                <li class="paginate_button page-item previous disabled" id="bootstrap-data-table_previous"><a href="#" aria-controls="bootstrap-data-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                                </li>
-                                                <li class="paginate_button page-item active"><a href="#" aria-controls="bootstrap-data-table" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                                </li>
-                                                <li class="paginate_button page-item next disabled" id="bootstrap-data-table_next"><a href="#" aria-controls="bootstrap-data-table" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
-                                            </ul>
+                                        <div class="dataTables_paginate paging_simple_numbers"
+                                             id="bootstrap-data-table_paginate" style="text-align: right;float: right">
+                                            @php echo $render_paginate @endphp
                                         </div>
                                     </div>
                                 </div>

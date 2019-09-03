@@ -177,8 +177,8 @@
                 {{--<li>
                     <a href="{{route('dashboard')}}"><i class="menu-icon fa fa-handshake-o"></i>Member </a>
                 </li>--}}
-                <li>
-                    <a href="#"><i class="menu-icon fa fa-bar-chart-o"></i>My Listing </a>
+                <li class="my-listing">
+                    <a href="{{route('my-listing')}}"><i class="menu-icon fa fa-bar-chart-o"></i>My Listing </a>
                 </li>
                 <li class="all-user">
                     <a href="{{route('all-user')}}"><i class="menu-icon fa fa-users"></i>All User </a>
@@ -398,6 +398,10 @@
     </header>
     <!-- /#header -->
     <!-- Content -->
+@isset($no_permission)
+    @component('components.permission',['no_permission'=>$no_permission])
+    @endcomponent
+@endisset
 @yield('content')
 <!-- /.content -->
     <div class="clearfix"></div>

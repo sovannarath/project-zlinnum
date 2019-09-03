@@ -13,3 +13,4 @@ const mix = require('laravel-mix');
 mix.setPublicPath('/');
 mix.sass('resources/sass/alert.scss', 'assets/custom/css');
 mix.sass('resources/sass/scss-model.scss', 'assets/custom/css');
+mix.sass('resources/sass/my-listing.scss', 'assets/custom/css');

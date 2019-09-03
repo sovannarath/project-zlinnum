@@ -1484,24 +1484,28 @@ $(document).ready(function () {
 
         return result + "-" + $.now();
     }
-
+    var delete_project = {};
     doc.on('click', '.delete-project', function (e) {
         var id = $(this).closest('.item-project').find('.id_project').attr('id');
         var status = "false";
         var url = $(this).attr('datasrc');
-        $('.popup-model').find('.action-btn-project')
-            .attr('datasrc', url)
-            .attr('id_project', id)
-            .attr('status', status);
-        popup_message('Are Want to Delete ? ', 'Waning', 'change-status');
+        delete_project.url = url;
+        delete_project.status = "false";
+        delete_project.id_project = id;
+        delete_project.status = status;
+        v.alert.set({
+            title:"Waning",
+            message:"Are Your Want Delete ?",
+            button:"action-btn-project",
+            buttontxt:"Delete"
+        })
     });
 
     doc.on('click', '.action-btn-project', function () {
-        var url = $(this).attr('datasrc');
-        var type = $(this).closest('.popup-model').attr('type');
-        var status = $(this).attr('status');
-        if (type == "change-status") {
-            var id = $(this).attr('id_project');
+        var url = delete_project.url;
+        var status = delete_project.status;
+            var id = delete_project.id_project;
+
             $.post(url, {_token: tokent, id: id, status: status}, function (data) {
                 if (data.status_code == 200) {
                     notification('change Successfuly', 'ok');
@@ -1518,7 +1522,7 @@ $(document).ready(function () {
                 notification('can`t change status', 'false');
 
             });
-        }
+
     });
 
     function popup_message(message, title, type, cls=null) {
@@ -2042,6 +2046,83 @@ $(document).ready(function () {
         var THIS = $(this);
         event_process(true, THIS);
     });
+    doc.on('click', '.save-banner', function () {
+        var THIS = $(this);
+        banner_process(true, THIS);
+    });
+
+    function banner_process(update=false, element) {
+        var data = new FormData();
+        var title = $('.title-banner').val();
+        var url = element.attr('datasrc');
+        var check = $('.receive-background').attr('check_image');
+        data.append('title', title);
+        if (check == "true") {
+            var thum = $('.receive-background').css('background-image');
+            var thumnew = thum.split('"')[1];
+            var file = dataURLtoFile(thumnew, randomstr(20));
+            var type1 = file.type.substr(6, file.type.length);
+            data.append('file', file, randomstr(20) + "." + type1);
+        }
+        $.ajaxSetup({
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            headers: {
+                'X-CSRF-TOKEN': tokent
+            }
+        });
+        $.post(url, data, function (result) {
+            if (result.status_code == 200) {
+                validation_banner([]);
+                notification('Insert Banner Successfully', 'ok');
+            }
+        }).fail(function (errro) {
+            console.log(errro);
+            validation_banner(errro.responseJSON.message);
+        });
+
+
+    }
+
+    function validation_banner(json) {
+        var message = [];
+        if (typeof json.title != "undefined") {
+            $('.title-banner')
+                .addClass('is-invalid')
+                .removeClass('is-valid')
+                .closest('.form-group')
+                .find('.has-error-text')
+                .text(json.title)
+                .show();
+            message.push("* " + json.title);
+        } else {
+            $('.title-banner')
+                .removeClass('is-invalid')
+                .addClass('is-valid')
+                .closest('.form-group')
+                .find('.has-error-text')
+                .hide();
+        }
+
+        if (typeof json.file != "undefined") {
+            $('.receive-background').css('border', '1px solid #901e1e')
+                .closest('.row')
+                .find('.message')
+                .css('color', '#901e1e')
+                .text('Please Select Image')
+                .show();
+            message.push("* " + json.file);
+        } else {
+            $('.receive-background').css('border', 'none')
+                .closest('.row')
+                .find('.message')
+                .hide();
+        }
+        if (Object.keys(json).length > 0) {
+            notification(message.join('<br>'));
+        }
+    }
 
     function event_process(update=false, element) {
         var data = new FormData();
@@ -2142,7 +2223,8 @@ $(document).ready(function () {
                 .find('.message')
                 .hide();
         }
-        if (json.length > 0) {
+
+        if (Object.keys(json).length > 0) {
             notification(message.join('<br>'));
         }
 
@@ -2151,7 +2233,6 @@ $(document).ready(function () {
 
     var index;
     doc.on('click', '.cancel-enable', function () {
-        console.log(index);
         v.switchButton.setcheck({
             fill: index,
             status: false
@@ -2186,6 +2267,55 @@ $(document).ready(function () {
             });
         }
     });
+    doc.on('click', '.action-enable-banner', function () {
+        check_status_banner(true);
+    });
+    doc.on('click', '.action-delete-banner', function () {
+        check_status_banner(false);
+    });
+    doc.on('change', '.banner_check', function () {
+        var check = v.switchButton.getcheck({fill: this});
+        index = this;
+        if (check.check) {
+            v.alert.set({
+                title: "Message",
+                message: "Are You Want To Enable Banner ?",
+                button: "action-enable-banner",
+                buttontxt: "Enable",
+                buttonCancel: "cancel-enable"
+            });
+        } else {
+            v.alert.set({
+                title: "Waning",
+                message: "Are You Want To Disable Banner ?",
+                button: "action-delete-banner",
+                buttontxt: "Disable",
+                buttonCancel: "cancel-disable"
+            });
+        }
+    });
+
+    function check_status_banner(check) {
+        var id = $(index)
+            .closest('.odd')
+            .find('.banner_id')
+            .text();
+        var url = $('.delete-banner-link').attr('datasrc');
+        loadingmode('on');
+        $.post(url + "/" + id, {_token: tokent, status: check}, function (result) {
+            console.log(result);
+            if (typeof result.status_code != "undefined" && result.status_code == 200) {
+                window.location.reload();
+            } else {
+                notification('Delete Banner False', 'false');
+            }
+        }).fail(function (error) {
+            notification('Delete Banner False', 'false');
+            console.log(error);
+            loadingmode('off');
+        });
+    }
+
     doc.on('click', '.action-delete-event', function () {
         change_status(false);
     });
@@ -2209,6 +2339,7 @@ $(document).ready(function () {
             loadingmode('off');
         });
     }
+
 
     doc.on('change', '.status-list-event', function () {
         var data = $(this).val();
@@ -2243,5 +2374,185 @@ $(document).ready(function () {
 
 
     /* End Event Function */
+
+    /* Banner Function */
+    doc.on('change', '.banner-limit', function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.limit = data;
+        var page = check_parameter_event(json);
+        window.open(page, '_self');
+    });
+    doc.on('change', '.banner-status', function () {
+        var data = $(this).val();
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.status = data;
+        var page = check_parameter_event(json);
+        window.open(page, '_self');
+    });
+    /* End Banner Function */
+    /* User Project */
+    doc.on('change','.limit-user-project',function () {
+        var data = $(this).val();
+        console.log(data);
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.status = data;
+        var page = check_parameter_user_project(json);
+        window.open(page, '_self');
+    });
+    doc.on('change','.status-user-project',function () {
+        var data = $(this).val();
+        console.log(data);
+        var in_parameter = $('.parameter').attr('content');
+        var json = JSON.parse(in_parameter);
+        json.status = data;
+        var page = check_parameter_user_project(json);
+        window.open(page, '_self');
+    });
+
+    doc.on('keyup','.search-name-user-project',function () {
+        var data = $(this).val();
+        var url  = $(this).attr('datasrc');
+        $.post(url,{search:data,_token:tokent},function (data) {
+            if(typeof data.result !="undefined"){
+                $('#project-list-search').empty();
+                data.result.forEach(function (item) {
+                    $('#project-list-search').append('<option>'+ item.name +'</option>');
+                });
+            }
+        });
+    });
+
+    function check_parameter_user_project(json={}) {
+        var current_url = window.location.href.split('?')[0];
+        var query = [];
+        if (typeof json.limit != "undefined") {
+            query.push("limit=" + json.limit);
+        }
+        if (typeof json.status != "undefined") {
+            query.push("status=" + json.status);
+        }
+        if (typeof json.search != "undefined") {
+            query.push("search=" + json.search);
+        }
+        var result = current_url + "?" + query.join('&');
+        return result;
+    }
+    doc.on('keypress','.search-name-user-project',function (e) {
+        if(e.key=="Enter"){
+            search_project_use();
+        }
+        
+    });
+    doc.on('click','.action-search-project-user-title',function () {
+        search_project_use();
+    });
+    function search_project_use() {
+        var data = $('.search-name-user-project').val();
+        if(data!=""){
+            var in_parameter = $('.parameter').attr('content');
+            var json = JSON.parse(in_parameter);
+            json.search = data;
+            var page = check_parameter_user_project(json);
+            window.open(page, '_self');
+        }else{
+            notification('Invalid Search','false');
+        }
+
+    }
+
+    doc.on('change','.custom-btn-project-user',function () {
+     var check =   v.switchButton.getcheck({
+            fill:this
+       });
+     index = this;
+     var id = $(this).closest('tr').find('.odd').text();
+     delete_project.url = $('.link-change-status').attr('datasrc');
+     delete_project.id_project = $(this).closest('tr').find('.odd').text();
+     if(check.check){
+         v.alert.set({
+             title:"Message",
+             message:"Are You want to Enable ?",
+             button:"action-enable-project-user",
+             buttontxt:"Enable",
+             buttonCancel:"cancel-project-user-enable"
+         });
+         delete_project.status = "true";
+     }else{
+        v.alert.set({
+            title:"Waning",
+            message:"Are You want to Disable ?",
+            button:"action-disable-project-user",
+            buttontxt:"Disable",
+            buttonCancel:"cancel-project-user-disable"
+        });
+         delete_project.status = "false";
+     }
+     console.log(delete_project);
+    });
+
+    doc.on('click','.cancel-project-user-disable',function (){
+        v.switchButton.setcheck({
+            fill:index,
+            status:true
+        });
+    });
+    doc.on('click','.cancel-project-user-enable',function (){
+        v.switchButton.setcheck({
+            fill:index,
+            status:false
+        });
+    });
+    doc.on('click','.action-disable-project-user',function () {
+        delete_user_project(false);
+    });
+    doc.on('click','.action-enable-project-user',function () {
+
+    });
+    
+    function delete_user_project(status) {
+        var url = delete_project.url;
+        var status = delete_project.status;
+        var id = delete_project.id_project;
+        loadingmode('on');
+        $.post(url, {_token: tokent, id: id, status: status}, function (data) {
+            loadingmode('off');
+            console.log(data);
+            if (data.status_code == 200) {
+                if(status!==true){
+                    notification('Disable Project Successfuly', 'ok');
+                }else{
+                    notification('Enable Project Successfuly', 'ok');
+                }
+
+                /* window.open(window.location.href,'_self');*/
+            } else {
+                if(status!==true){
+                    notification('can`t Disable Project', 'false');
+                }else{
+                    notification('can`t Enable Project', 'false');
+                }
+
+            }
+
+        }).fail(function (data) {
+            /*console.log(data);*/
+            loadingmode('off');
+            if(status!==true){
+                notification('can`t Disable Project', 'false');
+            }else{
+                notification('can`t Enable Project', 'false');
+            }
+
+        });
+        
+    }
+
+
+    /* End User Project*/
+
 });
 

@@ -25,11 +25,14 @@
         </div>
     </div>
     <div class="content">
+
         <div class="animated fadeIn">
             <div class="row">
 
                 <div class="col-md-12">
                     <div class="card">
+
+
                         {{--<div class="card-header">
                             <strong class="card-title">User</strong>
                         </div>--}}
@@ -156,6 +159,7 @@
 
                                             </tbody>
                                         </table>
+
                                     </div>
                                 </div>
                                 <div class="row">

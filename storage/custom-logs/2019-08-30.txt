@@ -1,0 +1,23 @@
+
+------------- Start ---------------------
+Date: 19-08-30 08:57:23
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.90.2 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-30 08:57:28
+Error  Controller :HttpRequest
+Line: 45
+Message: cURL error 7: Failed to connect to 192.168.90.2 port 80: Timed out (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-08-30 09:00:08
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Client error: `POST http://192.168.90.2/api/sign-in` resulted in a `401 Unauthorized` response:
+{"status_code":401,"message":"Password not correct. "}
+
+-------------End -------------------

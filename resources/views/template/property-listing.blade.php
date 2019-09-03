@@ -2,8 +2,6 @@
 @section('title') Property Listing @endsection
 
 @section('content')
-    @component('components.alert',['title'=>'Change Status','message'=>'','class_action'=>'property','action'=>'OK'])
-    @endcomponent
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
             <div class="row m-0">
@@ -410,15 +408,28 @@
                                                     <td class="">{{$item->type}}</td>
                                                     <td class="">{{number_format($item->unit_price,2)." $"}}</td>
                                                     <td class="">{{number_format($item->sqm_price,2)." $"}}</td>
-                                                    <td class="delete-property" style="text-align: center;font-size: 12px;color: darkred;cursor: pointer" id="{{$item->id}}" datasrc="{{route('delete-property')}}">
+                                                    @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user")
+                                                        <td class="delete-property" style="text-align: center;font-size: 12px;color: darkred;cursor: pointer" id="{{$item->id}}" datasrc="{{route('delete-property')}}">
                                                         <i class="fas fa-trash"></i>
                                                     </td>
+                                                        @else
+                                                    <td>
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input" readonly="true" @if($item->status=="true") checked @endif>
+                                                                <label class="custom-control-label" for="customSwitch1"></label>
+                                                            </div>
+
+                                                        </td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                             </tbody>
                                         </table>
-                                        @if($paginate->total_item<=0)
-                                            <div class="alert alert-danger">Project not Found</div>
+
+                                        @if(isset($data) && empty($data))
+                                            <div class="alert alert-danger" role="alert">
+                                                No Found
+                                            </div>
                                         @endif
                                     </div>
                                 </div>

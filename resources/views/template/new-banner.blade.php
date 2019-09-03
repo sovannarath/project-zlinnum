@@ -47,13 +47,15 @@
                                         <div
                                             style="width: 100%;height: 200px;background-image:url('{{asset('assets/media/no_image.f1ee5199.jpg')}}')" class="add-background receive-background"></div>
                                         <p style="text-align: center">Select to Chouse File</p>
+                                        <p style="text-align: center;margin-top: 10px;display: none" class="message">Select to Chouse File</p>
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group position-relative">
                                                 <label>Title</label>
-                                                <input type="text" class="form-control title-bannerphp" placeholder="Enter title">
+                                                <input type="text" class="form-control title-banner" placeholder="Enter title">
+                                                    <small class="form-text has-error-text"></small>
                                             </div>
                                         </div>
                                         </div>
@@ -62,7 +64,7 @@
 
                                         <div class="row">
                                             <div class="col-sm-12 mt-3">
-                                                <button class="btn btn-success" style="width: 100%;">Save</button>
+                                                <button class="btn btn-success save-banner" style="width: 100%;" datasrc="{{route('store-banner')}}">Save</button>
                                             </div>
                                         </div>
 

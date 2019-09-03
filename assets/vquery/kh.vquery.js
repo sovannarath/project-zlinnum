@@ -3,16 +3,21 @@ $(document).ready(function () {
     var len = $('.v-switch-button').length;
     for(var i=0;i<len;i++){
         var element = $('.v-switch-button').eq(i);
-
+        var readonly;
+        if(typeof element.attr('readonly') !="undefined"){
+            readonly = "readonly";
+        }else{
+            readonly = "";
+        }
         if(typeof  element.attr('checked')!="undefined"){
             element.html(' <label class="switch">\n' +
-                '<input type="checkbox" class="event-status" checked>\n' +
+                '<input type="checkbox" class="event-status" checked '+ readonly +'>\n' +
                 '<span class="slider round move-right"></span>\n' +
                 '</label>');
 
         }else{
             element.html(' <label class="switch">\n' +
-                '<input type="checkbox" class="event-status">\n' +
+                '<input type="checkbox" class="event-status" '+ readonly +'>\n' +
                 '<span class="slider round move-left"></span>\n' +
                 '</label>');
         }
@@ -31,6 +36,9 @@ $(document).ready(function () {
         "    </div>\n" +
         "</div>";
    $('.tage-vquery').append(str);
+   $('.tage-vquery').append('<div id="v-loading">\n' +
+        '    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9IjIwMHB4IiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiIGNsYXNzPSJsZHMtcmlwcGxlIiBzdHlsZT0iYmFja2dyb3VuZDogbm9uZTsiPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjI3LjE4MjMiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMX19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxIiBrZXlTcGxpbmVzPSIwIDAuMiAwLjggMSIgYmVnaW49Ii0wLjVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMTswIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjEiIGtleVNwbGluZXM9IjAuMiAwIDAuOCAxIiBiZWdpbj0iLTAuNXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PC9jaXJjbGU+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMy45NDgyOSIgZmlsbD0ibm9uZSIgbmctYXR0ci1zdHJva2U9Int7Y29uZmlnLmMyfX0iIG5nLWF0dHItc3Ryb2tlLXdpZHRoPSJ7e2NvbmZpZy53aWR0aH19IiBzdHJva2U9IiNlZGVkZWQiIHN0cm9rZS13aWR0aD0iMiI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIwOzQwIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjEiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iMHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMSIga2V5U3BsaW5lcz0iMC4yIDAgMC44IDEiIGJlZ2luPSIwcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT48L2NpcmNsZT48L3N2Zz4=">\n' +
+        ' </div>');
 });
 $(document).on('click','.action-btn',function () {
     $('.main-layout-alert')
@@ -46,7 +54,7 @@ $(document).on('click', '.cancel-btn', function () {
 
 });
 v.public_parameter = {};
-v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=null){
+v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=null,otherbutton=null,otherbuttontxt=null){
     var doc = $(document);
         $('.popup-model').fadeIn(300);
         $('body').css('overflow', 'hidden');
@@ -61,14 +69,16 @@ v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=nu
 
         }
         $('.popup-model').find('.title').text(title).css('background-color', color);
-        $('.popup-model').find('.body').text(message);
+        $('.popup-model').find('.body').html(message);
         $('.btn-custom').css('background-color', color);
 
-        if(cls!=null){
+        if(cls!=null && cls != "false"){
             $('.action-btn')
                 .removeClass()
                 .addClass('btn-custom action-btn '+cls)
 
+        }else{
+            $('.action-btn').remove();
         }
         if(buttontxt!=null) {
             $('.action-btn').text(buttontxt);
@@ -80,6 +90,19 @@ v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=nu
                 .removeClass()
                 .addClass('btn-custom cancel-btn '+buttonCancel);
         }
+        if(buttonCancel=="disable"){
+            $('.cancel-btn').remove();
+        }
+        otherbutton.forEach(function (item) {
+            var len = $('.other-button').length;
+            if(len<=otherbutton.length){
+                $('.footer-alert').prepend('<span class="other-button btn-custom '+ item.on +'" style="background-color: rgb(3, 169, 243);margin-left: 5px;">'+item.text+'</span>');
+            }
+
+        });
+
+
+
 
 };
 v.loadingmode = {
@@ -90,14 +113,9 @@ v.loadingmode = {
         } else {
             this.touch = true;
         }
-        console.log(this.touch);
-
         if (this.touch) {
             $(document).ready(function () {
-                $('body').append('<div id="v-loading">\n' +
-                    '    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwcHgiICBoZWlnaHQ9IjIwMHB4IiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiIGNsYXNzPSJsZHMtcmlwcGxlIiBzdHlsZT0iYmFja2dyb3VuZDogbm9uZTsiPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjI3LjE4MjMiIGZpbGw9Im5vbmUiIG5nLWF0dHItc3Ryb2tlPSJ7e2NvbmZpZy5jMX19IiBuZy1hdHRyLXN0cm9rZS13aWR0aD0ie3tjb25maWcud2lkdGh9fSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InIiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMDs0MCIga2V5VGltZXM9IjA7MSIgZHVyPSIxIiBrZXlTcGxpbmVzPSIwIDAuMiAwLjggMSIgYmVnaW49Ii0wLjVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSI+PC9hbmltYXRlPjxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9Im9wYWNpdHkiIGNhbGNNb2RlPSJzcGxpbmUiIHZhbHVlcz0iMTswIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjEiIGtleVNwbGluZXM9IjAuMiAwIDAuOCAxIiBiZWdpbj0iLTAuNXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PC9jaXJjbGU+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMy45NDgyOSIgZmlsbD0ibm9uZSIgbmctYXR0ci1zdHJva2U9Int7Y29uZmlnLmMyfX0iIG5nLWF0dHItc3Ryb2tlLXdpZHRoPSJ7e2NvbmZpZy53aWR0aH19IiBzdHJva2U9IiNlZGVkZWQiIHN0cm9rZS13aWR0aD0iMiI+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iciIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIwOzQwIiBrZXlUaW1lcz0iMDsxIiBkdXI9IjEiIGtleVNwbGluZXM9IjAgMC4yIDAuOCAxIiBiZWdpbj0iMHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIj48L2FuaW1hdGU+PGFuaW1hdGUgYXR0cmlidXRlTmFtZT0ib3BhY2l0eSIgY2FsY01vZGU9InNwbGluZSIgdmFsdWVzPSIxOzAiIGtleVRpbWVzPSIwOzEiIGR1cj0iMSIga2V5U3BsaW5lcz0iMC4yIDAgMC44IDEiIGJlZ2luPSIwcyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiPjwvYW5pbWF0ZT48L2NpcmNsZT48L3N2Zz4=">\n' +
-                    ' </div>');
-                jQuery('#v-loading').fadeIn();
+                $('#v-loading').fadeIn();
             });
 
         } else {
@@ -181,6 +199,8 @@ v.alert = {
     button:null,
     buttontxt:null,
     parameter:null,
+    otherbutton:{},
+
     set:function (option={}) {
 
         if(typeof option.title != "undefined" ){
@@ -201,14 +221,18 @@ v.alert = {
         if(typeof option.parameter!=null){
            this.parameter = option.parameter;
         }
+        if(typeof option.otherbutton!=null){
+            this.otherbutton = option.otherbutton;
+        }
 
-        v.popupmessage(this.message,this.title,this.button,this.buttontxt,this.buttonCancel);
+        v.popupmessage(this.message,this.title,this.button,this.buttontxt,this.buttonCancel,this.otherbutton,this.otherbuttontxt);
         $(document).ready(function () {
             $('.popup-model')
                 .find('.main-layout-alert')
                 .removeClass('fadeOutUp')
                 .addClass('fadeInDown');
         });
+
 
     }
 };
@@ -219,18 +243,52 @@ v.notify = {
             align: "right"
         },
         animate: {
-            enter: 'animated fadeInRight 300ms',
-            exit: 'animated fadeOutRight 300ms'
+            enter: 'animated fadeInDown 300ms',
+            exit: 'animated fadeOutUp 300ms'
         },
         mouse_over:'pause',
         newest_on_top: true,
-        allow_dismiss: true
+        allow_dismiss: true,
+            delay:5000,
+        type:"danger",
+        template: '<div style="background: white;box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.1);" class="tubo">\n' +
+            '  <div class="toast-header">\n' +
+            '    <div class="round-alert" style="text-align: center"><i class="fas fa-exclamation-triangle" style="font-size: 12px;color: white;position: relative;top: -2px;"></i></div>\n' +
+            '    <strong class="mr-auto">Message</strong>\n' +
+            '    <small>now</small>\n' +
+            '    <button type="button" class="ml-2 mb-1 close close-btn" data-dismiss="toast" aria-label="Close" data-notify="dismiss">\n' +
+            '      <span aria-hidden="true">&times;</span>\n' +
+            '    </button>\n' +
+            '  </div>\n' +
+            '  <div class="toast-body" style="min-width: 200px;">\n' +
+            '   {2}\n' +
+            '  </div>\n' +
+            '</div>',
+    },
+    success:{
+        template: '<div style="background: white;box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.1);" class="tubo1" >\n' +
+            '  <div class="toast-header">\n' +
+            '    <div class="round-alert" style="text-align: center;background: #5cb85c;"><i class="fas fa-check" style="font-size: 12px;color: white;position: relative;top: -2px;"></i></div>\n' +
+            '    <strong class="mr-auto">Message</strong>\n' +
+            '    <small>now</small>\n' +
+            '    <button type="button" class="ml-2 mb-1 close close-btn" data-dismiss="toast" aria-label="Close" data-notify="dismiss">\n' +
+            '      <span aria-hidden="true">&times;</span>\n' +
+            '    </button>\n' +
+            '  </div>\n' +
+            '  <div class="toast-body" style="min-width: 200px;">\n' +
+            '   {2}\n' +
+            '  </div>\n' +
+            '</div>',
     },
     message:function (content={}) {
         if(typeof content.type!= "undefined"){
            $.extend(this.option,{type:content.type});
         }
+        if(content.type!="danger"){
+            this.option.template = this.success.template;
+        }
         $.notify(content.message,this.option);
+
     }
 };
 

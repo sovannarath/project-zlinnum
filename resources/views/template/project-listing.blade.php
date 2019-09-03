@@ -1,13 +1,10 @@
 @extends('template.master')
 @section('title') Project Listing @endsection
 @section('content')
-    @component('components.alert',['title'=>'Change Status','message'=>'','class_action'=>'project','action'=>'OK'])
-        @endcomponent
     <datalist id="project_list">
         @foreach($datalist->result as $value)
         <option value="{{$value->name}}"></option>
             @endforeach
-        
     </datalist>
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -60,7 +57,8 @@
                                                         <option value="{{$item->name}}" @if(isset($parameter->country) && $parameter->country==$item->name) selected @endif>{{$item->name}}</option>
                                                         @endforeach
 
-                                                </select> <select name="select" class="form-control city"
+                                                </select>
+                                                <select name="select" class="form-control city"
                                                                   style="margin-right: 10px;">
                                                     <option value="">--All Cities--</option>
 
@@ -189,9 +187,12 @@
                                                     <a href="{{route('project-detail',['id'=>$item->id])}}" class="linker">{{$item->name}}</a>
                                                 </td>
                                                 <td class="">
+
+
                                                     <div style="text-align: center">
                                                         <i class="flag-icon flag-icon-kh h4 mb-0" title="kh" id="kh"></i>
                                                     </div>
+
                                                 </td>
                                                 <td class="">{{$item->project_type}}</td>
                                                 <td class="">{{number_format($item->price,2)." $"}}  GRR: {{$item->grr}}</td>
@@ -201,13 +202,25 @@
                                                         <label class="custom-control-label" for="customSwitch1"></label>
                                                     </div>
                                                 </td>--}}
-                                                <td style="text-align: center;font-size: 12px;color: darkred" class="delete-project"><i class="fas fa-trash"></i></td>
+                                                @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user")
+                                                    <td style="text-align: center;font-size: 12px;color: darkred" class="delete-project" datasrc="{{route('change-status-project')}}"><i class="fas fa-trash"></i></td>
+                                                @else
+                                                    <td>
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input" readonly="true" @if($item->status=="true") checked @endif>
+                                                                <label class="custom-control-label" for="customSwitch1"></label>
+                                                            </div>
+
+                                                    </td>
+                                                @endif
+
 
                                             </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        @if($paginate->total_item<=0)
+
+                                        @if(empty($result))
                                         <div class="alert alert-danger">Project not Found</div>
                                             @endif
                                     </div>

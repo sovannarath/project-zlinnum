@@ -1,0 +1,10 @@
+$path:"http://localhost/project/assets/fonts/";
+
+@font-face {
+    font-family: "Raleway Regular";
+    src: url("#{$path}/Raleway-Regular.ttf");
+}
+@font-face {
+    font-family: "Verdana Regular";
+    src: url("#{$path}/verdana.ttf");
+}

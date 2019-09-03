@@ -85,7 +85,7 @@
 							Create an account?
 						</span>
 
-						<a href="#" class="txt2 hov1">
+						<a href="{{route('sign-up')}}" class="txt2 hov1">
 							Sign up
 						</a>
 					</div>

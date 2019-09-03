@@ -11,6 +11,7 @@
     </style>
 @endsection
 @section('content')
+
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
             <div class="row m-0">

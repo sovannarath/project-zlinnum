@@ -12,16 +12,20 @@ class MasterController extends Controller
     public $project_request;
     public $event_request;
     public $banner;
-
+    public $my_listing;
+    public $user_request;
     public function __construct()
     {
         $this->date = date('d-m-Y h:i:s');
-        $this->middleware('MasterAuth');
+        $this->middleware('MasterAuth')
+            ->except('signup','signup_post');
         $this->http = new HttpRequest();
         $this->property_request = new properties_request();
         $this->project_request = new project_request();
         $this->event_request = new event_request();
         $this->banner = new slider_request();
+        $this->my_listing = new Mylisting_request();
+        $this->user_request = new user_request();
     }
 
     static public function check_centen($str)

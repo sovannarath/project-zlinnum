@@ -62,6 +62,7 @@ class project_request extends HttpRequest
 
         $country_id = false;
         $this->country_and_city($data, $other);
+
         $result = $this->client->post($host . "?" . $url, [
             'body' => json_encode($data)
         ]);
@@ -103,11 +104,9 @@ class project_request extends HttpRequest
             'body' => json_encode($data)
         ]);
         $item = $result->getBody()->getContents();
-
-
         $return = [
             'result' => $item,
-            'city' => $city_all,
+            'city' => $data['city_all'],
             'project_type' => $project_type_result,
         ];
 
