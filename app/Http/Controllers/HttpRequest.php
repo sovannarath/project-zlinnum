@@ -15,6 +15,7 @@ class HttpRequest extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->client = new Client(['headers' => ['Content-Type' => 'application/json'], 'verify' => false]);
     }
 
@@ -106,7 +107,7 @@ class HttpRequest extends Controller
 
     public function change_profile_image($token, $file)
     {
-        $file = curl_file_create($file, $file->getMimeType(), $file->getClientOriginalName());
+        $file = new \CURLFile($file, $file->getMimeType(), $file->getClientOriginalName());
         $post = ['userImage' => $file];
         $result = $this->httpPost($this->host . "/apis/user-upload-image", $post, $token);
         return $result;
@@ -210,7 +211,7 @@ class HttpRequest extends Controller
                 try {
                     $error = $value->getError();
                     if (isset($error) && $error != 1) {
-                        $subfile['' . $name . '[' . $index . ']'] = curl_file_create($value, $value->getMimeType(), $value->getClientOriginalName());
+                        $subfile['' . $name . '[' . $index . ']'] = new \CURLFile($value, $value->getMimeType(), $value->getClientOriginalName());
                     }
                 } catch (\Exception $exception) {
                     return false;
@@ -222,7 +223,7 @@ class HttpRequest extends Controller
                 try {
                     $error = $image[0]->getError();
                     if (isset($error) && $error != 1) {
-                        $cfile['' . $name . '[0]'] = curl_file_create($image[0], $image[0]->getMimeType(), $image[0]->getClientOriginalName());
+                        $cfile['' . $name . '[0]'] = new \CURLFile($image[0], $image[0]->getMimeType(), $image[0]->getClientOriginalName());
                         $file = $cfile;
                     } else {
                         return false;
@@ -236,7 +237,7 @@ class HttpRequest extends Controller
                 try {
                     $error = $image->getError();
                     if (isset($error) && $error != 1) {
-                        $cfile = curl_file_create($image, $image->getMimeType(), $image->getClientOriginalName());
+                        $cfile = new \CURLFile($image, $image->getMimeType(), $image->getClientOriginalName());
                         $file = $cfile;
                     } else {
                         return false;

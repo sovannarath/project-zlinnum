@@ -248,7 +248,6 @@ $(document).ready(function () {
     doc.on('click', '.action-change', function () {
         var type = $(this).attr('type');
         var url = $('.change-profile').attr('datasrc');
-        var tokent = $('meta[name="csrf_token"]').attr('content');
         var THIS = $(this);
         var data = {};
         switch (type) {
@@ -401,18 +400,22 @@ $(document).ready(function () {
         var paramat = window.location.href.split('?');
         if (paramat.length >= 2) {
             window.history.pushState({}, '', url + "?" + paramat[1]);
-            $.get(url + "?" + paramat[1], {}, function (data) {
+            window.open(url + "?" + paramat[1],'_self');
+            /*$.get(url + "?" + paramat[1], {}, function (data) {
                 loadingmode('off');
                 $('.change-row').html($(data).find('.change-row').html());
+                $('.script').html($(data).find('.script').html());
 
-            });
+            });*/
         } else {
             window.history.pushState({}, '', url);
-            $.get(url, {}, function (data) {
+            window.open(url,'_self');
+            /*$.get(url, {}, function (data) {
                 loadingmode('off');
                 $('.change-row').html($(data).find('.change-row').html());
+                 $('.script').html($(data).find('.script').html());
 
-            });
+            });*/
         }
 
 
@@ -1395,7 +1398,7 @@ $(document).ready(function () {
             }
             validation();
         }).fail(function (error) {
-
+            console.log(error);
             loadingmode('off');
             var json = error.responseJSON;
             var message = validation(json.message);
@@ -1485,20 +1488,46 @@ $(document).ready(function () {
         return result + "-" + $.now();
     }
     var delete_project = {};
-    doc.on('click', '.delete-project', function (e) {
+    doc.on('click','.cancel-project',function () {
+        if(delete_project.status=="true"){
+            v.switchButton.setcheck({
+                fill:delete_project.index,status:false
+            })
+        }else{
+            v.switchButton.setcheck({
+                fill:delete_project.index,status:true
+            })
+        }
+    });
+    doc.on('change', '.delete-project', function (e) {
         var id = $(this).closest('.item-project').find('.id_project').attr('id');
-        var status = "false";
         var url = $(this).attr('datasrc');
+        var check = v.switchButton.getcheck({
+            fill:this
+        });
+        if(check.check){
+            delete_project.status = "true";
+            delete_project.index = this;
+            v.alert.set({
+                title:"Message",
+                message:"Are Your Want Enable ?",
+                button:"action-btn-project",
+                buttontxt:"Enable",
+                buttonCancel:"cancel-project"
+            });
+        }else{
+            delete_project.index = this;
+            delete_project.status = "false";
+            v.alert.set({
+                title:"Waning",
+                message:"Are Your Want Disable?",
+                button:"action-btn-project",
+                buttontxt:"Disable",
+                buttonCancel:"cancel-project"
+            });
+        }
         delete_project.url = url;
-        delete_project.status = "false";
         delete_project.id_project = id;
-        delete_project.status = status;
-        v.alert.set({
-            title:"Waning",
-            message:"Are Your Want Delete ?",
-            button:"action-btn-project",
-            buttontxt:"Delete"
-        })
     });
 
     doc.on('click', '.action-btn-project', function () {
@@ -2004,23 +2033,56 @@ $(document).ready(function () {
     }
 
     /* End Add Project*/
+    var delete_property = {};
+    doc.on('click','.cancel-property',function () {
+        if(delete_project.status=="true"){
+            v.switchButton.setcheck({
+                fill:delete_property.index,status:false
+            })
+        }else{
+            v.switchButton.setcheck({
+                fill:delete_property.index,status:true
+            })
+        }
+    });
     /* Property Listing */
     doc.on('click', '.delete-property', function () {
         var id = $(this).attr('id');
-        var status = "false";
         var url = $(this).attr('datasrc');
-        console.log(url, id);
-        $('.popup-model').find('.action-btn-property')
-            .attr('datasrc', url)
-            .attr('id_project', id)
-            .attr('status', status);
-        popup_message('Are Want to Delete ? ', 'Waning', 'change-status');
+        var check = v.switchButton.getcheck({
+            fill:this
+        });
+        delete_property.url = url;
+        delete_property.id = id;
+        if(check.check){
+            delete_property.status = "true";
+            delete_property.index = this;
+            v.alert.set({
+                title:"Message",
+                message:"Are Your Want Enable ?",
+                button:"action-btn-property",
+                buttontxt:"Enable",
+                buttonCancel:"cancel-property"
+            });
+        }else{
+            delete_property.index = this;
+            delete_property.status = "false";
+            v.alert.set({
+                title:"Waning",
+                message:"Are Your Want Disable?",
+                button:"action-btn-property",
+                buttontxt:"Disable",
+                buttonCancel:"cancel-property"
+            });
+        }
+
 
     });
+
     doc.on('click', '.action-btn-property', function () {
-        var id = $(this).attr('id_project');
-        var url = $(this).attr('datasrc');
-        $.post(url + "/" + id, {_token: tokent}, function (data) {
+        var id = delete_property.id;
+        var url = delete_property.url;
+        $.post(url + "/" + id, {_token: tokent,status:delete_property.status}, function (data) {
             var response = JSON.parse(data);
             if (response.status_code == 200) {
                 $('.popup-model').fadeOut();
@@ -2028,9 +2090,9 @@ $(document).ready(function () {
                 var json = JSON.parse(in_parameter);
                 check_parameter_property(json);
                 refresh_data(json);
-                notification("Delete Property Successfully", 'ok');
+                notification("Change Status Successfuly", 'ok');
             } else {
-                notification("Delete Property Unsuccess", "false");
+                notification("Change Status Unsuccessfuly", "false");
             }
         }).fail(function (error) {
             console.log(error);
@@ -2246,7 +2308,6 @@ $(document).ready(function () {
     });
 
     doc.on('change', '.status_check', function () {
-
         var check = v.switchButton.getcheck({fill: this});
         index = this;
         if (check.check) {
@@ -2491,7 +2552,6 @@ $(document).ready(function () {
         });
          delete_project.status = "false";
      }
-     console.log(delete_project);
     });
 
     doc.on('click','.cancel-project-user-disable',function (){
@@ -2510,7 +2570,7 @@ $(document).ready(function () {
         delete_user_project(false);
     });
     doc.on('click','.action-enable-project-user',function () {
-
+        delete_user_project(true);
     });
     
     function delete_user_project(status) {
@@ -2553,6 +2613,203 @@ $(document).ready(function () {
 
 
     /* End User Project*/
+    doc.on('click','.change-role',function () {
+       var data =  $(this).attr('data-value');
+       var url = $(this).closest('.dropdown-menu').attr('datasrc');
+       var user_id = $(this).closest('.odd').find('.user_id').text();
+       v.loadingmode.loading({
+           turn:"on"
+       });
+       $.post(url,{change_to:data,user_id:user_id,_token:tokent},function (data) {
+            if(data.status_code==200){
+                v.notify.message({
+                    message:"Change Success"
+                });
+                $.get(window.location.href,{},function(data){
+                    $('.content').html($(data).find('.content').html());
+                });
+            }else{
+                v.notify.message({
+                    message:"Change Unsuccess",
+                    type:"danger"
+                })
+            }
+           v.loadingmode.loading({
+               turn:"off"
+           });
+
+       }).fail(function (error) {
+            console.log(error);
+            v.notify.message({
+                message:"Change Unsuccess",
+                type:"danger"
+            })
+           v.loadingmode.loading({
+               turn:"off"
+           });
+       })
+
+    });
+
+    doc.on('click','.change-password',function () {
+       v.public_parameter.user_id = $(this).closest('.odd').find('.user_id').text();
+        v.alert.set({
+            title: "Change Password",
+            message: `<div><p style="font-size: 14px;">You can change your password for security reasons or reset it if you forget it.</p>
+                    <div class="form-group">
+                    <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                    </div>
+                    <input type="password" class="form-control password-new" placeholder="Password">
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <div class="input-group">   
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                    </div>
+                     <input type="password" class="form-control confirm-pass" placeholder="Confirm Password">
+                    </div>
+                    </div>
+                    </div>`,
+            button: "false",
+            buttontxt: "Verify",
+            otherbutton: [
+                {
+                    text: "Change",
+                    on: "action-change-password"
+                },
+            ],
+        });
+    });
+
+        doc.on('click','.action-change-password',function () {
+
+            var password = $('.password-new').val();
+            var confirm = $('.confirm-pass').val();
+            v.public_parameter.password = password;
+            v.public_parameter.confirm_password = confirm;
+            $.extend(v.public_parameter,{_token:tokent});
+            var url = $('meta[name="change-pass-admin"]').attr('content');
+
+            $.post(url,v.public_parameter,function (result) {
+                if(result.status_code==200){
+                    v.notify.message({
+                        message:"Change Password Success"
+                    });
+                    $('.popup-model').fadeOut(300);
+
+                }else{
+                    v.notify.message({
+                        message:"Change Password Unsuccess",
+                        type:'danger'
+                    });
+                }
+                check_validation_change_pass();
+            }).fail(function (error) {
+                console.log(error);
+                var json = error.responseJSON.message;
+                check_validation_change_pass(json);
+            })
+        });
+       function check_validation_change_pass(json={}){
+           var element,len;
+           var message = [];
+            if(typeof json.password !="undefined"){
+                message.push("* "+json.password);
+                 element = $('.password-new');
+                element.addClass('is-invalid');
+                len =  element.closest('.form-group').find('.has-error-text').length;
+                if(len>0){
+                    element.closest('.form-group').find('.has-error-text').text(json.password);
+                }else{
+                    element.closest('.form-group')
+                        .append('<small class="form-text has-error-text" style="display: inline;font-size: 14px;">'+json.password+'</small>');
+                };
+            }else{
+                $('.password-new')
+                    .closest('.form-group')
+                    .removeClass('is-invalid')
+                    .find('.has-error-text')
+                    .remove();
+
+            }
+           if(typeof json.confirm_password !="undefined"){
+               message.push("* "+json.confirm_password);
+                element = $('.confirm-pass');
+               element.addClass('is-invalid');
+                len =  element.closest('.form-group').find('.has-error-text').length;
+               if(len>0){
+                   element.closest('.form-group').find('.has-error-text').html(json.confirm_password);
+               }else{
+                   element.closest('.form-group')
+                       .append('<small class="form-text has-error-text" style="display: inline;font-size: 14px;">'+json.confirm_password+'</small>')
+               }
+           }else{
+               $('.confirm-pass')
+                   .closest('.form-group')
+                   .removeClass('is-invalid')
+                   .find('.has-error-text')
+                   .remove();
+           }
+           if(Object.keys(json).length>0){
+               v.notify.message({
+                   message:message.join("<br>"),
+                   type:"danger"
+               })
+           }
+        }
+        var button_sw = {};
+       var user_obj = {};
+    /*doc.on('click','.change-status-user',function () {
+        button_sw.index = this;
+        user_obj.user_id = $(this).closest('.odd').find('.user_id').text();
+
+      var check  =  v.switchButton.getcheck({
+            fill:this
+        });
+      console.log('OK');
+        $('.action-change-password').remove();
+      if(check.check){
+            button_sw.status = false;
+            v.alert.set({
+                title:"Message",
+                message:"Are You want Enable User",
+                otherbutton:[
+                    { text: "Enable",
+                        on: "enable-user" }
+                ],
+                buttonCancel:"cancel-btn-user"
+
+            })
+        }else{
+            button_sw.status = true;
+            v.alert.set({
+                title:"Waning",
+                message:"Are You want Disable User",
+                otherbutton:[
+                    { text: "Disable",
+                        on: "disable-user" }
+                ],
+                buttonCancel:"cancel-btn-user",
+
+            })
+        }
+    });
+       doc.on('click','.cancel-btn-user',function () {
+           v.switchButton.setcheck({
+                fill:button_sw.index,
+                status:button_sw.status
+           });
+       });
+    doc.on('click','.enable-user',function () {
+        change_status_user(true)
+    });
+       doc.on('click','.disable-user',function () {
+            change_status_user(false)
+       });
+       */
 
 });
 

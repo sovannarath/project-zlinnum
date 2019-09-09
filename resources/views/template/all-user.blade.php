@@ -1,5 +1,26 @@
 @extends('template.master')
 @section('title') User @endsection
+@section('style')
+    <style>
+        .dropdown-menu{
+            top: 30px !important;
+        }
+        .tage-vquery .main-layout-alert{
+            top: 20%;
+        }
+        .tgl-sw+.btn-switch{
+            width: 35px !important;
+            height: 20px !important;
+        }
+    </style>
+    <link rel="stylesheet" href="{{asset('assets/vquery/swtich/assets/css/jquery.btnswitch.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vquery/swtich/assets/css/darcula.css')}}">
+
+    @endsection
+@section('meta')
+    <meta name="change-pass-admin" content="{{route('change-password-admin')}}">
+    <meta name="change-status-user" content="{{route('change-status-user')}}">
+    @endsection
 @section('content')
     <div class="breadcrumbs">
         <div class="breadcrumbs-inner">
@@ -134,12 +155,23 @@
                                                     aria-label="Salary: activate to sort column descending"
                                                     aria-sort="ascending">Company
                                                 </th>
+                                                 <th class="sorting_asc" tabindex="0"
+                                                     aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                     aria-label="Salary: activate to sort column descending"
+                                                     aria-sort="ascending">Status
+                                                </th>
+                                                <th class="sorting_asc" tabindex="0"
+                                                    aria-controls="bootstrap-data-table" rowspan="1" colspan="1"
+                                                    aria-label="Salary: activate to sort column descending"
+                                                    aria-sort="ascending">Action
+                                                </th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($user as $value)
                                                 <tr class="odd">
-                                                    <td class="">{{$value->id}}</td>
+                                                    <td class="user_id">{{$value->id}}</td>
                                                     <td class="">
                                                         <div class="lazyload"
                                                              style="width:50px;height: 50px;background-size: cover;border-radius: 50px;;margin: 0 auto"
@@ -149,11 +181,39 @@
                                                         <div> {{$value->first_name." ".$value->last_name}}</div>
                                                     </td>
                                                     <td class="">
-                                                        <div
-                                                            style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center">{{$value->role}}</div>
+
+                                                        @if(isset($super_user) && $super_user===true)
+                                                            <div class="btn-group">
+                                                            <div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center;font-size: 15px;padding: 3px 10px;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$value->role}}</div>
+                                                            <div class="dropdown-menu" datasrc="{{route('change-role')}}">
+                                                        <span class="dropdown-item change-role" data-value="USER">USER</span>
+                                                        <span class="dropdown-item change-role" data-value="AGENT">AGENT</span>
+                                                        <span class="dropdown-item change-role" data-value="ADMIN">ADMIN</span>
+                                                        </div>
+                                                        </div>
+                                                            @else
+                                                            <div style="    width: auto;border-radius: 30px;background: #337ab7;padding: 1px 1px;color: white;text-align: center;font-size: 15px;padding: 3px 10px;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$value->role}}</div>
+                                                        @endif
+
                                                     </td>
                                                     <td class="">{{$value->phone_number}}</td>
                                                     <td class="sorting_1">Century 21 Apex Property</td>
+
+                                                      @if($value->status=="true")
+                                                        @php
+                                                        $active = true;
+                                                        @endphp
+                                                          @else
+                                                        @php
+                                                            $active = false;
+                                                        @endphp
+                                                        @endif
+
+                                                    <td>
+                                                      <div id="btnSwitch{{$value->id}}" style="width: 50px;"></div>
+                                                    </td>
+                                                    <td><button class="btn btn-danger change-password">Change Password</button></td>
+
                                                 </tr>
                                             @endforeach
 
@@ -227,6 +287,8 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{asset('assets/vquery/swtich/assets/js/jquery.btnswitch.min.js')}}"></script>
+    <script src="{{asset('assets/vquery/swtich/assets/js/highlight.pack.js')}}"></script>
     <script>
         var doc = $(document);
         $(document).ready(function () {
@@ -236,6 +298,59 @@
             @endif
             $('select[name="type"]').find('option[value="{{$type}}"]').attr('selected','selected');
         });
+
+        @foreach($user as $value)
+        $('#btnSwitch{{$value->id}}').btnSwitch({
+            Theme: 'iOS',
+            ConfirmChanges: true,
+            ConfirmText: 'Are You Sure ? ',
+            @if($value->status=="true")
+            ToggleState: true,
+
+            @else
+            ToggleState: false,
+
+            @endif
+            OnCallback: function(val) {
+                change_status_user('{{$value->id}}',true)
+
+            },
+            OffCallback: function (val) {
+                change_status_user('{{$value->id}}',false)
+            }
+        });
+        @endforeach
+        function change_status_user(user_id,status) {
+            var tokent = $('meta[name="csrf-token"]').attr('content');
+            var url = $('meta[name="change-status-user"]').attr('content');
+            var user_obj = {user_id:user_id,status:status,_token:tokent};
+            $.post(url,user_obj,function (result) {
+                v.loadingmode.loading({
+                    turn:"off"
+                });
+                if(result.status_code==200){
+                    v.notify.message({
+                        message:"Change Status Successfull"
+                    })
+                }else{
+                    v.notify.message({
+                        message:"Change Status Unsccessfull",type:"danger"
+                    })
+                }
+                setTimeout(function () {
+                    window.location.reload();
+                },1000);
+
+            }).fail(function (error) {
+                console.log(error);
+                v.loadingmode.loading({
+                    turn:"off"
+                });
+                v.notify.message({
+                    message:"Change Status Unsccessfull",type:"danger"
+                })
+            });
+        }
     </script>
 @endsection
 

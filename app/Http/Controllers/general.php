@@ -10,6 +10,7 @@ class general extends Controller
     public $http;
     public function __construct(HttpRequest $httpRequest)
     {
+        parent::__construct();
         $this->http = $httpRequest;
     }
     public function city(Request $request){

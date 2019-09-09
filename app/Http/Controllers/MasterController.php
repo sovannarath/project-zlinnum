@@ -16,6 +16,7 @@ class MasterController extends Controller
     public $user_request;
     public function __construct()
     {
+        parent::__construct();
         $this->date = date('d-m-Y h:i:s');
         $this->middleware('MasterAuth')
             ->except('signup','signup_post');

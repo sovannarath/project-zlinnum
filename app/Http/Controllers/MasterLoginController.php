@@ -22,6 +22,7 @@ class MasterLoginController extends Controller
     public $client;
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('LoginCheck')->except('logout','LoginPost');
         $this->http = $http  = new HttpRequest();
         $this->client = new Client();
@@ -115,5 +116,38 @@ class MasterLoginController extends Controller
         Session::forget('access');
         Cookie::queue('access',null,-1);
         return redirect()->route('show-login');
+    }
+    public function signup(){
+        $enable_email = url('api/enable-email');
+        return view('auth.Register',['enable_email'=>$enable_email,'signup_post'=>url('api/sign-up-post')]);
+    }
+    public function signup_post(Request $request){
+        $rule = [
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required|email',
+            'password'=>'required|min:8',
+            'confirm_password'=>'required|same:password',
+            'gender'=>'required'
+        ];
+        $validator = Validator::make($request->all(),$rule);
+        if($validator->fails()){
+            return \response(['status_code'=>400,'message'=>$validator->errors()],400);
+        }else{
+            $res = new user_request();
+            $result = $res->sign_up_post(['email'=>$request->email]);
+            if($result->status_code==200){
+                return \response((array)$result);
+            }else{
+                try{
+                    return \response(['status_code'=>$result->status_code,'message'=>['email_error'=>$result->message]],$result->status_code);
+                }catch (\Exception $error){
+                    return \response(['status_code'=>$result->status_code,'message'=>['general'=>'Error Server Please Try Again Later','dbug'=>$result]],$result->status_code);
+                }
+
+            }
+
+        }
+
     }
 }

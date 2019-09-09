@@ -164,7 +164,7 @@
   background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
-  z-index: 500;
+  z-index: 1000;
 }
 .tage-vquery .popup-model {
   display: none;

@@ -1,10 +1,17 @@
 $(document).ready(function () {
     var user_data = {};
-    $('.login-submit').on('click', function () {
+    $('.login-submit').on('click', function () { login() });
+    $('.input100').on('keypress',function (e) {
+        if(e.key=="Enter"){
+            login();
+        }
+    });
+
+    function login() {
         var email = $('input[name="email"]').val();
         var pass = $('input[name="pass"]').val();
         var remember = $('#remember:checked').val();
-        var url = $(this).attr('data-action');
+        var url = $('.login-submit').attr('data-action');
         var tokent = $('meta[name="csrf_token"]').attr('content');
 
         if (remember == "on") {
@@ -52,7 +59,9 @@ $(document).ready(function () {
             }
 
         }
-    });
+
+    }
+
 
     function check_time(s) {
         var mn = Math.trunc(s / 60);

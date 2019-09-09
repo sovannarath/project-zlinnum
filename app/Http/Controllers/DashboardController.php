@@ -36,16 +36,56 @@ class DashboardController extends MasterController
 
         if ($result->status_code == 200) {
             $result = $result->result;
-            $totalproject = $result->project->countries[0]->total;
-            $totalEvent = $result->event->total;
-            $eventEnable = $result->event->total_enable;
-            $eventDisble = $result->event->total_disable;
-            $admin_count = $result->user->ADMIN->total;
-            $total_user = $result->user->total;
-            $agent_count = $result->user->AGENT->total;
-            $user_count = $result->user->USER->total;
 
-            $property_count = $result->property->total;
+            if(isset($result->project->countries[0]->total)){
+                $totalproject = $result->project->countries[0]->total;
+            }else{
+                $totalproject = 0;
+            }
+            if(isset($result->event->total)){
+                $totalEvent = $result->event->total;
+            }else{
+                $totalEvent = 0;
+            }
+            if(isset($result->event->total_enable)){
+                $eventEnable = $result->event->total_enable;
+            }else{
+                $eventEnable = 0;
+            }
+
+            if(isset($result->event->total_disable)){
+                $eventDisble = $result->event->total_disable;
+            }else{
+                $eventDisble = 0;
+            }
+            if(isset($result->user->ADMIN->total)){
+                $admin_count = $result->user->ADMIN->total;
+            }else{
+                $admin_count = 0;
+            }
+            if(isset($result->user->total)){
+                $total_user = $result->user->total;
+            }else{
+                $total_user = 0;
+            }
+            if(isset($result->user->AGENT->total)){
+                $agent_count = $result->user->AGENT->total;
+            }else{
+                $agent_count = 0;
+            }
+            if(isset($result->user->USER->total)){
+                $user_count = $result->user->USER->total;
+            }else{
+                $user_count = 0;
+            }
+
+            if(isset($result->property->total)){
+                $property_count = $result->property->total;
+            }else{
+                $property_count = 0;
+            }
+
+
             if(isset($result->property->disable->total)){
                 $propertyoff_count = $result->property->disable->total;
             }else{
@@ -58,10 +98,22 @@ class DashboardController extends MasterController
             }
 
 
+            if(isset($result->project->countries[0]->types[2]->total)){
+                $apartment_count = $result->project->countries[0]->types[2]->total;
+            }else{
+                $apartment_count = 0;
+            }
+            if(isset($result->project->countries[0]->types[1]->total)){
+                $condo_count = $result->project->countries[0]->types[1]->total ;
+            }else{
+                $condo_count = 0;
+            }
+            if(isset($result->project->countries[0]->types[0]->total)){
+                $borey_count = $result->project->countries[0]->types[0]->total;
+            }else{
+                $borey_count = 0;
+            }
 
-            $apartment_count = $result->project->countries[0]->types[2]->total;
-            $condo_count = $result->project->countries[0]->types[1]->total;
-            $borey_count = $result->project->countries[0]->types[0]->total;
             $apartment_percent =  number_format(($apartment_count * 100) / $totalproject,2);
             $condo_percent = number_format(($condo_count*100) / $totalproject,2);
             $borey_percent =  number_format(($borey_count * 100) / $totalproject,2);

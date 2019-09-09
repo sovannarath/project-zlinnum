@@ -21,15 +21,18 @@ Route::GET('404', function () {
 })->name('404');
 
 Route::GET('/', function () {
-    return view('welcome');
+    return redirect(\route('dashboard'));
 });
-Route::get('test','UserController@signup')->name('sign-up');
-Route::post('sign-up','UserController@signup_post')->name('singup.post');
+Route::get('sign-up','MasterLoginController@signup')->name('sign-up');
+Route::post('sign-up','MasterLoginController@signup_post')->name('singup.post');
 Route::POST('test-image', 'projectController@post_image')->name('test-image');
 Route::prefix('admin')->group(function () {
     Route::GET('/', 'DashboardController@index')->name('dashboard');
     Route::GET('/user/{page?}', 'UserController@listUser')->name('all-user');
     Route::POST('search-user/', 'UserController@search')->name('user-search');
+    Route::POST('change-role','UserController@change_role')->name('change-role');
+    Route::POST('change-password-admin','user_request@change_password')->name('change-password-admin');
+    Route::POST('change-status-user','user_request@change_status_user')->name('change-status-user');
 
     Route::GET('/add-project', 'projectController@add_project')->name('add-project');
     Route::POST('/add-project', 'projectController@store_project')->name('store-project');

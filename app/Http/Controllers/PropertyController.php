@@ -12,7 +12,7 @@ class PropertyController extends MasterController
 
     public function index(Request $request)
     {
-        $data = ['sort_type' => 'id', 'sort_type_mode' => 'DESC', 'status' => 'true'];
+        $data = ['sort_type' => 'id', 'sort_type_mode' => 'DESC'];
         $page = "";
         $limit = "";
         $distict_data = [];
@@ -224,11 +224,11 @@ class PropertyController extends MasterController
 
     }
 
-    public function delete($id)
+    public function delete($id,Request $request)
     {
         if (isset($id)) {
             $token = Session::get('access');
-            $data = ['id' => $id];
+            $data = ['id' => $id,'status'=>$request->status];
             $result = $this->property_request->delete_property($data, $token);
             return $result;
         } else {

@@ -32,7 +32,6 @@ class properties_request extends HttpRequest
     public function delete_property($data, $token)
     {
         try {
-            $data += ['status' => 'false'];
             $result = $this->client->put($this->host . "/apis/property/update", [
                 'body' => json_encode($data),
                 'headers' => [

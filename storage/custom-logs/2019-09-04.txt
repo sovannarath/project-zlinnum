@@ -1,0 +1,36 @@
+
+------------- Start ---------------------
+Date: 19-09-04 09:37:24
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Client error: `POST http://192.168.90.2/api/sign-in` resulted in a `401 Unauthorized` response:
+{"status_code":401,"message":"Password not correct. "}
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-09-04 10:47:11
+Error  Controller :HttpRequest
+Line: 45
+Message: Client error: `GET http://192.168.90.2/apis/user-info` resulted in a `401 Unauthorized` response:
+{"status_code":401,"message":"Full authentication is required to access this resource"}
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-09-04 10:47:45
+Error  Controller :HttpRequest
+Line: 45
+Message: Client error: `GET http://192.168.90.2/apis/user-info` resulted in a `401 Unauthorized` response:
+{"status_code":401,"message":"Full authentication is required to access this resource"}
+
+-------------End -------------------
+
+------------- Start ---------------------
+Date: 19-09-04 16:39:28
+Error  Controller :HttpRequest.php
+Line: 18
+Message: Client error: `POST http://192.168.90.2/api/sign-in` resulted in a `401 Unauthorized` response:
+{"status_code":401,"message":"Password not correct. "}
+
+-------------End -------------------

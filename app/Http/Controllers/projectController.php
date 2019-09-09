@@ -248,9 +248,7 @@ class projectController extends MasterController
         if(isset($request->room_select) && $request->room_select!="else"){
             $other += ['room'=>$request->room_select];
         }
-        $body = [
-            'status'=>'true'
-        ];
+        $body = [];
         $country = json_decode($this->http->get_country());
         $datalist = json_decode($this->http->all_title_project());
         if(isset($request->search)){
@@ -294,7 +292,6 @@ class projectController extends MasterController
         return view('template.project-listing',
             compact('result',
                 'city',
-                'item',
                 'message',
                 'paginate',
                 'render_paginate',

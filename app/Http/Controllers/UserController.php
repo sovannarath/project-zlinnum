@@ -126,6 +126,7 @@ class UserController extends MasterController
     public function listUser(Request $request, $page = 1)
     {
 
+
         if (isset($request->limit)) {
             $limit = $request->limit;
         } else {
@@ -136,6 +137,7 @@ class UserController extends MasterController
         } else {
             $type = "";
         }
+
 
 
         $key = Session::get('access');
@@ -161,8 +163,13 @@ class UserController extends MasterController
         if ($list->status_code == "200") {
             $user = $list->result;
             $paging = $list->paginate;
+            if(Session::get('role')=="SUPERUSER" || Session::get('role')=="ADMIN"){
+                $super_user = true;
+            }else{
+                $super_user = false;
+            }
 
-            return view('template.all-user', compact('user', 'paging', 'type'));
+            return view('template.all-user', compact('user', 'paging', 'type','super_user'));
         } else {
             $paging = false;
             $user = [];
@@ -203,39 +210,13 @@ class UserController extends MasterController
         }
 
     }
-    public function signup(){
-        $enable_email = url('api/enable-email');
-        return view('auth.Register',['enable_email'=>$enable_email,'signup_post'=>url('api/sign-up-post')]);
-    }
-    public function signup_post(Request $request){
-        $rule = [
-            'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required|email',
-            'password'=>'required|min:8',
-            'confirm_password'=>'required|same:password',
-            'gender'=>'required'
-        ];
-        $validator = Validator::make($request->all(),$rule);
-        if($validator->fails()){
-            return \response(['status_code'=>400,'message'=>$validator->errors()],400);
-        }else{
-            $result = $this->user_request->sign_up_post(['email'=>$request->email]);
-            if($result->status_code==200){
-                return \response((array)$result);
-            }else{
-                try{
-                    return \response(['status_code'=>$result->status_code,'message'=>['email_error'=>$result->message]],$result->status_code);
-                }catch (\Exception $error){
-                    return \response(['status_code'=>$result->status_code,'message'=>['general'=>'Error Server Please Try Again Later','dbug'=>$result]],$result->status_code);
-                }
 
-            }
 
-        }
+
+    public function change_role(Request $request){
+        $data = $request->only('change_to','user_id');
+        $token = Session::get('access');
+     return $this->user_request->change_role($data,$token);
 
     }
-
-
-
 }

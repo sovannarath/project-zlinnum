@@ -408,10 +408,25 @@
                                                     <td class="">{{$item->type}}</td>
                                                     <td class="">{{number_format($item->unit_price,2)." $"}}</td>
                                                     <td class="">{{number_format($item->sqm_price,2)." $"}}</td>
-                                                    @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user")
-                                                        <td class="delete-property" style="text-align: center;font-size: 12px;color: darkred;cursor: pointer" id="{{$item->id}}" datasrc="{{route('delete-property')}}">
+                                                    @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user" && \Illuminate\Support\Facades\Session::get('role') != 'agent' )
+                                                        @if($item->status=="true")
+                                                            @php
+                                                                $active = "checked";
+                                                            @endphp
+                                                        @else
+                                                            @php
+                                                                $active = "";
+                                                            @endphp
+                                                        @endif
+                                                        <td><div class="v-switch-button delete-property" id="{{$item->id}}" datasrc="{{route('delete-property')}}" {{$active}}>
+                                                                <label class="switch">
+                                                                    <input type="checkbox" class="event-status" {{$active}}>
+                                                                    <span class="slider round move-left"></span>
+                                                                </label>
+                                                            </div></td>
+                                                       {{-- <td class="delete-property" style="text-align: center;font-size: 12px;color: darkred;cursor: pointer" id="{{$item->id}}" datasrc="{{route('delete-property')}}">
                                                         <i class="fas fa-trash"></i>
-                                                    </td>
+                                                    </td>--}}
                                                         @else
                                                     <td>
                                                             <div class="custom-control custom-switch">

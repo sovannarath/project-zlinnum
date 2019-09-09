@@ -10,7 +10,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public $host = "http://192.168.90.2";
+    public $host;
+    public function __construct()
+    {
+        $this->host = env('API_HOST','http://192.168.90.2');
+    }
 
     public function created_paginate($pagiate, $class = "custom-pagination")
     {

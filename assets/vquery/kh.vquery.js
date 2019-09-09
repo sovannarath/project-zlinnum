@@ -48,13 +48,17 @@ $(document).on('click','.action-btn',function () {
     $('body').css('overflow', 'auto');
 });
 $(document).on('click', '.cancel-btn', function () {
-    $(this).closest('.popup-model').fadeOut(300);
     $('.main-layout-alert').removeClass('fadeInDown').addClass('fadeOutUp');
     $('body').css('overflow', 'auto');
+    var THIS = $(this);
+    THIS.closest('.popup-model').fadeOut(300);
+    setTimeout(function () {
+        $('.main-layout-alert').removeClass('fadeOutUp');
 
+    },300);
 });
 v.public_parameter = {};
-v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=null,otherbutton=null,otherbuttontxt=null){
+v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=null,otherbutton={},otherbuttontxt=null){
     var doc = $(document);
         $('.popup-model').fadeIn(300);
         $('body').css('overflow', 'hidden');
@@ -93,13 +97,16 @@ v.popupmessage = function(message, title,cls=null,buttontxt=null,buttonCancel=nu
         if(buttonCancel=="disable"){
             $('.cancel-btn').remove();
         }
-        otherbutton.forEach(function (item) {
-            var len = $('.other-button').length;
-            if(len<=otherbutton.length){
-                $('.footer-alert').prepend('<span class="other-button btn-custom '+ item.on +'" style="background-color: rgb(3, 169, 243);margin-left: 5px;">'+item.text+'</span>');
-            }
+        if(Object.keys(otherbutton).length>0){
+            otherbutton.forEach(function (item) {
+                var len = $('.other-button').length;
+                if(len<otherbutton.length){
+                    $('.footer-alert').prepend('<span class="other-button btn-custom '+ item.on +'" style="background-color: rgb(3, 169, 243);margin-left: 5px;">'+item.text+'</span>');
+                }
 
-        });
+            });
+        }
+
 
 
 

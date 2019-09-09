@@ -112,6 +112,9 @@
         .right-panel {
             position: absolute;
         }
+        a.navbar-brand {
+            text-align: center;
+        }
 
     </style>
     @yield('style')
@@ -120,49 +123,13 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>--}}
-    <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
-    <script src="{{asset('assets/vquery/kh.vquery.js')}}"></script>
-    <script src="{{asset('assets/c-js/popper.min.js')}}"></script>
-    <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('assets/jqery-match-height/dist/jquery.matchHeight.min.js')}}"></script>
-    <script src="{{asset('assets/js/main.js')}}"></script>
-    <script src="{{asset('assets/quill/quill.js')}}"></script>
-    <script src="{{asset('assets/quill/quill.min.js')}}"></script>
-    <script src="{{asset('assets/bootstrap/js/bootstrap.js')}}"></script>
-    <script src="{{asset('assets/js/lazysizes.min.js')}}"></script>
-    <script src="{{asset('assets/js/ls.bgset.min.js')}}"></script>
 
-
-    <!--  Chart js -->
-    <script src="{{asset('assets/chart.js/dist/Chart.bundle.min.js')}}"></script>
-
-    <!--Chartist Chart-->
-    <script src="{{asset('assets/c-js/chartist.min.js')}}"></script>
-    <script src="{{asset('assets/c-js/chartist-plugin-legend.min.js')}}"></script>
-
-    <script src="{{asset('assets/c-js/jquery.flot.min.js')}}"></script>
-    <script src="{{asset('assets/c-js/jquery.flot.pie.min.js')}}"></script>
-    <script src="{{asset('assets/c-js/jquery.flot.spline.min.js')}}"></script>
-
-    <script src="{{asset('assets/c-js/jquery.simpleWeather.min.js')}}"></script>
-    <script src="{{asset('assets/js/init/weather-init.js')}}"></script>
-
-    <script src="{{asset('assets/c-js/moment.min.js')}}"></script>
-    <script src="{{asset('assets/c-js/fullcalendar.min.js')}}"></script>
-    <script src="{{asset('assets/js/init/fullcalendar-init.js')}}"></script>
-
-    <script src="{{asset('assets/chart.js/dist/chart.js')}}"></script>
-    <script src="{{asset('assets/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
-    <script src="{{asset('assets/vquery/bootstrap-notify.min.js')}}"></script>
-    <script src="{{asset('assets/vquery/bootstrap-notify.js')}}"></script>
-    <script src="{{asset('assets/custom/js/custom.js')}}"></script>
 </head>
-<body>
+<div>
 <div class="notification">
 </div>
 <div style="width: 100%;height: 100%;position: fixed;background: rgba(0,0,0,0.35);z-index: 1080" id="loading">
-    <img src="http://localhost/project/assets/custom/media/load.svg" alt=""
+    <img src="{{asset('assets/custom/media/load.svg')}}" alt=""
          style="margin: 0 auto;display: block;top: 30%;position: relative">
 </div>
 <!-- Left Panel -->
@@ -294,8 +261,8 @@
     <header id="header" class="header">
         <div class="top-left">
             <div class="navbar-header">
-                <a class="navbar-brand" href="./"><img src="{{asset('images/logo.png')}}" alt="Logo"></a>
-                <a class="navbar-brand hidden" href="./"><img src="{{asset('images/logo2.png')}}" alt="Logo"></a>
+                <a class="navbar-brand" href="./"><img src="{{asset('assets/media/logo.png')}}" alt="Logo"  style="width: 92px !important;"></a>
+                <a class="navbar-brand hidden" href="./"><img src="{{asset('assets/media/logo.png')}}" alt="Logo"></a>
                 <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
             </div>
         </div>
@@ -386,9 +353,6 @@
 
                     <div class="user-menu dropdown-menu">
                         <a class="nav-link" href="{{route('view-profile')}}"><i class="fa fa- user"></i>My Profile</a>
-
-                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
-
                         <a class="nav-link" href="{{route('logout')}}"><i class="fa fa-power -off"></i>Logout</a>
                     </div>
                 </div>
@@ -410,7 +374,7 @@
         <div class="footer-inner bg-white">
             <div class="row">
                 <div class="col-sm-6">
-                    Copyright &copy; @php if(date('Y')!="2019") {echo "2019 -";}echo date('Y') @endphp Zillennium
+                    Copyright &copy; @php if(date('Y')!="2019") {echo "2019 -";}echo date('Y') @endphp C21apex.com
                 </div>
 
             </div>
@@ -419,6 +383,42 @@
     <!-- /.site-footer -->
 </div>
 <!-- /#right-panel -->
+
+<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
+<script src="{{asset('assets/vquery/kh.vquery.js')}}"></script>
+<script src="{{asset('assets/c-js/popper.min.js')}}"></script>
+<script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/jqery-match-height/dist/jquery.matchHeight.min.js')}}"></script>
+<script src="{{asset('assets/js/main.js')}}"></script>
+<script src="{{asset('assets/quill/quill.js')}}"></script>
+<script src="{{asset('assets/quill/quill.min.js')}}"></script>
+<script src="{{asset('assets/bootstrap/js/bootstrap.js')}}"></script>
+<script src="{{asset('assets/js/lazysizes.min.js')}}"></script>
+<script src="{{asset('assets/js/ls.bgset.min.js')}}"></script>
+
+
+<!--  Chart js -->
+<script src="{{asset('assets/chart.js/dist/Chart.bundle.min.js')}}"></script>
+
+<!--Chartist Chart-->
+<script src="{{asset('assets/c-js/chartist.min.js')}}"></script>
+<script src="{{asset('assets/c-js/chartist-plugin-legend.min.js')}}"></script>
+
+<script src="{{asset('assets/c-js/jquery.flot.min.js')}}"></script>
+<script src="{{asset('assets/c-js/jquery.flot.pie.min.js')}}"></script>
+<script src="{{asset('assets/c-js/jquery.flot.spline.min.js')}}"></script>
+
+
+<script src="{{asset('assets/c-js/moment.min.js')}}"></script>
+<script src="{{asset('assets/c-js/fullcalendar.min.js')}}"></script>
+<script src="{{asset('assets/js/init/fullcalendar-init.js')}}"></script>
+
+<script src="{{asset('assets/chart.js/dist/Chart.js')}}"></script>
+<script src="{{asset('assets/chart.js/dist/Chart.min.js')}}"></script>
+<script src="{{asset('assets/js/jquery-3.4.1.min.js')}}"></script>
+<script src="{{asset('assets/vquery/bootstrap-notify.min.js')}}"></script>
+<script src="{{asset('assets/vquery/bootstrap-notify.js')}}"></script>
+<script src="{{asset('assets/custom/js/custom.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
 <script>
     var toolbarOptions = [
@@ -442,6 +442,8 @@
     ];
 </script>
 @yield('script')
+
+
 
 </body>
 </html>

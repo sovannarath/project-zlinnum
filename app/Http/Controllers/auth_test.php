@@ -11,6 +11,7 @@ class auth_test extends Controller
     //
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('api_auth');
     }
 

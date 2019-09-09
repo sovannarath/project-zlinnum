@@ -171,7 +171,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 250px;">Price
                                                 </th>
 
-                                                <th class="sorting_asc" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Salary: activate to sort column descending" aria-sort="ascending" style="width: 15px;">Remove
+                                                <th class="sorting_asc" tabindex="0" aria-controls="bootstrap-data-table" rowspan="1" colspan="1" aria-label="Salary: activate to sort column descending" aria-sort="ascending" style="width: 15px;">Status
                                                 </th>
                                             </tr>
                                             </thead>
@@ -202,8 +202,23 @@
                                                         <label class="custom-control-label" for="customSwitch1"></label>
                                                     </div>
                                                 </td>--}}
-                                                @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user")
-                                                    <td style="text-align: center;font-size: 12px;color: darkred" class="delete-project" datasrc="{{route('change-status-project')}}"><i class="fas fa-trash"></i></td>
+                                                @if(strtolower(\Illuminate\Support\Facades\Session::get('role') )!="user" && \Illuminate\Support\Facades\Session::get('role') != 'agent' )
+                                                    @if($item->status=="true")
+                                                        @php
+                                                            $active = "checked";
+                                                            @endphp
+                                                        @else
+                                                        @php
+                                                            $active = "";
+                                                        @endphp
+                                                        @endif
+                                                    <td><div class="v-switch-button delete-project" datasrc="{{route('change-status-project')}}" {{$active}}>
+                                                            <label class="switch">
+                                                                <input type="checkbox" class="event-status" {{$active}}>
+                                                                <span class="slider round move-left"></span>
+                                                            </label>
+                                                        </div></td>
+                                                   {{-- <td style="text-align: center;font-size: 12px;color: darkred" class="delete-project" datasrc="{{route('change-status-project')}}"><i class="fas fa-trash"></i></td>--}}
                                                 @else
                                                     <td>
                                                             <div class="custom-control custom-switch">
